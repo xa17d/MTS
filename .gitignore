@@ -2,3 +2,4 @@
 *.class
 db/*
 .classpath
+*/bin/*
