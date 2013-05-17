@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Mobile Triage System</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="triage_mode">Triage Modus</string>
+    <string name="walk">Gehfähigkeit</string>
+    <string name="respiration">Respiration</string>
+    <string name="perfusion">Perfusion</string>
+    <string name="mental">Mentaler Status</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <string name="stable">Stabil</string>
+    <string name="critical">Kritisch</string>
+    <string name="error">FEHLER</string>
+    <string name="save">Speichern</string>
+    <string name="change">Ändern</string>
+    <string name="error_category_missing">Der Patient wurde noch nicht eingestuft!</string>
+    <string name="salvageinfo">Bergeinformation</string>
+    <string name="question_restart">Wollen Sie die gerade eingegebenen Daten wirklich zurücksetzen?</string>
+    <string name="insert_info">Info einfügen</string>
+    <string name="error_ok">OK</string>
+    <string name="add">Hinzufügen</string>
+
+</resources>
