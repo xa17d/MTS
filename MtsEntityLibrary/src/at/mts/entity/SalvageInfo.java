@@ -1,4 +1,4 @@
-package moco.android.mtsdevice.temp;
+package at.mts.entity;
 
 import java.util.ArrayList;
 

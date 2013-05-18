@@ -27,6 +27,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     public static final class id {
         public static final int TextView1=0x7f070014;
         public static final int addButton=0x7f070016;
+        public static final int infoView=0x7f070018;
         public static final int mental=0x7f07000d;
         public static final int mental_critical=0x7f070010;
         public static final int mental_stable=0x7f07000f;
@@ -68,6 +69,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int insert_info=0x7f050012;
         public static final int mental=0x7f050007;
         public static final int no=0x7f050009;
+        public static final int no_info=0x7f050015;
         public static final int perfusion=0x7f050006;
         public static final int question_restart=0x7f050011;
         public static final int respiration=0x7f050005;

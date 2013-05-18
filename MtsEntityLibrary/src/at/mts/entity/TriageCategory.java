@@ -1,21 +1,19 @@
 package at.mts.entity;
 
-import java.awt.Color;
-
 public enum TriageCategory {
 	 immediate, delayed, minor, deceased, notSpecified;
 	 
-	 public Color getTriageColor() {
+	 public int getTriageColor() {
 		 
 		 if(this == notSpecified)
-			 return Color.WHITE;
+			 return -1;				//WHITE
 		 if(this == deceased)
-			 return Color.BLACK;
+			 return -16777216;		//BLACK
 		 if(this == immediate)
-			 return Color.RED;
+			 return -65536;			//RED
 		 if(this == delayed)
-			 return Color.YELLOW;
-		 return Color.GREEN;
+			 return -256;			//YELLOW
+		 return -16711936;			//GREEN
 	 }
 	 
 	 public static TriageCategory getValueOf(String value) {

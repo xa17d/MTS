@@ -1,8 +1,6 @@
-package moco.android.mtsdevice.activity;
+package moco.android.mtsdevice.triage;
 
 import moco.android.mtsdevice.R;
-
-import moco.android.mtsdevice.temp.TriageCategory;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -16,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import at.mts.entity.TriageCategory;
 
 
 public class TriageActivity extends Activity implements OnClickListener {
@@ -43,7 +42,7 @@ public class TriageActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.triage_main);
         
-        getViews();      
+        initButtons();      
        
         walkYes.setOnClickListener(new WalkButtonListener());
         walkNo.setOnClickListener(new WalkButtonListener());
@@ -85,8 +84,8 @@ public class TriageActivity extends Activity implements OnClickListener {
 				/**
 				 * naechste Seite
 				 */
-				Intent myIntent = new Intent(v.getContext(), TriageSalvageinfoActivity.class);
-                startActivityForResult(myIntent, 0);
+				Intent myIntent = new Intent(this, TriageSalvageinfoActivity.class);
+                startActivity(myIntent);
 			}
 		}
 		/**
@@ -101,7 +100,7 @@ public class TriageActivity extends Activity implements OnClickListener {
 		}
 	}
 	
-	public class ResetListener implements android.content.DialogInterface.OnClickListener {
+	private class ResetListener implements android.content.DialogInterface.OnClickListener {
 
 		@SuppressLint("NewApi")
 		@Override
@@ -129,7 +128,7 @@ public class TriageActivity extends Activity implements OnClickListener {
 	 * Gehfaehigkeit
 	 * @author Lucas
 	 */
-	public class WalkButtonListener implements OnClickListener {
+	private class WalkButtonListener implements OnClickListener {
 
 		@Override
 		public void onClick(View v) {
@@ -164,7 +163,7 @@ public class TriageActivity extends Activity implements OnClickListener {
 	 * Spontane Atmung
 	 * @author Lucas
 	 */
-	public class RespirationButtonListener implements OnClickListener {
+	private class RespirationButtonListener implements OnClickListener {
 
 		@Override
 		public void onClick(View v) {
@@ -198,7 +197,7 @@ public class TriageActivity extends Activity implements OnClickListener {
 	 * Blutkreislauf
 	 * @author Lucas
 	 */
-	public class PerfusionButtonListener implements OnClickListener {
+	private class PerfusionButtonListener implements OnClickListener {
 
 		@Override
 		public void onClick(View v) {
@@ -230,7 +229,7 @@ public class TriageActivity extends Activity implements OnClickListener {
 	 * Mentaler Status
 	 * @author Lucas
 	 */
-	public class MentalButtonListener implements OnClickListener {
+	private class MentalButtonListener implements OnClickListener {
 
 		@Override
 		public void onClick(View v) {
@@ -256,7 +255,7 @@ public class TriageActivity extends Activity implements OnClickListener {
 		}
 	}
 	
-	public void getViews() {
+	private void initButtons() {
 		
 		walkYes = (Button)findViewById(R.id.walk_yes);
         walkNo = (Button)findViewById(R.id.walk_no);
@@ -280,5 +279,6 @@ public class TriageActivity extends Activity implements OnClickListener {
         perfusionCritical.setClickable(false);
         mentalStable.setClickable(false);
         mentalCritical.setClickable(false);
+        tagColor.setClickable(false);
 	}
 }

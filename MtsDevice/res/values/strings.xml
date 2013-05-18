@@ -22,5 +22,6 @@
     <string name="insert_info">Info einfügen</string>
     <string name="error_ok">OK</string>
     <string name="add">Hinzufügen</string>
+    <string name="no_info">keine Information</string>
 
 </resources>
