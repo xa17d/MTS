@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public enum SalvageInfo {
 
-	Bergeschere, Schaufeltrage, Trage, Sauerstoff, Schmerztherapie;
+	Schaufeltrage, Trage, Tragstuhl, Bergeschere, Sauerstoff, Schmerztherapie, Feuerwehr, Wasserrettung, Bergrettung, Polizei;
 	
 	public static ArrayList<SalvageInfo> getAll() {
 		ArrayList<SalvageInfo> result = new ArrayList<SalvageInfo>();

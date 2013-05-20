@@ -1,5 +1,7 @@
 package moco.android.mtsdevice.triage;
 
+import java.util.UUID;
+
 import moco.android.mtsdevice.R;
 
 import android.annotation.SuppressLint;
@@ -14,12 +16,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-import at.mts.entity.TriageCategory;
+import at.mts.entity.*;
 
 
 public class TriageActivity extends Activity implements OnClickListener {
 	
 	private TriageCategory category;
+	private Patient patient;
 	
 	private Button walkYes;
 	private Button walkNo;
@@ -39,25 +42,14 @@ public class TriageActivity extends Activity implements OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	
+    	//TODO nur zum Testen
+    	patient = new Patient(new UUID(5, 3));
+    	Patient.setSelectedPatient(patient);
+    	
         super.onCreate(savedInstanceState);
         setContentView(R.layout.triage_main);
         
-        initButtons();      
-       
-        walkYes.setOnClickListener(new WalkButtonListener());
-        walkNo.setOnClickListener(new WalkButtonListener());
-        
-        respirationStable.setOnClickListener(new RespirationButtonListener());
-        respirationCritical.setOnClickListener(new RespirationButtonListener());
-        
-        perfusionStable.setOnClickListener(new PerfusionButtonListener());
-        perfusionCritical.setOnClickListener(new PerfusionButtonListener());
-        
-        mentalStable.setOnClickListener(new MentalButtonListener());
-        mentalCritical.setOnClickListener(new MentalButtonListener());
-        
-        save.setOnClickListener(this);
-        restart.setOnClickListener(this);
+        initButtons();
         
         buttonBackground = walkYes.getBackground();
         category = TriageCategory.notSpecified;
@@ -79,13 +71,15 @@ public class TriageActivity extends Activity implements OnClickListener {
 	            	.show();
 			}
 			else {
-				//TODO Patient aktualisieren
+				patient.setCategory(category);
 				
 				/**
 				 * naechste Seite
 				 */
-				Intent myIntent = new Intent(this, TriageSalvageinfoActivity.class);
-                startActivity(myIntent);
+				Intent intent = new Intent(this, TriageSalvageinfoActivity.class);
+                startActivity(intent);
+                
+                finish();
 			}
 		}
 		/**
@@ -279,6 +273,25 @@ public class TriageActivity extends Activity implements OnClickListener {
         perfusionCritical.setClickable(false);
         mentalStable.setClickable(false);
         mentalCritical.setClickable(false);
-        tagColor.setClickable(false);
+        
+        walkYes.setOnClickListener(new WalkButtonListener());
+        walkNo.setOnClickListener(new WalkButtonListener());
+        
+        respirationStable.setOnClickListener(new RespirationButtonListener());
+        respirationCritical.setOnClickListener(new RespirationButtonListener());
+        
+        perfusionStable.setOnClickListener(new PerfusionButtonListener());
+        perfusionCritical.setOnClickListener(new PerfusionButtonListener());
+        
+        mentalStable.setOnClickListener(new MentalButtonListener());
+        mentalCritical.setOnClickListener(new MentalButtonListener());
+        
+        save.setOnClickListener(this);
+        restart.setOnClickListener(this);
+	}
+	
+	@Override
+	public void onBackPressed() {
+		//DO NOTHING
 	}
 }

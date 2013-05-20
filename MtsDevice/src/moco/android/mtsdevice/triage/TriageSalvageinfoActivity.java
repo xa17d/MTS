@@ -1,7 +1,6 @@
 package moco.android.mtsdevice.triage;
 
 import moco.android.mtsdevice.R;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,13 +9,15 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import at.mts.entity.*;
+
 public class TriageSalvageinfoActivity extends Activity implements OnClickListener {
 	
 	private Button add;
 	private Button save;
 	private TextView salvageText;
 	
-	private Bundle savedInstanceState;
+	private Patient patient;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,25 +25,17 @@ public class TriageSalvageinfoActivity extends Activity implements OnClickListen
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.triage_salvageinfo);
         
-        this.savedInstanceState = savedInstanceState;
+        patient = Patient.getSelectedPatient();
         
         add = (Button)findViewById(R.id.addButton);
         save = (Button)findViewById(R.id.save);
         salvageText = (TextView)findViewById(R.id.salvageText);
-        
-        Intent intent = getIntent();
-        
-        if(intent.getStringExtra("newItem") != null) {
-        	if(salvageText.equals(R.string.no_info))
-        		salvageText.setText(intent.getStringExtra("newItem") + ";");
-        	salvageText.setText(salvageText.getText() + "\n" + intent.getStringExtra("newItem") + ";");
-        }
-                
+             
         save.setOnClickListener(this);
         add.setOnClickListener(this);
 	}
 
-	@SuppressLint("NewApi")
+	
 	@Override
 	public void onClick(View v) {
 		
@@ -50,22 +43,33 @@ public class TriageSalvageinfoActivity extends Activity implements OnClickListen
 		 * Hinzufuegen
 		 */
 		if(v == add) {
-			Intent myIntent = new Intent(this, TriageSalvageinfoAdd.class);
-            startActivityForResult(myIntent, 0, savedInstanceState);
+			Intent intent = new Intent(this, TriageSalvageinfoAdd.class);
+            startActivity(intent);
 		}
+		
 		/**
 		 * Speichern
 		 */
 		if(v == save) {
-			//TODO Patient aktualisieren
-			
+
 			/**
-			 * naechste Seite
+			 * Triage schliessen
 			 */
-			Intent intent = new Intent(this, TriageActivity.class);
-            startActivity(intent);
+			finish();
 		}
 	}
+	
+	@Override
+	public void onResume() {
+		
+		super.onResume();
+		
+		/**
+		 * Textfeld aktualisieren
+		 */
+		salvageText.setText(patient.getSalvageInfoString());
+	}
+	
 	
 	@Override
 	public void onBackPressed() {

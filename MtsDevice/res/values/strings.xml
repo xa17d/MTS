@@ -5,6 +5,8 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="triage_mode">Triage Modus</string>
+	<string name="salvage_mode">Bergungs Modus</string>
+    <string name="therapy_mode">Behandlungs Modus</string>
     <string name="walk">Gehfähigkeit</string>
     <string name="respiration">Respiration</string>
     <string name="perfusion">Perfusion</string>
@@ -23,5 +25,7 @@
     <string name="error_ok">OK</string>
     <string name="add">Hinzufügen</string>
     <string name="no_info">keine Information</string>
+    <string name="scan_new_tag">neuen Triage-Tag einscannen</string>
+    <string name="change_mode">Modus ändern</string>
 
 </resources>

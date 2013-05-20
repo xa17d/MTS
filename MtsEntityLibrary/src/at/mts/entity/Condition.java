@@ -1,6 +1,7 @@
 package at.mts.entity;
 
 public enum Condition {
+	
 	yes, no, stable, critical, notSpecified;
 
 	public static String[] toStringArray() {
