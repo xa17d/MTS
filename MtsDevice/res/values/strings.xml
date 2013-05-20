@@ -2,8 +2,6 @@
 <resources>
 
     <string name="app_name">Mobile Triage System</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="triage_mode">Triage Modus</string>
 	<string name="salvage_mode">Bergungs Modus</string>
     <string name="therapy_mode">Behandlungs Modus</string>

@@ -1,6 +1,8 @@
 package moco.android.mtsdevice;
 
 import moco.android.mtsdevice.handler.Mode;
+import moco.android.mtsdevice.maps.SalvageMap;
+import moco.android.mtsdevice.therapy.TherapyAreaActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,16 +30,23 @@ public class ModeActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 
-		if(v == btnTriageMode)
+		Intent intent = null;
+		
+		if(v == btnTriageMode) {
 			Mode.setActiveMode(Mode.triage);
+			intent = new Intent(this, ScanTagActivity.class);
+		}
 		
-		if(v == btnSalvageMode)
+		if(v == btnSalvageMode) {
 			Mode.setActiveMode(Mode.salvage);
+			intent = new Intent(this, SalvageMap.class);
+		}
 		
-		if(v == btnTherapyMode)
+		if(v == btnTherapyMode) {
 			Mode.setActiveMode(Mode.therapy);
+			intent = new Intent(this, TherapyAreaActivity.class);
+		}
 		
-		Intent intent = new Intent(this, ScanTagActivity.class);
 		startActivity(intent);
 	}
 	
