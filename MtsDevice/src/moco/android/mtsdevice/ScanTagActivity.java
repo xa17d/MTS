@@ -49,15 +49,17 @@ public class ScanTagActivity extends Activity implements OnClickListener {
 	
 	private void initButtons() {
 		
-		btnChangeMode = (Button)findViewById(R.id.buttonChangeMode);
+		btnChangeMode = (Button)findViewById(R.id.buttonChangeModeInScan);
 		btnTagScanned = (Button)findViewById(R.id.buttonTagScanned);
 		
 		btnChangeMode.setOnClickListener(this);
 		btnTagScanned.setOnClickListener(this);
 	}
 	
+	/*
 	@Override
 	public void onBackPressed() {
 		//DO NOTHING
 	}
+	*/
 }

@@ -19,6 +19,8 @@ public class SalvageMap extends Activity {
 	static final LatLng KIEL = new LatLng(53.551, 9.993);
 	private GoogleMap map;
 
+	//TODO Fehlerbehebung
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

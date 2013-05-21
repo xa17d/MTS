@@ -25,5 +25,9 @@
     <string name="no_info">keine Information</string>
     <string name="scan_new_tag">neuen Triage-Tag einscannen</string>
     <string name="change_mode">Modus ändern</string>
+    <string name="area_1">Behandlungsplatz I</string>
+    <string name="area_2">Behandlungsplatz II</string>
+    <string name="area_3">Behandlungsplatz III</string>
+    <string name="area_4">Behandlungsplatz IV</string>
 
 </resources>

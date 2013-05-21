@@ -71,8 +71,10 @@ public class TriageSalvageinfoActivity extends Activity implements OnClickListen
 	}
 	
 	
+	/*
 	@Override
 	public void onBackPressed() {
 		//DO NOTHING
 	}
+	*/
 }

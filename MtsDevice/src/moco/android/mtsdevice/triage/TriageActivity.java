@@ -290,8 +290,10 @@ public class TriageActivity extends Activity implements OnClickListener {
         restart.setOnClickListener(this);
 	}
 	
+	/*
 	@Override
 	public void onBackPressed() {
 		//DO NOTHING
 	}
+	*/
 }
