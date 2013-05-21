@@ -37,5 +37,10 @@
     <string name="edit_patient">Patienten bearbeiten</string>
     <string name="skip">Überspringen</string>
     <string name="info_saved">Die Daten des Patienten wurden gespeichert!</string>
+    <string name="question_gotoareaormode">Modus oder Behandlungsplatz wechseln?</string>
+    <string name="question_gotomode">Modus wechseln?</string>
+    <string name="nothing">Nichts</string>
+    <string name="area">Behandlungsplatz</string>
+    <string name="mode">Modus</string>
 
 </resources>

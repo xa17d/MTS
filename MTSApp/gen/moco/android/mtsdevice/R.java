@@ -241,6 +241,7 @@ containing a value of this type.
     public static final class string {
         public static final int add=0x7f060029;
         public static final int app_name=0x7f060015;
+        public static final int area=0x7f06003c;
         public static final int area_1=0x7f06002d;
         public static final int area_2=0x7f06002e;
         public static final int area_3=0x7f06002f;
@@ -330,10 +331,14 @@ containing a value of this type.
         public static final int location_client_ulr_inactive_age_unknown=0x7f060013;
         public static final int location_client_ulr_inactive_unknown_restriction=0x7f060014;
         public static final int mental=0x7f06001c;
+        public static final int mode=0x7f06003d;
         public static final int no=0x7f06001e;
         public static final int no_info=0x7f06002a;
+        public static final int nothing=0x7f06003b;
         public static final int ok=0x7f060028;
         public static final int perfusion=0x7f06001b;
+        public static final int question_gotoareaormode=0x7f060039;
+        public static final int question_gotomode=0x7f06003a;
         public static final int question_restart=0x7f060026;
         public static final int respiration=0x7f06001a;
         public static final int salvage_mode=0x7f060017;
