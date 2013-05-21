@@ -26,6 +26,8 @@ public class Patient {
 		setId(id);
 	}
 	
+	public Patient() {}
+	
 	/**
 	 * Setter
 	 */

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:columnCount="1" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/triage_mode"
+        android:layout_gravity="left|top"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:columnCount="1" >
+
+        <Button
+            android:id="@+id/restart"
+            android:layout_gravity="left"
+            android:text="@string/change" />
+
+        <Button
+            android:id="@+id/save"
+            android:layout_column="0"
+            android:layout_gravity="right|top"
+            android:layout_row="0"
+            android:text="@string/save" />
+
+        <Button
+            android:id="@+id/tag_color"
+            android:layout_column="0"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_row="0"
+            android:background="@color/black_overlay"
+            android:text="" />
+    </GridLayout>
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="0"
+        android:layout_gravity="center"
+        android:layout_row="0" >
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/walk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/walk"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/walk_yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/yes" />
+
+            <Button
+                android:id="@+id/walk_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/respiration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/respiration"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/respiration_stable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/stable" />
+
+            <Button
+                android:id="@+id/respiration_critical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/critical" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/perfusion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/perfusion"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/perfusion_stable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/stable" />
+
+            <Button
+                android:id="@+id/perfusion_critical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:text="@string/critical" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/mental"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mental"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/mental_stable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/stable" />
+
+            <Button
+                android:id="@+id/mental_critical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/critical" />
+        </TableRow>
+    </TableLayout>
+
+</GridLayout>
