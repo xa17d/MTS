@@ -7,10 +7,71 @@ import java.util.HashMap;
  * @author Daniel Gehrer
  */
 public class CdaBody {
+	
+	
+	//Vitalzeichen
 	public static final String KEY_GEHFAEHIGKEIT = "gehfaehigkeit";
 	public static final String KEY_RESPIRATION = "respiration";
 	public static final String KEY_PERFUSION = "perfusion";
-	// TODO: restlichen Keys einfuegen
+	public static final String KEY_MENTALERSTATUS = "mentalerstatus";
+	public static final String KEY_TRIAGEKATEGORIE = "triagekategorie";
+	public static final String KEY_BEHANDLUNG = "behandlung";
+	//TODO : Section/Component-Unterteilung ?
+	
+	/*
+	//Details
+	public static final String KEY_GPS ="gps";
+	public static final String KEY_LEBENSPHASE ="gps";
+	public static final String KEY_BERGEINFORMATION ="gps";
+	public static final String KEY_HILFPLATZPOSITION ="gps";
+	public static final String KEY_DRINGLICHKEIT ="gps";
+	public static final String KEY_DIAGNOSE ="gps";
+	public static final String KEY_BLUTDRUCK ="gps";
+	public static final String KEY_PULS ="gps";
+	public static final String KEY_BEHANDLUNGSVERLAUF ="gps";
+	public static final String KEY_TRANSPORTBEREITSCHAFT ="gps";
+	public static final String KEY_ZIELKRANKENHAUS ="gps";
+	public static final String KEY_KRANKEKASSE ="gps";
+	*/
+	
+	/*
+	//Bodyparts
+	public Static final String Vorne_Kopf= ="";
+    public static final String Vorne_Hals ="";
+    public static final String Vorne_Brust ="";
+    public static final String Vorne_Bauch ="";
+    public static final String Vorne_ROberarm ="";
+    public static final String Vorne_LOberarm ="";
+    public static final String Vorne_RUnterarm ="";
+    public static final String Vorne_LUnterarm ="";
+    public static final String Vorne_RHand ="";
+    public static final String Vorne_LHand ="";
+    public static final String Vorne_LOberschenkel ="";
+    public static final String Vorne_ROberschenkel ="";
+    public static final String Vorne_LUnterschenkel ="";
+    public static final String Vorne_RUnterschenkel ="";
+    public static final String Vorne_LFuss ="";
+    public static final String Vorne_RFuss ="";
+    public static final String Hinten_Kopf ="";
+    public static final String Hinten_Hals ="";
+    public static final String Hinten_Brust ="";
+    public static final String Hinten_Bauch ="";
+    public static final String Hinten_ROberarm ="";
+    public static final String Hinten_LOberarm ="";
+    public static final String Hinten_RUnterarm ="";
+    public static final String Hinten_LUnterarm ="";
+    public static final String Hinten_RHand ="";
+    public static final String Hinten_LHand ="";
+    public static final String Hinten_LOberschenkel ="";
+    public static final String Hinten_ROberschenkel ="";
+    public static final String Hinten_LUnterschenkel ="";
+    public static final String Hinten_RUnterschenkel ="";
+    public static final String Hinten_LFuss ="";
+    public static final String Hinten_RFuss ="";
+	*/
+	
+	
+	
 	
 	/**
 	 * Repraesentiert einen Key im Body.
