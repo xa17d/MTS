@@ -34,44 +34,40 @@ public class CdaBody {
 	public static final String KEY_KRANKEKASSE ="gps";
 	*/
 	
-	/*
 	//Bodyparts
-	public Static final String Vorne_Kopf= ="";
-    public static final String Vorne_Hals ="";
-    public static final String Vorne_Brust ="";
-    public static final String Vorne_Bauch ="";
-    public static final String Vorne_ROberarm ="";
-    public static final String Vorne_LOberarm ="";
-    public static final String Vorne_RUnterarm ="";
-    public static final String Vorne_LUnterarm ="";
-    public static final String Vorne_RHand ="";
-    public static final String Vorne_LHand ="";
-    public static final String Vorne_LOberschenkel ="";
-    public static final String Vorne_ROberschenkel ="";
-    public static final String Vorne_LUnterschenkel ="";
-    public static final String Vorne_RUnterschenkel ="";
-    public static final String Vorne_LFuss ="";
-    public static final String Vorne_RFuss ="";
-    public static final String Hinten_Kopf ="";
-    public static final String Hinten_Hals ="";
-    public static final String Hinten_Brust ="";
-    public static final String Hinten_Bauch ="";
-    public static final String Hinten_ROberarm ="";
-    public static final String Hinten_LOberarm ="";
-    public static final String Hinten_RUnterarm ="";
-    public static final String Hinten_LUnterarm ="";
-    public static final String Hinten_RHand ="";
-    public static final String Hinten_LHand ="";
-    public static final String Hinten_LOberschenkel ="";
-    public static final String Hinten_ROberschenkel ="";
-    public static final String Hinten_LUnterschenkel ="";
-    public static final String Hinten_RUnterschenkel ="";
-    public static final String Hinten_LFuss ="";
-    public static final String Hinten_RFuss ="";
-	*/
-	
-	
-	
+	public static final String KEY_FRONT_HEAD = "Vorne_Kopf";
+	public static final String KEY_FRONT_NECK = "Vorne_Hals";
+	public static final String KEY_FRONT_CHEST = "Vorne_Brust";
+	public static final String KEY_FRONT_ABDOMEN = "Vorne_Bauch";
+	public static final String KEY_FRONT_R_UPPERARM = "Vorne_ROberarm";
+	public static final String KEY_FRONT_L_UPPERARM = "Vorne_LOberarm";
+	public static final String KEY_FRONT_R_FOREARM = "Vorne_RUnterarm";
+	public static final String KEY_FRONT_L_FOREARM = "Vorne_LUnterarm";
+	public static final String KEY_FRONT_R_HAND = "Vorne_RHand";
+	public static final String KEY_FRONT_L_HAND = "Vorne_LHand";
+	public static final String KEY_FRONT_L_UPPERLEG = "Vorne_LOberschenkel";
+	public static final String KEY_FRONT_R_UPPERLEG = "Vorne_ROberschenkel";
+	public static final String KEY_FRONT_L_SHANK = "Vorne_LUnterschenkel";
+	public static final String KEY_FRONT_R_SHANK = "Vorne_RUnterschenkel";
+	public static final String KEY_FRONT_L_FOOT = "Vorne_LFuss";
+	public static final String KEY_FRONT_R_FOOT = "Vorne_RFuss";
+	public static final String KEY_BACK_HEAD = "Hinten_Kopf";
+	public static final String KEY_BACK_NECK = "Hinten_Hals";
+	public static final String KEY_BACK_UPPERBACK = "Hinten_Brust";
+	public static final String KEY_BACK_LOWERBACK = "Hinten_Bauch";
+	public static final String KEY_BACK_R_UPPERARM = "Hinten_ROberarm";
+	public static final String KEY_BACK_L_UPPERARM = "Hinten_LOberarm";
+	public static final String KEY_BACK_R_FOREARM = "Hinten_RUnterarm";
+	public static final String KEY_BACK_L_FOREARM = "Hinten_LUnterarm";
+	public static final String KEY_BACK_R_HAND = "Hinten_RHand";
+	public static final String KEY_BACK_L_HAND = "Hinten_LHand";
+	public static final String KEY_BACK_L_UPPERLEG = "Hinten_LOberschenkel";
+	public static final String KEY_BACK_R_UPPERLEG = "Hinten_ROberschenkel";
+	public static final String KEY_BACK_L_SHANK = "Hinten_LUnterschenkel";
+	public static final String KEY_BACK_R_SHANK = "Hinten_RUnterschenkel";
+	public static final String KEY_BACK_L_FOOT = "Hinten_LFuss";
+	public static final String KEY_BACK_R_FOOT = "Hinten_RFuss";
+
 	
 	/**
 	 * Repraesentiert einen Key im Body.
