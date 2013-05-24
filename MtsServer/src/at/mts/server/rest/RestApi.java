@@ -67,4 +67,20 @@ public class RestApi {
 		
 		return "null [t="+triagekategorie+";b="+behandlung+"]"; 
 	}
+	
+	@GET
+	@Path("status")
+	@Produces(MediaType.TEXT_HTML)
+	public String status() {
+		
+		return "<h1>Status</h1>"; 
+	}
+	
+	@GET
+	@Path("clear")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String clear() {
+		
+		return "clear not implemented yet"; 
+	}
 } 
