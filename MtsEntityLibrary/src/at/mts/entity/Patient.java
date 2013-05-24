@@ -132,6 +132,10 @@ public class Patient {
 	public Bodyparts getBodyparts() { return bodyparts; }
 	public void setBodyparts(Bodyparts value) { this.bodyparts = value; }
 	
+	private Treatment treatment;
+	public Treatment getTreatment() { return treatment; }
+	public void setTreatment(Treatment value) { this.treatment = value; }
+	
 	/**
 	 * statisch aktuellen Patienten definieren
 	 */
