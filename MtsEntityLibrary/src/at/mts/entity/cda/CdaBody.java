@@ -91,6 +91,10 @@ public class CdaBody {
 			}
 			else { return false; }
 		}
+		@Override
+		public int hashCode() {
+			return this.key.toLowerCase().hashCode();
+		}
 	}
 	
 	/**
