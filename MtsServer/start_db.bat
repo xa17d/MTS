@@ -1,0 +1,1 @@
+java -cp lib/hsqldb-2.2.9.jar org.hsqldb.Server -database.0 db/MTS -dbname.0 MTS
