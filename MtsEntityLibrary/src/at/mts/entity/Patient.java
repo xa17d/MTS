@@ -60,6 +60,10 @@ public class Patient {
 	 * Eigenschaften
 	 */
 	
+	private int version;
+	public int getVersion() { return version; }
+	public void setVersion(int value) { this.version = value; }
+	
 	private String nameGiven;
 	public String getNameGiven() { return nameGiven; }
 	public void setNameGiven(String value) { this.nameGiven = value; }
