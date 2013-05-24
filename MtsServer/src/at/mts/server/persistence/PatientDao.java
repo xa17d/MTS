@@ -1,5 +1,5 @@
 package at.mts.server.persistence;
 
-public class PatientDao {
+public interface PatientDao {
 
 }
