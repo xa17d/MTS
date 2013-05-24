@@ -128,13 +128,13 @@ public class Patient {
 	public String getHealthInsurance() { return healthInsurance; }
 	public void setHealthInsurance(String value) { this.healthInsurance = value; }
 	
-	private Bodyparts bodyparts = new Bodyparts();
-	public Bodyparts getBodyparts() { return bodyparts; }
-	public void setBodyparts(Bodyparts value) { this.bodyparts = value; }
-	
 	private Treatment treatment;
 	public Treatment getTreatment() { return treatment; }
 	public void setTreatment(Treatment value) { this.treatment = value; }
+	
+	private Bodyparts bodyparts = new Bodyparts();
+	public Bodyparts getBodyparts() { return bodyparts; }
+	public void setBodyparts(Bodyparts value) { this.bodyparts = value; }
 	
 	/**
 	 * statisch aktuellen Patienten definieren
