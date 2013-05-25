@@ -37,6 +37,20 @@ public class Patient {
 	
 	public void addSalvageInfo(SalvageInfo info) { this.salvageinfo.add(info); }
 	
+	public void setSalvageInfo(String salvageInfoString) {
+		getSalvageInfo().clear();
+		
+		if (salvageInfoString != null) {
+			String[] sList = salvageInfoString.split(";");
+			for (String s : sList) {
+				String st = s.trim();
+				if (!st.isEmpty()) {
+					addSalvageInfo(SalvageInfo.valueOf(st));
+				}
+			}
+		}
+	}
+	
 	/**
 	 * Getter
 	 */
@@ -139,6 +153,30 @@ public class Patient {
 	private Bodyparts bodyparts = new Bodyparts();
 	public Bodyparts getBodyparts() { return bodyparts; }
 	public void setBodyparts(Bodyparts value) { this.bodyparts = value; }
+	
+	@Override
+	public String toString() {
+		return 
+				"name: "+nameFamily+" "+nameGiven+"; "+
+				"birthtime: "+birthTime+"; "+
+				"gender: "+gender+"; "+
+				"category: "+category+"; "+
+				"walkable: "+walkable+"; "+
+				"respiration: "+respiration+"; "+
+				"perfusion: "+perfusion+"; "+
+				"mentalStatus: "+mentalStatus+"; "+
+				"phaseOfLife: "+phaseOfLife+"; "+
+				"salvageInfo: "+getSalvageInfoString()+"; "+
+				"placePosition: "+placePosition+"; "+
+				"urgency: "+urgency+"; "+
+				"pressure: "+bloodPressureSystolic+":"+bloodPressureDiastolic+"; "+
+				"pulse: "+pulse+"; "+
+				"readyForTransport: "+readyForTransport+"; "+
+				"hospital: "+hospital+"; "+
+				"healthInsurance: "+healthInsurance+"; "+
+				"treatment: "+treatment;
+				
+	}
 	
 	/**
 	 * statisch aktuellen Patienten definieren
