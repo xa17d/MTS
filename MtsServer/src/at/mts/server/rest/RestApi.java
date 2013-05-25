@@ -1,6 +1,7 @@
 package at.mts.server.rest;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
@@ -16,6 +17,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
+
+import at.mts.entity.Patient;
+import at.mts.server.Server;
+import at.mts.server.service.ServiceException;
 
 @Path("/restApi")
 public class RestApi {
@@ -73,7 +78,23 @@ public class RestApi {
 	@Produces(MediaType.TEXT_HTML)
 	public String status() {
 		
-		return "<h1>Status</h1>"; 
+		StringBuilder r = new StringBuilder();
+		r.append("<h1>Status</h1>\n"); 
+		
+		List<Patient> patients;
+		try {
+			patients = Server.getInstance().getPatientService().findAll();
+			
+			for (Patient patient : patients) {
+				r.append("<p><pre>"+patient.toString()+"</pre></p>\n");
+			}
+			
+		} catch (ServiceException e) {
+			r.append(e.getMessage());
+		}
+		
+		return r.toString();
+
 	}
 	
 	@GET

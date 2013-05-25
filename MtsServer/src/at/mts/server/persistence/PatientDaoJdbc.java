@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,7 +24,7 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 		super(connection);
 	}
 
-	private static final String selectQueryBase = "SELECT"+
+	private static final String sqlSelectQueryBase = "SELECT"+
 			" p.Guid," +
 			" v.Version," +
 			" v.NameGiven," +
@@ -33,6 +36,7 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 			" v.Perfusion," +
 			" v.MentalStatus," +
 			" v.PhaseOfLife," +
+			" v.SalvageInfo," +
 			" v.PlacePosition," +
 			" v.Urgency," +
 			" v.BloodPressureSystolic," +
@@ -41,9 +45,41 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 			" v.ReadyForTransport," +
 			" v.Hospital," +
 			" v.HealthInsurance," +
-			" v.Treatment "+
-			"FROM Patient p JOIN PatientVersion v on p.id = v.Patient AND p.Version=v.Version ";
+			" v.Treatment, "+
+			" v.Category "+
+			"FROM Patient p JOIN PatientVersion v on p.id = v.Patient ";
+	
+	private static final String sqlSelectQueryLatest = sqlSelectQueryBase + "AND p.Version=v.Version ";
 
+	private static final String sqlInsertPatientVersion =
+			"INSERT INTO PatientVersion ("+
+			" Patient," +
+			" Version," +
+			" NameGiven," +
+			" NameFamily," +
+			" BirthTime," +
+			" Gender," +
+			" Walkable," +
+			" Respiration," +
+			" Perfusion," +
+			" MentalStatus," +
+			" PhaseOfLife," +
+			" SalvageInfo," +
+			" PlacePosition," +
+			" Urgency," +
+			" BloodPressureSystolic," +
+			" BloodPressureDiastolic," +
+			" Pulse," +
+			" ReadyForTransport," +
+			" Hospital," +
+			" HealthInsurance," +
+			" Treatment,"+
+			" Category"+
+			") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	
+	private static final String sqlInsertPatient = "INSERT INTO Patient (guid, version) VALUES (?, ?)";
+	
+	private static final String sqlUpdatePatient = "UPDATE Patient SET version = ? WHERE id = ?";
 	
 	private interface StatementPreparation {
 		public String sql();
@@ -90,7 +126,7 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 			
 			@Override
 			public String sql() {
-				return selectQueryBase + " WHERE p.Guid = ?";
+				return sqlSelectQueryLatest + " WHERE p.Guid = ?";
 			}
 			
 			@Override
@@ -112,7 +148,7 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 			
 			@Override
 			public String sql() {
-				return selectQueryBase + " WHERE p.Guid = ? AND v.version = ?";
+				return sqlSelectQueryBase + " WHERE p.Guid = ? AND v.version = ?";
 			}
 			
 			@Override
@@ -128,11 +164,82 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 			return l.get(0);
 		}
 	}
-
+	
 	@Override
 	public void update(final Patient patient) throws PersistenceException {
-		// TODO Auto-generated method stub
-		
+
+		if (patient == null) {
+			throw new PersistenceArgumentException("Patient darf nicht null sein", null);
+		}
+
+		PreparedStatement p = null;
+		try {
+			
+			p = connection.prepareStatement("SELECT id, version FROM Patient WHERE guid = ?");
+			String guidString = patient.getId().toString();
+			p.setString(1, guidString);
+			
+			ResultSet r = p.executeQuery();
+			
+			int patientId = -1;
+			int version = -1;
+			
+			if (r.next()) {
+				patientId = r.getInt(1);
+				version = r.getInt(2) + 1;
+				p.close();
+			}
+			else {
+				p.close();
+				
+				p = connection.prepareStatement(sqlInsertPatient, Statement.RETURN_GENERATED_KEYS);
+				
+				p.setString(1, guidString);
+				p.setInt(2, 1);
+				
+				p.executeUpdate();
+				
+				ResultSet keySet = p.getGeneratedKeys();
+				if (keySet != null && keySet.next()) {
+					patientId = keySet.getInt(1);
+					version = 1;
+				}
+				else {
+					//log.debug("No keys returned in create");
+					throw new PersistenceAccessException(null);
+				}
+				
+				p.close();
+			}
+			
+			
+			p = connection.prepareStatement(sqlInsertPatientVersion);
+			setPreparedStatement(p, patient, patientId, version);
+			p.executeUpdate();
+			p.close();
+			
+			p = connection.prepareStatement(sqlUpdatePatient);
+			p.setInt(1, version);
+			p.setInt(2, patientId);
+			p.executeUpdate();
+			p.close();
+			
+		} catch (SQLIntegrityConstraintViolationException e) {
+			//log.debug("Integrity violation in create", e);
+			throw new PersistenceIntegrityException(e);
+		} catch (SQLException e) {
+			//log.debug("Error in create", e);
+			throw new PersistenceAccessException(e);
+		}
+		finally {
+			if (p!=null) { 
+				try {
+					p.close();
+				} catch (SQLException e) {
+					//log.debug("Error while closing statement in create", e);
+				}
+			}
+		}
 	}
 
 	@Override
@@ -141,7 +248,7 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 			
 			@Override
 			public String sql() {
-				return selectQueryBase + " WHERE v.Category = ? AND v.Treatment = ?";
+				return sqlSelectQueryLatest + " WHERE v.Category = ? AND v.Treatment = ?";
 			}
 			
 			@Override
@@ -160,7 +267,7 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 			
 			@Override
 			public String sql() {
-				return selectQueryBase;
+				return sqlSelectQueryLatest;
 			}
 			
 			@Override
@@ -199,27 +306,107 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 
 		p.setId(UUID.fromString(r.getString(1)));
 		p.setVersion(r.getInt(2));
-		p.setNameGiven(r.getString(3));
-		p.setNameFamily(r.getString(4));
-		p.setBirthTime(r.getDate(5));
+		p.setNameGiven((String)r.getObject(3));
+		p.setNameFamily((String)r.getObject(4));
+		p.setBirthTime((Date)r.getObject(5));
 		p.setGender(Gender.getValueOf(r.getString(6)));
-		p.setWalkable(r.getBoolean(7));
+		p.setWalkable((Boolean)r.getObject(7));
 		p.setRespiration(Condition.getValueOf(r.getString(8)));
 		p.setPerfusion(Condition.getValueOf(r.getString(9)));
 		p.setMentalStatus(Condition.getValueOf(r.getString(10)));
 		p.setPhaseOfLife(PhaseOfLife.getValueOf(r.getString(11)));
-		p.setPlacePosition(r.getString(12));
-		p.setUrgency(r.getInt(13));
-		p.setBloodPressureSystolic(r.getInt(14));
-		p.setBloodPressureDiastolic(r.getInt(15));
-		p.setPlacePosition(r.getString(16));
-		p.setReadyForTransport(r.getBoolean(17));
-		p.setHospital(r.getString(18));
-		p.setHealthInsurance(r.getString(19));
-		p.setTreatment(Treatment.getValueOf(r.getString(20)));
+		p.setSalvageInfo((String)r.getObject(12));
+		p.setPlacePosition((String)r.getObject(13));
+		p.setUrgency((Integer)r.getObject(14));
+		p.setBloodPressureSystolic((Integer)r.getObject(15));
+		p.setBloodPressureDiastolic((Integer)r.getObject(16));
+		p.setPlacePosition((String)r.getObject(17));
+		p.setReadyForTransport((Boolean)r.getObject(18));
+		p.setHospital((String)r.getObject(19));
+		p.setHealthInsurance((String)r.getObject(20));
+		p.setTreatment(Treatment.getValueOf(r.getString(21)));
+		p.setCategory(TriageCategory.getValueOf(r.getString(22)));
 		
 		return p;
 	}
 	
+	private void statementSetVarchar(PreparedStatement s, int index, String value) throws SQLException {
+		if (value == null) {
+			s.setNull(index, java.sql.Types.VARCHAR);
+		}
+		else {
+			s.setString(index, value);
+		}
+	}
 	
+	private void statementSetLongVarchar(PreparedStatement s, int index, String value) throws SQLException {
+		if (value == null) {
+			s.setNull(index, java.sql.Types.LONGNVARCHAR);
+		}
+		else {
+			s.setString(index, value);
+		}
+	}
+	
+	private void statementSetDate(PreparedStatement s, int index, Date value) throws SQLException {
+		if (value == null) {
+			s.setNull(index, java.sql.Types.DATE);
+		}
+		else {
+			s.setDate(index, new java.sql.Date(value.getTime()));
+		}
+	}
+	
+	private void statementSetEnum(PreparedStatement s, int index, Object value) throws SQLException {
+		if (value == null) {
+			s.setNull(index, java.sql.Types.VARCHAR);
+		}
+		else {
+			s.setString(index, value.toString());
+		}
+	}
+	
+	private void statementSetBoolean(PreparedStatement s, int index, Boolean value) throws SQLException {
+		if (value == null) {
+			s.setNull(index, java.sql.Types.BOOLEAN);
+		}
+		else {
+			s.setBoolean(index, value);
+		}
+	}
+	
+	private void statementSetInt(PreparedStatement s, int index, Integer value) throws SQLException {
+		if (value == null) {
+			s.setNull(index, java.sql.Types.INTEGER);
+		}
+		else {
+			s.setInt(index, value);
+		}
+	}
+	private void setPreparedStatement(PreparedStatement s, Patient p, int patientId, int version) throws SQLException {
+		
+		s.setInt(1, patientId);
+		s.setInt(2, version);
+		statementSetLongVarchar(s, 3, p.getNameGiven());
+		statementSetLongVarchar(s, 4, p.getNameFamily());
+		statementSetDate(s, 5, p.getBirthTime());
+		statementSetEnum(s, 6, p.getGender());
+		statementSetBoolean(s, 7, p.getWalkable());
+		statementSetEnum(s, 8, p.getRespiration());
+		statementSetEnum(s, 9, p.getPerfusion());
+		statementSetEnum(s, 10, p.getMentalStatus());
+		statementSetEnum(s, 11, p.getPhaseOfLife());
+		statementSetLongVarchar(s, 12, p.getSalvageInfoString());
+		statementSetLongVarchar(s, 13, p.getPlacePosition());
+		statementSetInt(s, 14, p.getUrgency());
+		statementSetInt(s, 15, p.getBloodPressureSystolic());
+		statementSetInt(s, 16, p.getBloodPressureDiastolic());
+		statementSetInt(s, 17, p.getPulse());
+		statementSetBoolean(s, 18, p.getReadyForTransport());
+		statementSetLongVarchar(s, 19, p.getHospital());
+		statementSetLongVarchar(s, 20, p.getHealthInsurance());
+		statementSetEnum(s, 21, p.getTreatment());
+		statementSetEnum(s, 22, p.getCategory());
+
+	}
 }

@@ -8,7 +8,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import at.mts.server.Server;
 import at.mts.server.persistence.HsqldbConnection;
+import at.mts.server.service.PatientService;
 
 public class HsqldbConnectionTest {
 
@@ -27,4 +29,11 @@ public class HsqldbConnectionTest {
 		if (connection.isClosed()) { fail("connection is not open"); }
 	}
 
+	@Test
+	public void testServer() throws Exception {
+		Server server = Server.getInstance();
+		if (server == null) { fail("server is null"); }
+		PatientService service = server.getPatientService();
+		if (service == null) { fail("service is null"); }
+	}
 }
