@@ -17,7 +17,13 @@ public class Patient {
 		// TODO: Patienten Properties aus CDA-Dokument auslesen
 		
 		setId(document.getPatientId());
+		setNameGiven(document.getPatientNameGiven());
+		setNameFamily(document.getPatientNameFamily());
+		setBirthTime(document.getPatientBirthTime());
+		setGender(document.getPatientGender());        
 		
+		
+		//sollte so klappen.. noch nicht getestet-> setRespiration(Condition.getValueOf(document.getBody().get("respiration")));
 		// TODO: weitere Properties einlesen, z.B.:
 		// setRespiration(Zustand.getValueOf(document.getBody().get(CdaBody.KEY_RESPIRATION)));
 	}
