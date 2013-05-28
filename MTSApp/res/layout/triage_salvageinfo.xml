@@ -5,14 +5,14 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/TextView1"
+        android:id="@+id/textViewSalvageMain1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/triage_mode"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textViewSalvageMain2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/salvageinfo"

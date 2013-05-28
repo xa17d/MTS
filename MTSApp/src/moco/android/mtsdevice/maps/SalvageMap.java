@@ -3,22 +3,16 @@ package moco.android.mtsdevice.maps;
 import moco.android.mtsdevice.R;
 import moco.android.mtsdevice.handler.DeviceButtons;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
+import android.support.v4.app.FragmentActivity;
 
-public class SalvageMap extends Activity {
+public class SalvageMap extends FragmentActivity {
 
-	static final LatLng HAMBURG = new LatLng(53.558, 9.927);
-	static final LatLng KIEL = new LatLng(53.551, 9.993);
 	private GoogleMap map;
 
 	//TODO Fehlerbehebung
@@ -28,40 +22,30 @@ public class SalvageMap extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.salvage_map);
 		
-		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.salvage_map)).getMap();
-		Marker hamburg = map.addMarker(new MarkerOptions().position(HAMBURG).title("Hamburg"));
-		Marker kiel = map.addMarker(new MarkerOptions()
-				.position(KIEL)
-				.title("Kiel")
-				.snippet("Kiel is cool")
-				.icon(BitmapDescriptorFactory
-						.fromResource(R.drawable.ic_launcher)));
-
-		// Move the camera instantly to hamburg with a zoom of 15.
-		map.moveCamera(CameraUpdateFactory.newLatLngZoom(HAMBURG, 15));
-
-		// Zoom in, animating the camera.
-		map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
-	}
-
-	/*
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.salvage_map, menu);
-		return true;
-	}
-	*/
-	
-	@Override
-	public boolean onMenuOpened(int featureId, Menu menu) {
+		setUpMapIfNeeded();
 		
-		DeviceButtons.getToModeSelection(this);
-		return true;
+		
 	}
+	
+	private void setUpMapIfNeeded() {
+		
+        if (map == null) {
+            map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.salvage_map)).getMap();
+            
+            if (map != null) {
+                setUpMap();
+            }
+        }
+	}
+	
+	private void setUpMap() {
+        map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+    }
+	
 	
 	@Override
 	public void onBackPressed() {
 		
-		DeviceButtons.onBackPressed(this);
+		DeviceButtons.getToModeSelection(this);
 	}
 }

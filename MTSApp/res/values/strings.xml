@@ -23,7 +23,7 @@
     <string name="ok">OK</string>
     <string name="add">Hinzufügen</string>
     <string name="no_info">keine Information</string>
-    <string name="scan_new_tag">neuen Triage-Tag einscannen</string>
+    <string name="scan_new_tag">Triage-Tag einscannen</string>
     <string name="change_mode">Modus ändern</string>
     <string name="area_1">Behandlungsplatz I</string>
     <string name="area_2">Behandlungsplatz II</string>
@@ -42,5 +42,14 @@
     <string name="nothing">Nichts</string>
     <string name="area">Behandlungsplatz</string>
     <string name="mode">Modus</string>
+    <string name="walk_criteria">Ist der Patient gehfähig?</string>
+    <string name="respiration1_criteria">Hat der Patient eine spontane Atmung?</string>
+    <string name="respiration2_criteria">Hat der Patient eine kleinere Atemfrequenz als 30?</string>
+    <string name="perfusion_criteria">Hat der Patient eine Puls und eine Rekap-Zeit von weniger als 2 Sekunden?</string>
+    <string name="mental_criteria">Kann der Patient einfachen Befehlen folgen?</string>
+    <string name="urgent">Dringlichkeit</string>
+    <string name="bloodpressure">Blutdruck</string>
+    <string name="s_o2">O2-Sättigung</string>
+    <string name="pulse">Puls</string>
 
 </resources>

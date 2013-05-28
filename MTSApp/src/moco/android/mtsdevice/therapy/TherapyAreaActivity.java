@@ -6,10 +6,10 @@ import moco.android.mtsdevice.handler.DeviceButtons;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import at.mts.entity.TriageCategory;
 
 public class TherapyAreaActivity extends Activity implements OnClickListener {
 
@@ -20,6 +20,7 @@ public class TherapyAreaActivity extends Activity implements OnClickListener {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.therapy_area);
 		
@@ -45,6 +46,7 @@ public class TherapyAreaActivity extends Activity implements OnClickListener {
 		
 		Intent intent = new Intent(this, TherapyListActivity.class);
 		startActivity(intent);
+		finish();
 	}
 	
 	private void initButtons() {
@@ -54,22 +56,21 @@ public class TherapyAreaActivity extends Activity implements OnClickListener {
 		btnArea3 = (Button)findViewById(R.id.buttonArea3);
 		btnArea4 = (Button)findViewById(R.id.buttonArea4);
 		
+		btnArea1.setTextColor(TriageCategory.immediate.getTriageColor());
+		btnArea2.setTextColor(TriageCategory.delayed.getTriageColor());
+		btnArea3.setTextColor(TriageCategory.minor.getTriageColor());
+		btnArea4.setTextColor(TriageCategory.deceased.getTriageColor());
+		
 		btnArea1.setOnClickListener(this);
 		btnArea2.setOnClickListener(this);
 		btnArea3.setOnClickListener(this);
 		btnArea4.setOnClickListener(this);
 	}
 	
-	@Override
-	public boolean onMenuOpened(int featureId, Menu menu) {
-		
-		DeviceButtons.getToModeSelection(this);
-		return true;
-	}
 	
 	@Override
 	public void onBackPressed() {
 		
-		DeviceButtons.onBackPressed(this);
+		DeviceButtons.getToModeSelection(this);
 	}
 }

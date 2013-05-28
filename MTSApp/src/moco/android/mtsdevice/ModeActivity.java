@@ -41,8 +41,8 @@ public class ModeActivity extends Activity implements OnClickListener {
 		}
 		
 		if(v == btnSalvageMode) {
-			//Mode.setActiveMode(Mode.salvage);
-			//intent = new Intent(this, SalvageMap.class);
+//			Mode.setActiveMode(Mode.salvage);
+//			intent = new Intent(this, SalvageMap.class);
 			new AlertDialog.Builder(this) 
 			    	.setMessage("TODO")
 			    	.setNeutralButton(R.string.ok, null)

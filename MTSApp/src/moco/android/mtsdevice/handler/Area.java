@@ -24,4 +24,18 @@ public enum Area {
 			 return -256;			//YELLOW
 		 return -16711936;			//GREEN
 	 }
+	
+//	public static boolean equalsCategory(TriageCategory category) {
+//		
+//		if(category == TriageCategory.immediate && area == I)
+//			return true;
+//		if(category == TriageCategory.delayed && area == II)
+//			return true;
+//		if(category == TriageCategory.minor && area == III)
+//			return true;
+//		if(category == TriageCategory.deceased && area == IV)
+//			return true;
+//		
+//		return false;
+//	}
 }

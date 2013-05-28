@@ -1,12 +1,12 @@
 package moco.android.mtsdevice.triage;
 
 import moco.android.mtsdevice.R;
+import moco.android.mtsdevice.handler.MTSListAdapter;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -15,7 +15,6 @@ import at.mts.entity.*;
 public class TriageSalvageinfoAdd extends Activity implements OnItemClickListener {
 
 	private ListView infoView;
-	
 	private Patient patient;
 	
 	@Override
@@ -26,7 +25,7 @@ public class TriageSalvageinfoAdd extends Activity implements OnItemClickListene
         
         patient = Patient.getSelectedPatient();
         
-        ListAdapter adapter = new ArrayAdapter<SalvageInfo>(getApplicationContext(), android.R.layout.simple_list_item_1, SalvageInfo.values());
+        ListAdapter adapter = new MTSListAdapter<SalvageInfo>(getApplicationContext(), R.layout.mts_list, SalvageInfo.getAll());
         
         infoView = (ListView)findViewById(R.id.infoView); 
         infoView.setAdapter(adapter);

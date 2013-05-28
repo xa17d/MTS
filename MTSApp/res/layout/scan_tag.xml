@@ -26,7 +26,7 @@
                 android:textAlignment="center" />
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/textViewScan1"
                 android:layout_column="0"
                 android:layout_gravity="center_horizontal|top"
                 android:layout_row="0"

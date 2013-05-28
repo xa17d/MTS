@@ -1,7 +1,5 @@
 package moco.android.mtsdevice.triage;
 
-import java.util.UUID;
-
 import moco.android.mtsdevice.R;
 import moco.android.mtsdevice.handler.DeviceButtons;
 
@@ -11,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -26,6 +23,8 @@ public class TriageActivity extends Activity implements OnClickListener {
 	
 	private Button walkYes;
 	private Button walkNo;
+	private Button respirationYes;
+	private Button respirationNo;
 	private Button respirationStable;
 	private Button respirationCritical;
 	private Button perfusionStable;
@@ -41,7 +40,7 @@ public class TriageActivity extends Activity implements OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
     	
     	//TODO nur zum Testen
-    	patient = new Patient(new UUID(5, 3));
+    	patient = new Patient();
     	Patient.setSelectedPatient(patient);
     	
         super.onCreate(savedInstanceState);
@@ -50,8 +49,16 @@ public class TriageActivity extends Activity implements OnClickListener {
         initButtons();
 
         category = TriageCategory.notSpecified;
-        
-        tagColor.setBackgroundColor(category.getTriageColor());
+        patient.setCategory(category);
+    }
+    
+    @Override
+    public void onResume() {
+    	
+    	super.onResume();
+    	
+    	category = patient.getCategory();
+    	tagColor.setBackgroundColor(category.getTriageColor());
     }
     
 	@Override
@@ -61,6 +68,7 @@ public class TriageActivity extends Activity implements OnClickListener {
 		 * Speichern
 		 */
 		if(v == save) {
+			
 			if(category == TriageCategory.notSpecified) {
 				new AlertDialog.Builder(this) 
 	            	.setMessage(R.string.error_category_missing)
@@ -83,11 +91,20 @@ public class TriageActivity extends Activity implements OnClickListener {
 		 * Eingabe loeschen
 		 */
 		else if (v == restart) {
+			
 			new AlertDialog.Builder(this)
         		.setMessage(R.string.question_restart)
         		.setNegativeButton(R.string.no, null)
         		.setPositiveButton(R.string.yes, new ResetListener(this))
         		.show();
+		}
+		/**
+		 * Farbe manuell aendern
+		 */
+		else if(v == tagColor) {
+			
+			Intent intent = new Intent(this, TriageColorSelection.class);
+            startActivity(intent);
 		}
 	}
 	
@@ -107,141 +124,169 @@ public class TriageActivity extends Activity implements OnClickListener {
 		}
 	}
 	
+	
 	/**
-	 * Gehfaehigkeit
-	 * @author Lucas
+	 * gefaehigkeit?
+	 * @param v View
 	 */
-	private class WalkButtonListener implements OnClickListener {
-
-		@Override
-		public void onClick(View v) {
-			
-			/**
-			 * Patient kann laufen --> MINOR
-			 */
-			if(v == walkYes) {
-				walkYes.setBackgroundColor(Color.GREEN);
-				respirationStable.setBackgroundColor(Color.GREEN);
-				perfusionStable.setBackgroundColor(Color.GREEN);
-				mentalStable.setBackgroundColor(Color.GREEN);
-				category = TriageCategory.minor;
-			}
-			/**
-			 * Patient kann nicht laufen --> Atmung kontrollieren
-			 */
-			else {
-				walkNo.setBackgroundColor(Color.RED);
-				respirationStable.setClickable(true);
-				respirationCritical.setClickable(true);
-			}
-			
-			walkYes.setClickable(false);
-			walkNo.setClickable(false);
-			
-			tagColor.setBackgroundColor(category.getTriageColor());
+	public void walkClick(View v) {
+		
+		/**
+		 * Patient kann laufen --> MINOR
+		 */
+		if(v == walkYes) {
+			walkYes.setBackgroundColor(Color.GREEN);
+			respirationYes.setBackgroundColor(Color.GREEN);
+			respirationStable.setBackgroundColor(Color.GREEN);
+			perfusionStable.setBackgroundColor(Color.GREEN);
+			mentalStable.setBackgroundColor(Color.GREEN);
+			category = TriageCategory.minor;
+			patient.setCategory(category);
 		}
+		/**
+		 * Patient kann nicht laufen --> Atmung kontrollieren
+		 */
+		else {
+			walkNo.setBackgroundColor(Color.RED);
+			respirationYes.setEnabled(true);
+			respirationNo.setEnabled(true);
+		}
+		
+		walkYes.setEnabled(false);
+		walkNo.setEnabled(false);
+		
+		tagColor.setBackgroundColor(category.getTriageColor());
 	}
 	
 	/**
-	 * Spontane Atmung
-	 * @author Lucas
+	 * Spontane Atmung vorhanden?
+	 * @param v View
 	 */
-	private class RespirationButtonListener implements OnClickListener {
-
-		@Override
-		public void onClick(View v) {
-			
-			/**
-			 * KEINE Atmung vorhanden --> DECEASED
-			 */
-			if(v == respirationCritical) {
-				respirationCritical.setBackgroundColor(Color.RED);
-				perfusionCritical.setBackgroundColor(Color.RED);
-				mentalCritical.setBackgroundColor(Color.RED);
-				category = TriageCategory.deceased;
-			}
-			/**
-			 * Atmung vorhanden --> Perfusion kontrollieren
-			 */
-			else {
-				respirationStable.setBackgroundColor(Color.GREEN);
-				perfusionStable.setClickable(true);
-				perfusionCritical.setClickable(true);
-			}
-			
-			respirationStable.setClickable(false);
-			respirationCritical.setClickable(false);
-			
-			tagColor.setBackgroundColor(category.getTriageColor());
+	public void respiration1Click(View v) {
+		
+		/**
+		 * KEINE Atmung vorhanden --> DECEASED
+		 */
+		if(v == respirationNo) {
+			respirationNo.setBackgroundColor(Color.RED);
+			respirationCritical.setBackgroundColor(Color.RED);
+			perfusionCritical.setBackgroundColor(Color.RED);
+			mentalCritical.setBackgroundColor(Color.RED);
+			category = TriageCategory.deceased;
+			patient.setCategory(category);
 		}
+		/**
+		 * Atmung vorhanden --> Atemgeschwindigkeit kontrollieren
+		 */
+		else {
+			respirationYes.setBackgroundColor(Color.GREEN);
+			respirationStable.setEnabled(true);
+			respirationCritical.setEnabled(true);
+		}
+		
+		respirationYes.setEnabled(false);
+		respirationNo.setEnabled(false);
+		
+		tagColor.setBackgroundColor(category.getTriageColor());
 	}
 	
 	/**
-	 * Blutkreislauf
-	 * @author Lucas
+	 * Stabile Atmung vorhanden?
+	 * @param v View
 	 */
-	private class PerfusionButtonListener implements OnClickListener {
-
-		@Override
-		public void onClick(View v) {
-			/**
-			 * KEIN stabiler Blutkreislauf vorhanden
-			 */
-			if(v == perfusionCritical) {
-				perfusionCritical.setBackgroundColor(Color.RED);
-				mentalCritical.setBackgroundColor(Color.RED);
-				category = TriageCategory.immediate;
-			}
-			/**
-			 * stabiler Blutkreislauf vorhanden --> Mentaler Status kontrollieren
-			 */
-			else {
-				perfusionStable.setBackgroundColor(Color.GREEN);
-				mentalStable.setClickable(true);
-				mentalCritical.setClickable(true);
-			}
-			
-			perfusionStable.setClickable(false);
-			perfusionCritical.setClickable(false);
-			
-			tagColor.setBackgroundColor(category.getTriageColor());
+	public void respiration2Click(View v) {
+		
+		/**
+		 * KEINE stabile Atmung vorhanden --> IMMEDIATE
+		 */
+		if(v == respirationCritical) {
+			respirationCritical.setBackgroundColor(Color.RED);
+			perfusionCritical.setBackgroundColor(Color.RED);
+			mentalCritical.setBackgroundColor(Color.RED);
+			category = TriageCategory.immediate;
+			patient.setCategory(category);
 		}
+		/**
+		 * Atmung vorhanden --> Perfusion kontrollieren
+		 */
+		else {
+			respirationStable.setBackgroundColor(Color.GREEN);
+			perfusionStable.setEnabled(true);
+			perfusionCritical.setEnabled(true);
+		}
+		
+		respirationStable.setEnabled(false);
+		respirationCritical.setEnabled(false);
+		
+		tagColor.setBackgroundColor(category.getTriageColor());
 	}
 	
 	/**
-	 * Mentaler Status
-	 * @author Lucas
+	 * Stabiler Blutkreislauf vorhanden?
+	 * @param v
 	 */
-	private class MentalButtonListener implements OnClickListener {
-
-		@Override
-		public void onClick(View v) {
-			/**
-			 * KEIN ausreichendes Reaktionsvermögen
-			 */
-			if(v == mentalCritical) {
-				mentalCritical.setBackgroundColor(Color.RED);
-				category = TriageCategory.immediate;
-			}
-			/**
-			 * ausreichendes Reaktionsvermögen
-			 */
-			else {
-				mentalStable.setBackgroundColor(Color.GREEN);
-				category = TriageCategory.delayed;
-			}
-			
-			mentalStable.setClickable(false);
-			mentalCritical.setClickable(false);
-			
-			tagColor.setBackgroundColor(category.getTriageColor());
+	public void perfusionClick(View v) {
+		
+		/**
+		 * KEIN stabiler Blutkreislauf vorhanden --> IMMEDIATE
+		 */
+		if(v == perfusionCritical) {
+			perfusionCritical.setBackgroundColor(Color.RED);
+			mentalCritical.setBackgroundColor(Color.RED);
+			category = TriageCategory.immediate;
+			patient.setCategory(category);
 		}
+		/**
+		 * stabiler Blutkreislauf vorhanden --> Mentaler Status kontrollieren
+		 */
+		else {
+			perfusionStable.setBackgroundColor(Color.GREEN);
+			mentalStable.setEnabled(true);
+			mentalCritical.setEnabled(true);
+		}
+		
+		perfusionStable.setEnabled(false);
+		perfusionCritical.setEnabled(false);
+		
+		tagColor.setBackgroundColor(category.getTriageColor());
+	}
+	
+	/**
+	 * Ausreichender geistiger Zustand vorhanden?
+	 * @param v
+	 */
+	public void mentalClick(View v) {
+		
+		/**
+		 * KEIN ausreichendes Reaktionsvermögen --> IMMEDIATE
+		 */
+		if(v == mentalCritical) {
+			mentalCritical.setBackgroundColor(Color.RED);
+			category = TriageCategory.immediate;
+			patient.setCategory(category);
+		}
+		/**
+		 * ausreichendes Reaktionsvermögen --> DELAYED
+		 */
+		else {
+			mentalStable.setBackgroundColor(Color.GREEN);
+			category = TriageCategory.delayed;
+			patient.setCategory(category);
+		}
+		
+		mentalStable.setEnabled(false);
+		mentalCritical.setEnabled(false);
+		
+		tagColor.setBackgroundColor(category.getTriageColor());
 	}
 	
 	private void initButtons() {
 		
 		walkYes = (Button)findViewById(R.id.walk_yes);
         walkNo = (Button)findViewById(R.id.walk_no);
+        
+        respirationYes = (Button)findViewById(R.id.respiration_present);
+        respirationNo = (Button)findViewById(R.id.respiration_notpresent);
         
         respirationStable = (Button)findViewById(R.id.respiration_stable);
         respirationCritical = (Button)findViewById(R.id.respiration_critical);
@@ -256,39 +301,64 @@ public class TriageActivity extends Activity implements OnClickListener {
         restart = (Button)findViewById(R.id.restart);
         tagColor = (Button)findViewById(R.id.tag_color);
         
-        respirationStable.setClickable(false);
-        respirationCritical.setClickable(false);
-        perfusionStable.setClickable(false);
-        perfusionCritical.setClickable(false);
-        mentalStable.setClickable(false);
-        mentalCritical.setClickable(false);
-        
-        walkYes.setOnClickListener(new WalkButtonListener());
-        walkNo.setOnClickListener(new WalkButtonListener());
-        
-        respirationStable.setOnClickListener(new RespirationButtonListener());
-        respirationCritical.setOnClickListener(new RespirationButtonListener());
-        
-        perfusionStable.setOnClickListener(new PerfusionButtonListener());
-        perfusionCritical.setOnClickListener(new PerfusionButtonListener());
-        
-        mentalStable.setOnClickListener(new MentalButtonListener());
-        mentalCritical.setOnClickListener(new MentalButtonListener());
+        respirationYes.setEnabled(false);
+        respirationNo.setEnabled(false);
+        respirationStable.setEnabled(false);
+        respirationCritical.setEnabled(false);
+        perfusionStable.setEnabled(false);
+        perfusionCritical.setEnabled(false);
+        mentalStable.setEnabled(false);
+        mentalCritical.setEnabled(false);
         
         save.setOnClickListener(this);
         restart.setOnClickListener(this);
+        tagColor.setOnClickListener(this);
 	}
 	
-	@Override
-	public boolean onMenuOpened(int featureId, Menu menu) {
+	public void showWalkText(View view) {
 		
-		DeviceButtons.getToModeSelection(this);
-		return true;
+		new AlertDialog.Builder(this) 
+    		.setMessage(R.string.walk_criteria)
+    		.setNeutralButton(R.string.ok, null)
+    		.show();
 	}
+	
+	public void showRespiration1Text(View view) {
+		
+		new AlertDialog.Builder(this) 
+    		.setMessage(R.string.respiration1_criteria)
+    		.setNeutralButton(R.string.ok, null)
+    		.show();
+	}
+	
+	public void showRespiration2Text(View view) {
+		
+		new AlertDialog.Builder(this) 
+    		.setMessage(R.string.respiration2_criteria)
+    		.setNeutralButton(R.string.ok, null)
+    		.show();
+	}
+	
+	public void showPerfusionText(View view) {
+		
+		new AlertDialog.Builder(this) 
+    		.setMessage(R.string.perfusion_criteria)
+    		.setNeutralButton(R.string.ok, null)
+    		.show();
+	}
+	
+	public void showMentalText(View view) {
+		
+		new AlertDialog.Builder(this) 
+    		.setMessage(R.string.mental_criteria)
+    		.setNeutralButton(R.string.ok, null)
+    		.show();
+	}
+
 	
 	@Override
 	public void onBackPressed() {
 		
-		DeviceButtons.onBackPressed(this);
+		DeviceButtons.getToModeSelection(this);
 	}
 }

@@ -11,31 +11,34 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/textViewTherapyList1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/therapy_mode"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
-            android:id="@+id/textTherapyListArea"
+            android:id="@+id/textViewTherapyListArea"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/error"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
-            android:id="@+id/textView3"
+        <ListView
+            android:id="@+id/patientView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="** LISTE ALLER PATIENTEN AUF DEM BEHANDLUNGSPLATZ: **" />
-
-        <TextView
-            android:id="@+id/textTherapyListCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/error" />
+            android:layout_height="362dp"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnScanPatient"
+        android:layout_column="0"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_row="0"
+        android:onClick="scanTag"
+        android:text="@string/scan_tag" />
 
 </GridLayout>

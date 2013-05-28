@@ -153,6 +153,9 @@ containing a value of this type.
         public static final int common_signin_btn_text_dark=0x7f04000b;
         public static final int common_signin_btn_text_light=0x7f04000c;
     }
+    public static final class dimen {
+        public static final int textfield_size=0x7f070000;
+    }
     public static final class drawable {
         public static final int common_signin_btn_icon_dark=0x7f020000;
         public static final int common_signin_btn_icon_disabled_dark=0x7f020001;
@@ -181,62 +184,105 @@ containing a value of this type.
         public static final int ic_launcher=0x7f020018;
     }
     public static final class id {
-        public static final int TextView1=0x7f050026;
-        public static final int addButton=0x7f050028;
-        public static final int buttonArea1=0x7f05000e;
-        public static final int buttonArea2=0x7f05000f;
-        public static final int buttonArea3=0x7f050010;
-        public static final int buttonArea4=0x7f050011;
-        public static final int buttonCreatePatient=0x7f05002b;
-        public static final int buttonEditPatient=0x7f05002c;
+        public static final int EditText3=0x7f050020;
+        public static final int EditText4=0x7f050023;
+        public static final int GridLayoutIm=0x7f050016;
+        public static final int MTSView=0x7f050009;
+        public static final int addButton=0x7f05004f;
+        public static final int btnBlack=0x7f050046;
+        public static final int btnGreen=0x7f05004c;
+        public static final int btnRed=0x7f050048;
+        public static final int btnScanPatient=0x7f050034;
+        public static final int btnYellow=0x7f05004a;
+        public static final int buttonArea1=0x7f050011;
+        public static final int buttonArea2=0x7f050012;
+        public static final int buttonArea3=0x7f050013;
+        public static final int buttonArea4=0x7f050014;
+        public static final int buttonCreatePatient=0x7f050053;
+        public static final int buttonEditPatient=0x7f050054;
         public static final int buttonSalvageMode=0x7f050007;
-        public static final int buttonTagScanned=0x7f05000d;
+        public static final int buttonTagScanned=0x7f050010;
         public static final int buttonTherapyMode=0x7f050008;
         public static final int buttonTriageMode=0x7f050006;
+        public static final int editText1=0x7f05001b;
+        public static final int editText2=0x7f05001d;
         public static final int hybrid=0x7f050004;
-        public static final int infoView=0x7f05002a;
-        public static final int mental=0x7f050022;
-        public static final int mental_critical=0x7f050025;
-        public static final int mental_stable=0x7f050024;
+        public static final int immediatePatientName=0x7f050018;
+        public static final int infoView=0x7f050051;
+        public static final int mental_critical=0x7f050044;
+        public static final int mental_stable=0x7f050043;
         public static final int none=0x7f050000;
         public static final int normal=0x7f050001;
-        public static final int perfusion=0x7f05001f;
-        public static final int perfusion_critical=0x7f050021;
-        public static final int perfusion_stable=0x7f050020;
-        public static final int progressBar1=0x7f05000c;
-        public static final int respiration=0x7f05001b;
-        public static final int respiration_critical=0x7f05001d;
-        public static final int respiration_stable=0x7f05001c;
-        public static final int restart=0x7f05000a;
-        public static final int salvageText=0x7f050029;
-        public static final int salvage_map=0x7f050009;
+        public static final int patientView=0x7f050033;
+        public static final int perfusion=0x7f05003f;
+        public static final int perfusion_critical=0x7f050041;
+        public static final int perfusion_stable=0x7f050040;
+        public static final int progressBar1=0x7f05000e;
+        public static final int radio1=0x7f05002b;
+        public static final int radio2=0x7f05002c;
+        public static final int radio3=0x7f05002d;
+        public static final int radio4=0x7f05002e;
+        public static final int radio5=0x7f05002f;
+        public static final int radioGroup1=0x7f05002a;
+        public static final int respiration1=0x7f050039;
+        public static final int respiration2=0x7f05003c;
+        public static final int respiration_critical=0x7f05003e;
+        public static final int respiration_notpresent=0x7f05003b;
+        public static final int respiration_present=0x7f05003a;
+        public static final int respiration_stable=0x7f05003d;
+        public static final int restart=0x7f05000c;
+        public static final int salvageText=0x7f050050;
+        public static final int salvage_map=0x7f05000a;
         public static final int satellite=0x7f050002;
-        public static final int save=0x7f05000b;
-        public static final int tableRow1=0x7f050016;
-        public static final int tableRow2=0x7f05001a;
+        public static final int save=0x7f05000d;
+        public static final int saveTherapyIm=0x7f050030;
+        public static final int tableRow1=0x7f050017;
+        public static final int tableRow100=0x7f050028;
+        public static final int tableRow2=0x7f050019;
         public static final int tableRow3=0x7f05001e;
-        public static final int tag_color=0x7f050015;
+        public static final int tableRow4=0x7f050021;
+        public static final int tableRow5=0x7f050024;
+        public static final int tableRow6=0x7f050025;
+        public static final int tableRow7=0x7f050026;
+        public static final int tableRow8=0x7f050027;
+        public static final int tag_color=0x7f050045;
         public static final int terrain=0x7f050003;
-        public static final int textTherapyListArea=0x7f050012;
-        public static final int textTherapyListCategory=0x7f050014;
-        public static final int textView1=0x7f050005;
-        public static final int textView2=0x7f050027;
-        public static final int textView3=0x7f050013;
-        public static final int textView5=0x7f050023;
-        public static final int walk=0x7f050017;
-        public static final int walk_no=0x7f050019;
-        public static final int walk_yes=0x7f050018;
+        public static final int textViewMode1=0x7f050005;
+        public static final int textViewSalvageMain1=0x7f05004d;
+        public static final int textViewSalvageMain2=0x7f05004e;
+        public static final int textViewSalvageMap1=0x7f05000b;
+        public static final int textViewScan1=0x7f05000f;
+        public static final int textViewTherapyArea1=0x7f050015;
+        public static final int textViewTherapyIm1=0x7f05001a;
+        public static final int textViewTherapyIm100=0x7f050029;
+        public static final int textViewTherapyIm2=0x7f05001c;
+        public static final int textViewTherapyIm3=0x7f05001f;
+        public static final int textViewTherapyIm4=0x7f050022;
+        public static final int textViewTherapyList1=0x7f050031;
+        public static final int textViewTherapyListArea=0x7f050032;
+        public static final int textViewTriageMain1=0x7f050035;
+        public static final int textViewTriageMain2=0x7f050042;
+        public static final int textViewTriageMainColor1=0x7f050047;
+        public static final int textViewTriageMainColor2=0x7f050049;
+        public static final int textViewTriageMainColor3=0x7f05004b;
+        public static final int textViewTriageSelection1=0x7f050052;
+        public static final int walk=0x7f050036;
+        public static final int walk_no=0x7f050038;
+        public static final int walk_yes=0x7f050037;
     }
     public static final class layout {
         public static final int mode_selection=0x7f030000;
-        public static final int salvage_map=0x7f030001;
-        public static final int scan_tag=0x7f030002;
-        public static final int therapy_area=0x7f030003;
-        public static final int therapy_list=0x7f030004;
-        public static final int triage_main=0x7f030005;
-        public static final int triage_salvageinfo=0x7f030006;
-        public static final int triage_salvageinfo_add=0x7f030007;
-        public static final int triage_selection=0x7f030008;
+        public static final int mts_list=0x7f030001;
+        public static final int salvage_map=0x7f030002;
+        public static final int scan_tag=0x7f030003;
+        public static final int therapy_area=0x7f030004;
+        public static final int therapy_immediate=0x7f030005;
+        public static final int therapy_list=0x7f030006;
+        public static final int triage_main=0x7f030007;
+        public static final int triage_main_setcolor=0x7f030008;
+        public static final int triage_salvageinfo=0x7f030009;
+        public static final int triage_salvageinfo_add=0x7f03000a;
+        public static final int triage_selection=0x7f03000b;
     }
     public static final class string {
         public static final int add=0x7f060029;
@@ -255,6 +301,7 @@ containing a value of this type.
         /**   Requested by string saying which app requested the notification. [CHAR LIMIT=42] 
          */
         public static final int auth_client_requested_by_msg=0x7f060011;
+        public static final int bloodpressure=0x7f060044;
         public static final int change=0x7f060023;
         public static final int change_mode=0x7f06002c;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
@@ -331,16 +378,22 @@ containing a value of this type.
         public static final int location_client_ulr_inactive_age_unknown=0x7f060013;
         public static final int location_client_ulr_inactive_unknown_restriction=0x7f060014;
         public static final int mental=0x7f06001c;
+        public static final int mental_criteria=0x7f060042;
         public static final int mode=0x7f06003d;
         public static final int no=0x7f06001e;
         public static final int no_info=0x7f06002a;
         public static final int nothing=0x7f06003b;
         public static final int ok=0x7f060028;
         public static final int perfusion=0x7f06001b;
+        public static final int perfusion_criteria=0x7f060041;
+        public static final int pulse=0x7f060046;
         public static final int question_gotoareaormode=0x7f060039;
         public static final int question_gotomode=0x7f06003a;
         public static final int question_restart=0x7f060026;
         public static final int respiration=0x7f06001a;
+        public static final int respiration1_criteria=0x7f06003f;
+        public static final int respiration2_criteria=0x7f060040;
+        public static final int s_o2=0x7f060045;
         public static final int salvage_mode=0x7f060017;
         public static final int salvageinfo=0x7f060025;
         public static final int salvagelist=0x7f060031;
@@ -353,7 +406,9 @@ containing a value of this type.
         public static final int stable=0x7f06001f;
         public static final int therapy_mode=0x7f060018;
         public static final int triage_mode=0x7f060016;
+        public static final int urgent=0x7f060043;
         public static final int walk=0x7f060019;
+        public static final int walk_criteria=0x7f06003e;
         public static final int yes=0x7f06001d;
     }
     public static final class style {
@@ -380,14 +435,14 @@ containing a value of this type.
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f070000;
+        public static final int AppBaseTheme=0x7f080000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f070001;
-        public static final int ButtonBar=0x7f070003;
-        public static final int ButtonBarButton=0x7f070004;
-        public static final int FullscreenTheme=0x7f070002;
+        public static final int AppTheme=0x7f080001;
+        public static final int ButtonBar=0x7f080003;
+        public static final int ButtonBarButton=0x7f080004;
+        public static final int FullscreenTheme=0x7f080002;
     }
     public static final class styleable {
         /** 
