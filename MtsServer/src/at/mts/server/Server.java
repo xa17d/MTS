@@ -9,6 +9,10 @@ import at.mts.server.persistence.PersistenceException;
 import at.mts.server.service.PatientService;
 import at.mts.server.service.PatientServiceImpl;
 
+/**
+ * Singleton Klasse, die eine Server Instanz bereitstellt, die in der 
+ * ganzen Anwendung verwendet werden kann.
+ */
 public class Server {
 	private Server() throws ServerException {
 		

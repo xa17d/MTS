@@ -18,12 +18,18 @@ import at.mts.entity.PhaseOfLife;
 import at.mts.entity.Treatment;
 import at.mts.entity.TriageCategory;
 
+/**
+ * Implementierung des PatientDao mittels JDBC-Verbindung
+ */
 public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 	
 	public PatientDaoJdbc(Connection connection) {
 		super(connection);
 	}
 
+	/**
+	 * SQL-Query, das alle Patienten Versionen aus der Datenbank ausliest
+	 */
 	private static final String sqlSelectQueryBase = "SELECT"+
 			" p.Guid," +
 			" v.Version," +
@@ -49,8 +55,14 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 			" v.Category "+
 			"FROM Patient p JOIN PatientVersion v on p.id = v.Patient ";
 	
+	/**
+	 * SQL-Query, das alle Patienten in der aktuellsten Version aus der Datenbank ausliest
+	 */
 	private static final String sqlSelectQueryLatest = sqlSelectQueryBase + "AND p.Version=v.Version ";
 
+	/**
+	 * SQL-Statement fuer das einfuegen einer neuen Patientenversion
+	 */
 	private static final String sqlInsertPatientVersion =
 			"INSERT INTO PatientVersion ("+
 			" Patient," +
@@ -283,8 +295,16 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 	public void clear() throws PersistenceException {
 		PreparedStatement p = null;
 		try {
-			p = connection.prepareStatement("DELETE FROM BODYPART; DELETE FROM PATIENTVERSION; DELETE FROM PATIENT;");
-			p.execute();
+			p = connection.prepareStatement("DELETE FROM BODYPART;");
+			p.executeUpdate();
+			p.close();
+			
+			p = connection.prepareStatement("DELETE FROM PATIENTVERSION;");
+			p.executeUpdate();
+			p.close();
+			
+			p = connection.prepareStatement("DELETE FROM PATIENT;");
+			p.executeUpdate();
 			p.close();
 		} catch (SQLException e) {
 			//log.debug("Error in findAll", e);
@@ -328,15 +348,6 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 		p.setCategory(TriageCategory.getValueOf(r.getString(22)));
 		
 		return p;
-	}
-	
-	private void statementSetVarchar(PreparedStatement s, int index, String value) throws SQLException {
-		if (value == null) {
-			s.setNull(index, java.sql.Types.VARCHAR);
-		}
-		else {
-			s.setString(index, value);
-		}
 	}
 	
 	private void statementSetLongVarchar(PreparedStatement s, int index, String value) throws SQLException {

@@ -7,6 +7,9 @@ import at.mts.entity.Patient;
 import at.mts.entity.Treatment;
 import at.mts.entity.TriageCategory;
 
+/**
+ * DAO fuer Patienten
+ */
 public interface PatientDao {
 	public Patient findById(UUID id) throws PersistenceException;
 	public Patient findByIdV(UUID id, int version) throws PersistenceException;

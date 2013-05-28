@@ -21,4 +21,13 @@ public class PatientServiceImpl implements PatientService {
 			throw new ServiceStorageException(e);
 		}
 	}
+
+	@Override
+	public void clear() throws ServiceException {
+		try {
+			patientDao.clear();
+		} catch (PersistenceException e) {
+			throw new ServiceStorageException(e);
+		}
+	}
 }

@@ -1,8 +1,15 @@
 package at.mts.server.rest;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import javax.print.attribute.standard.DateTimeAtCompleted;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
@@ -18,6 +25,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
 
+import com.sun.jersey.core.util.Base64;
+
 import at.mts.entity.Patient;
 import at.mts.server.Server;
 import at.mts.server.service.ServiceException;
@@ -26,19 +35,37 @@ import at.mts.server.service.ServiceException;
 public class RestApi {
 
 	@Context
-	UriInfo uriInfo;
+	HttpServletRequest request;
+	
 	@Context
-	Request request;
+	HttpServletResponse response;
+	
+	private void authentificate() {
+		/*
+		String authHeader = request.getHeader("authorization");
+		if (authHeader != null) {
+			String encodedValue = authHeader.split(" ")[1];
+			String decodedValue = Base64.base64Decode(encodedValue);
+			System.out.println(decodedValue);
+		}
+		else {
+			try {
+				response.sendError(403, "nicht authorisiert!");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		*/
+	}
 
 	@PUT
 	@Path("patients/{id}")
 	@Produces(MediaType.TEXT_XML)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public void putPatient(@PathParam("id") String id,
-			@FormParam("document") String document,
-			@Context HttpServletResponse servletResponse) throws IOException {
-		
-		
+			@FormParam("document") String document) throws IOException {
+		authentificate();
 	    //servletResponse.sendRedirect("../create_todo.html");
 	}
 	
@@ -48,10 +75,9 @@ public class RestApi {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public void postPatient(@PathParam("id") String id,
 			@FormParam("document") String document,
-			@FormParam("timestamp") String timestamp,
-			@Context HttpServletResponse servletResponse) throws IOException {
+			@FormParam("timestamp") String timestamp) throws IOException {
 		
-		
+		authentificate();
 	    //servletResponse.sendRedirect("../create_todo.html");
 	}
 	
@@ -59,24 +85,28 @@ public class RestApi {
 	@Path("patients/{id}")
 	@Produces(MediaType.TEXT_XML)
 	public String getPatient(@PathParam("id") String id,
-			@QueryParam("version") int version) {
+			@QueryParam("version") int version,
+			@Context HttpServletRequest servletRequest) {
 		
-		return "null [id="+id+";v="+version+"]"; 
+		authentificate();
+		return "not implemented yet [id="+id+";v="+version+"]"; 
 	}
 	
 	@GET
 	@Path("patients")
 	@Produces(MediaType.TEXT_XML)
 	public String getPatient(@QueryParam("triagekategorie") String triagekategorie,
-			@QueryParam("behandlung") String behandlung) {
+			@QueryParam("behandlung") String behandlung,
+			@Context HttpServletRequest servletRequest) {
 		
-		return "null [t="+triagekategorie+";b="+behandlung+"]"; 
+		authentificate();
+		return "not implemented yet [t="+triagekategorie+";b="+behandlung+"]"; 
 	}
 	
 	@GET
 	@Path("status")
 	@Produces(MediaType.TEXT_HTML)
-	public String status() {
+	public String status(@Context HttpServletRequest servletRequest) {
 		
 		StringBuilder r = new StringBuilder();
 		r.append("<h1>Status</h1>\n"); 
@@ -100,8 +130,15 @@ public class RestApi {
 	@GET
 	@Path("clear")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String clear() {
+	public String clear(@Context HttpServletRequest servletRequest) {
 		
-		return "clear not implemented yet"; 
+		authentificate();
+		
+		try {
+			Server.getInstance().getPatientService().clear();
+		} catch (ServiceException e) {
+			return e.getMessage();
+		}
+		return "cleared "+new Date().toString(); 
 	}
 } 
