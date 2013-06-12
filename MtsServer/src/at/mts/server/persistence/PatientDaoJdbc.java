@@ -51,9 +51,9 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 			" v.ReadyForTransport," +
 			" v.Hospital," +
 			" v.HealthInsurance," +
-			" v.Treatment, "+
-			" v.Category, "+
-			" v.Timestamp "
+			" v.Treatment, " +
+			" v.Category, " +
+			" v.Timestamp " +
 			"FROM Patient p JOIN PatientVersion v on p.id = v.Patient ";
 	
 	/**
