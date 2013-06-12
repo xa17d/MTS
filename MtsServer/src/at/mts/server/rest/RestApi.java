@@ -1,14 +1,13 @@
 package at.mts.server.rest;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Calendar;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
-import javax.print.attribute.standard.DateTimeAtCompleted;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
@@ -22,13 +21,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Request;
-import javax.ws.rs.core.UriInfo;
-
-import com.sun.jersey.core.util.Base64;
 
 import at.mts.entity.Patient;
+import at.mts.entity.cda.CdaDocument;
 import at.mts.server.Server;
+import at.mts.server.service.PatientService;
 import at.mts.server.service.ServiceException;
 
 @Path("/restApi")
@@ -39,6 +36,8 @@ public class RestApi {
 	
 	@Context
 	HttpServletResponse response;
+	
+	private PatientService patientService = Server.getInstance().getPatientService();
 	
 	private void authentificate() {
 		/*
@@ -59,6 +58,26 @@ public class RestApi {
 		*/
 	}
 
+	private UUID parseId(String id) throws IOException {
+		try {
+			return UUID.fromString(id);
+		} catch (IllegalArgumentException e) {
+			response.sendError(404, "ungueltiges ID Format");
+			
+			return null;
+		}
+	}
+	
+	private Date parseTimestamp(String timestamp) throws IOException {
+		try {
+			return timeFormat.parse(timestamp);
+		} catch (ParseException e) {
+			response.sendError(404, "ungueltiges Timestamp Format");
+			
+			return null;
+		}
+	}
+	
 	@PUT
 	@Path("patients/{id}")
 	@Produces(MediaType.TEXT_XML)
@@ -66,8 +85,15 @@ public class RestApi {
 	public void putPatient(@PathParam("id") String id,
 			@FormParam("document") String document) throws IOException {
 		authentificate();
-	    //servletResponse.sendRedirect("../create_todo.html");
+	    
+		try {
+			patientService.update(new CdaDocument(document), new Date());
+		} catch (ServiceException e) {
+			response.sendError(404, "Service Error: "+e.getMessage());
+		}
 	}
+	
+	final DateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	@POST
 	@Path("patients/{id}")
@@ -78,18 +104,43 @@ public class RestApi {
 			@FormParam("timestamp") String timestamp) throws IOException {
 		
 		authentificate();
-	    //servletResponse.sendRedirect("../create_todo.html");
+	    
+		try {			
+			patientService.update(new CdaDocument(document), parseTimestamp(timestamp));
+		} catch (ServiceException e) {
+			response.sendError(404, "Service Error: "+e.getMessage());
+		}
 	}
 	
 	@GET
 	@Path("patients/{id}")
 	@Produces(MediaType.TEXT_XML)
 	public String getPatient(@PathParam("id") String id,
-			@QueryParam("version") int version,
-			@Context HttpServletRequest servletRequest) {
+			@QueryParam("version") Integer version,
+			@Context HttpServletRequest servletRequest) throws IOException {
 		
 		authentificate();
-		return "not implemented yet [id="+id+";v="+version+"]"; 
+		
+		Patient p = null;
+		
+		try {
+			if (version == null) {
+				p = patientService.findById(parseId(id));
+			} else {
+				p = patientService.findByIdV(parseId(id), version);
+			}
+
+		} catch (ServiceException e) {
+			response.sendError(404, "Service Error: "+e.getMessage());
+		}
+		
+		if (p == null) {
+			response.sendError(404, "Patient nicht gefunden");
+			return "";
+		}
+		else {
+			return "<notimplemented />";
+		}
 	}
 	
 	@GET
@@ -135,7 +186,7 @@ public class RestApi {
 		authentificate();
 		
 		try {
-			Server.getInstance().getPatientService().clear();
+			patientService.clear();
 		} catch (ServiceException e) {
 			return e.getMessage();
 		}

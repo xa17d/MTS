@@ -180,6 +180,29 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 	}
 	
 	@Override
+	public Patient findByTimestamp(final UUID id, final Date timestamp) throws PersistenceException {
+		List<Patient> l = queryPatients(new StatementPreparation() {
+			
+			@Override
+			public String sql() {
+				return sqlSelectQueryBase + " WHERE p.Guid = ? AND v.timetamp >= ? ORDER BY v.timestamp ASC LIMIT 1";
+			}
+			
+			@Override
+			public void setParameters(PreparedStatement p) throws SQLException {
+				p.setString(1, id.toString());
+				statementSetDate(p, 2, timestamp);
+			}
+		});
+		
+		if (l.isEmpty()) {
+			return null;
+		} else {
+			return l.get(0);
+		}
+	}
+	
+	@Override
 	public void update(final Patient patient) throws PersistenceException {
 
 		if (patient == null) {
@@ -237,6 +260,8 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 			p.setInt(2, patientId);
 			p.executeUpdate();
 			p.close();
+			
+			patient.setVersion(version);
 			
 		} catch (SQLIntegrityConstraintViolationException e) {
 			//log.debug("Integrity violation in create", e);
