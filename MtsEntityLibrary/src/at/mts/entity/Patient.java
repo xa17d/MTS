@@ -84,6 +84,10 @@ public class Patient {
 	public int getVersion() { return version; }
 	public void setVersion(int value) { this.version = value; }
 	
+	public Date timesamp;
+	public Date getTimestamp() { return timesamp; }
+	public void setTimestamp(Date value) { this.timesamp = value; }
+	
 	private String nameGiven;
 	public String getNameGiven() { return nameGiven; }
 	public void setNameGiven(String value) { this.nameGiven = value; }
