@@ -30,4 +30,12 @@ public class PatientServiceImpl implements PatientService {
 			throw new ServiceStorageException(e);
 		}
 	}
+	
+	public void save(Patient patient) throws ServiceException {
+		try {
+			Patient latest = patientDao.findById(patient.getId());
+		} catch (PersistenceException e) {
+			throw new ServiceStorageException(e);
+		}
+	}
 }

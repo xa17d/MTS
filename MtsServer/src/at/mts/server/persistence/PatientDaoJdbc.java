@@ -52,7 +52,8 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 			" v.Hospital," +
 			" v.HealthInsurance," +
 			" v.Treatment, "+
-			" v.Category "+
+			" v.Category, "+
+			" v.Timestamp "
 			"FROM Patient p JOIN PatientVersion v on p.id = v.Patient ";
 	
 	/**
@@ -87,7 +88,8 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 			" HealthInsurance," +
 			" Treatment,"+
 			" Category"+
-			") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			" Timestamp"+
+			") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	
 	private static final String sqlInsertPatient = "INSERT INTO Patient (guid, version) VALUES (?, ?)";
 	
@@ -346,6 +348,7 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 		p.setHealthInsurance((String)r.getObject(20));
 		p.setTreatment(Treatment.getValueOf(r.getString(21)));
 		p.setCategory(TriageCategory.getValueOf(r.getString(22)));
+		p.setTimestamp((Date)r.getObject(23));
 		
 		return p;
 	}
@@ -418,6 +421,6 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 		statementSetLongVarchar(s, 20, p.getHealthInsurance());
 		statementSetEnum(s, 21, p.getTreatment());
 		statementSetEnum(s, 22, p.getCategory());
-
+		statementSetDate(s, 23, p.getTimestamp());
 	}
 }
