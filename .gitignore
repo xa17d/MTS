@@ -3,3 +3,4 @@
 db/*
 .classpath
 */bin/*
+.DS_Store

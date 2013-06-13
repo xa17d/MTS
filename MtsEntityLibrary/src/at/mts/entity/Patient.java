@@ -120,9 +120,17 @@ public class Patient {
 	public Condition getMentalStatus() { return mentalStatus; }
 	public void setMentalStatus(Condition value) { this.mentalStatus = value; }
 
+	private Treatment treatMent;
+	public Treatment getTreatMent() { return treatMent; }
+	public void setTreatMent(Treatment value) { this.treatMent = value; }
+	
 	private PhaseOfLife phaseOfLife;
 	public PhaseOfLife getPhaseOfLife() { return phaseOfLife; }
 	public void setPhaseOfLife(PhaseOfLife value) { this.phaseOfLife = value; }
+	
+	private String gps;
+	public String getGps() { return gps; }
+	public void setGps(String value) { this.gps = value; }
 
 	private String placePosition;
 	public String getPlacePosition() { return placePosition; }
@@ -131,6 +139,10 @@ public class Patient {
 	private Integer urgency;
 	public Integer getUrgency() { return urgency; }
 	public void setUrgency(Integer value) { this.urgency = value; }
+
+	private String diagnosis;
+	public String getDiagnosis() { return diagnosis; }
+	public void setDiagnosis(String value) { this.diagnosis = value; }
 
 	private Integer bloodPressureSystolic;
 	public Integer getBloodPressureSystolic() { return bloodPressureSystolic; }
@@ -143,6 +155,10 @@ public class Patient {
 	private Integer pulse;
 	public Integer getPulse() { return pulse; }
 	public void setPulse(Integer value) { this.pulse = value; }
+	
+	private String courseOfTreatment;
+	public String getCourseOfTreatment() { return courseOfTreatment; }
+	public void setCourseOfTreatment(String value) { this.courseOfTreatment = value; }
 
 	private Boolean readyForTransport;
 	public Boolean getReadyForTransport() { return readyForTransport; }
