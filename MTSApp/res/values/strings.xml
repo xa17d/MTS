@@ -51,5 +51,14 @@
     <string name="bloodpressure">Blutdruck</string>
     <string name="s_o2">O2-Sättigung</string>
     <string name="pulse">Puls</string>
+    <string name="activate_gps">Damit die Patienten-Ortung genau ist, muss GPS aktiviert sein\nGPS jetzt aktivieren?</string>
+    <string name="i">i</string>
+    <string name="error_gps">Es gabe einen Fehler beim Speichern der GPS-Koordinaten</string>
+    <string name="vital_parameter">Vitalwerte</string>
+    <string name="diagnosis">Diagnose</string>
+    <string name="personal_data">Stammdaten</string>
+    <string name="therapy">Behandlung</string>
+    <string name="record_death">Tod feststellen</string>
+    <string name="reason_death">Todesursache</string>
 
 </resources>

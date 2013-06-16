@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import at.mts.entity.Patient;
 
 public class MTSListAdapter<T> extends ArrayAdapter<T> {
 	
@@ -28,7 +29,7 @@ public class MTSListAdapter<T> extends ArrayAdapter<T> {
 	
 	@Override
     public View getView(int position, View v, ViewGroup parent) {
-        View view = v ;
+        View view = v;
         if(view == null){
             LayoutInflater vi = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = vi.inflate(textViewResourceId, null);
@@ -38,8 +39,14 @@ public class MTSListAdapter<T> extends ArrayAdapter<T> {
 
         if(items.get(position) != null) {
             text.setTextColor(Color.BLACK);
-            text.setText(items.get(position).toString());
-            text.setBackgroundColor(66000000); 
+            text.setBackgroundColor(00000000);
+            
+            if(Mode.getActiveMode() == Mode.therapy)
+            	text.setText(((Patient)items.get(position)).toTherapyOverviewString());
+            else if(Mode.getActiveMode() == Mode.salvage)
+            	text.setText(((Patient)items.get(position)).toSalvageOverviewString());
+            else
+                text.setText(items.get(position).toString());
         }
 
         return view;

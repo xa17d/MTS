@@ -30,6 +30,7 @@
                 android:layout_column="0"
                 android:layout_gravity="center_horizontal|top"
                 android:layout_row="0"
+                android:onClick="triageModeSelected"
                 android:text="@string/triage_mode" />
 
             <Button
@@ -38,6 +39,7 @@
                 android:layout_column="0"
                 android:layout_gravity="center"
                 android:layout_row="0"
+                android:onClick="salvageModeSelected"
                 android:text="@string/salvage_mode" />
 
             <Button
@@ -46,6 +48,7 @@
                 android:layout_column="0"
                 android:layout_gravity="center_horizontal|bottom"
                 android:layout_row="0"
+                android:onClick="therapyModeSelected"
                 android:text="@string/therapy_mode" />
 
         </GridLayout>

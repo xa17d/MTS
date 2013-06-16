@@ -1,6 +1,7 @@
 package moco.android.mtsdevice.triage;
 
 import moco.android.mtsdevice.R;
+import moco.android.mtsdevice.handler.SelectedPatient;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,7 +24,7 @@ public class TriageColorSelection extends Activity {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.triage_main_setcolor);
         
-        patient = Patient.getSelectedPatient();
+        patient = SelectedPatient.getPatient();
 		
 		black = (Button)findViewById(R.id.btnBlack);
         red = (Button)findViewById(R.id.btnRed);
