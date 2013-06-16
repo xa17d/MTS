@@ -20,6 +20,16 @@ public enum Treatment {
 		if (value.toLowerCase().equals("transported")) {
 			return Treatment.transported;
 		}
+		
+		if (value.toLowerCase().equals("gesichtet")) {
+			return Treatment.sighted;
+		}
+		if (value.toLowerCase().equals("geborgen")) {
+			return Treatment.salvaged;
+		}
+		if (value.toLowerCase().equals("abtransportiert")) {
+			return Treatment.transported;
+		}
 
 		return Treatment.notSpecified;
 	}

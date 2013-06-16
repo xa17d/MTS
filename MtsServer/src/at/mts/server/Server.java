@@ -1,6 +1,7 @@
 package at.mts.server;
 
 import java.sql.Connection;
+import java.util.UUID;
 
 import at.mts.server.persistence.HsqldbConnection;
 import at.mts.server.persistence.PatientDao;
@@ -30,6 +31,14 @@ public class Server {
 	private PatientService patientService;
 	public PatientService getPatientService() {
 		return patientService;
+	}
+	
+	public String getUrlBase() {
+		return "http://88.116.105.228:30104/MtsServer/restApi/";
+	}
+	
+	public String getUrlPatient(UUID patientId) {
+		return getUrlBase() + "patients/"+patientId.toString();
 	}
 	
 	

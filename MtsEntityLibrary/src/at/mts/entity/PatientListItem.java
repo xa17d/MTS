@@ -14,14 +14,14 @@ public class PatientListItem {
 	/**
 	 * Erzeugt ein PatientListItem anhand eines Patienten
 	 * @param patient Patient
-	 * @param urlBase URL Basis an die noch die Patient-ID angehaengt wird
+	 * @param url URL des Patienten
 	 */
-	public PatientListItem(Patient patient, String urlBase) {
+	public PatientListItem(Patient patient, String url) {
 		setNameFamily(patient.getNameFamily());
 		setNameGiven(patient.getNameGiven());
 		setCategory(patient.getCategory());
 		setTreatment(patient.getTreatment());
-		setUrl(urlBase + patient.getId().toString());
+		setUrl(url);
 	}
 	
 	private TriageCategory category;

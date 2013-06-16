@@ -289,19 +289,40 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 
 	@Override
 	public List<Patient> findBy(final TriageCategory category, final Treatment treatment) throws PersistenceException {
-		List<Patient> l = queryPatients(new StatementPreparation() {
-			
-			@Override
-			public String sql() {
-				return sqlSelectQueryLatest + " WHERE v.Category = ? AND v.Treatment = ?";
-			}
-			
-			@Override
-			public void setParameters(PreparedStatement p) throws SQLException {
-				p.setString(1, category.toString());
-				p.setString(2, treatment.toString());
-			}
-		});
+		
+		List<Patient> l;
+		
+		if ((category != TriageCategory.notSpecified)&&(treatment != Treatment.notSpecified)) {
+			l = queryPatients(new StatementPreparation() {
+				@Override public String sql() { return sqlSelectQueryLatest + " WHERE v.Category = ? AND v.Treatment = ?"; }
+				@Override public void setParameters(PreparedStatement p) throws SQLException {
+					p.setString(1, category.toString());
+					p.setString(2, treatment.toString());
+				}
+			});
+		}
+		else if ((category == TriageCategory.notSpecified)&&(treatment != Treatment.notSpecified)) {
+			l = queryPatients(new StatementPreparation() {
+				@Override public String sql() { return sqlSelectQueryLatest + " WHERE v.Treatment = ?"; }
+				@Override public void setParameters(PreparedStatement p) throws SQLException {
+					p.setString(1, treatment.toString());
+				}
+			});
+		}
+		else if ((category != TriageCategory.notSpecified)&&(treatment == Treatment.notSpecified)) {
+			l = queryPatients(new StatementPreparation() {
+				@Override public String sql() { return sqlSelectQueryLatest + " WHERE v.Category = ?"; }
+				@Override public void setParameters(PreparedStatement p) throws SQLException {
+					p.setString(1, category.toString());
+				}
+			});
+		}
+		else {
+			l = queryPatients(new StatementPreparation() {
+				@Override public String sql() { return sqlSelectQueryLatest; }
+				@Override public void setParameters(PreparedStatement p) throws SQLException { }
+			});
+		}
 		
 		return l;
 	}
@@ -373,7 +394,7 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 		p.setUrgency((Integer)r.getObject(14));
 		p.setBloodPressureSystolic((Integer)r.getObject(15));
 		p.setBloodPressureDiastolic((Integer)r.getObject(16));
-		p.setPlacePosition((String)r.getObject(17));
+		p.setPulse((Integer)r.getObject(17));
 		p.setReadyForTransport((Boolean)r.getObject(18));
 		p.setHospital((String)r.getObject(19));
 		p.setHealthInsurance((String)r.getObject(20));

@@ -23,6 +23,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import at.mts.entity.Patient;
+import at.mts.entity.PatientList;
+import at.mts.entity.PatientListItem;
 import at.mts.entity.Treatment;
 import at.mts.entity.TriageCategory;
 import at.mts.entity.cda.CdaDocument;
@@ -39,6 +41,7 @@ public class RestApi {
 	@Context
 	HttpServletResponse response;
 	
+	private Server server = Server.getInstance();
 	private PatientService patientService = Server.getInstance().getPatientService();
 	
 	private void authentificate() {
@@ -150,14 +153,29 @@ public class RestApi {
 	@Produces(MediaType.TEXT_XML)
 	public String getPatient(@QueryParam("triagekategorie") String triagekategorie,
 			@QueryParam("behandlung") String behandlung,
-			@Context HttpServletRequest servletRequest) {
+			@Context HttpServletRequest servletRequest) throws IOException {
 		
 		authentificate();
 		
-		TriageCategory category = TriageCategory.getValueOf(triagekategorie);
-		Treatment treatment = Treatment.getValueOf(behandlung);
-	
-		return "";
+		try {
+			TriageCategory category = TriageCategory.getValueOf(triagekategorie);
+			Treatment treatment = Treatment.getValueOf(behandlung);
+		
+			List<Patient> list;
+
+			list = patientService.findBy(category, treatment);
+			
+			PatientList patientList = new PatientList();
+			for (Patient patient : list) {
+				patientList.add(new PatientListItem(patient, server.getUrlPatient(patient.getId())));
+			}
+			
+			return patientList.asXml();
+			
+		} catch (ServiceException e) {
+			response.sendError(404, e.getMessage());
+			return "";
+		}
 	}
 	
 	@GET
