@@ -3,12 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:columnCount="1" >
-
+    
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-		android:id="@+id/salvage_map"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		class="com.google.android.gms.maps.SupportMapFragment"/>
+          android:id="@+id/salvage_map_map"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:name="com.google.android.gms.maps.MapFragment"/>
 
     <TextView
         android:id="@+id/textViewSalvageMap1"

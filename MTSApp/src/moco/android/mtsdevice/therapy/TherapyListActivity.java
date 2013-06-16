@@ -136,6 +136,7 @@ public class TherapyListActivity extends Activity {
 		
 		Intent intent = new Intent(this, ScanTagActivity.class);
         startActivity(intent);
+        finish();
 	}
 	
 	@Override

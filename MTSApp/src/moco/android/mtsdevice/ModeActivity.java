@@ -7,17 +7,14 @@ import moco.android.mtsdevice.therapy.TherapyAreaActivity;
 import moco.android.mtsdevice.triage.TriageSelectionActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 
-public class ModeActivity extends Activity implements OnClickListener {
-
-	private Button btnTriageMode;
-	private Button btnSalvageMode;
-	private Button btnTherapyMode;
+public class ModeActivity extends Activity {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -27,46 +24,48 @@ public class ModeActivity extends Activity implements OnClickListener {
 		
 		Mode.setActiveMode(Mode.undef);
 		
-		initButtons();
-	}
-	
-	@Override
-	public void onClick(View v) {
-
-		Intent intent = null;
-		
-		if(v == btnTriageMode) {
-			Mode.setActiveMode(Mode.triage);
-			intent = new Intent(this, TriageSelectionActivity.class);
-		}
-		
-		if(v == btnSalvageMode) {
-//			Mode.setActiveMode(Mode.salvage);
-//			intent = new Intent(this, SalvageMap.class);
+		if(!checkGps()) {
+			
 			new AlertDialog.Builder(this) 
-			    	.setMessage("TODO")
-			    	.setNeutralButton(R.string.ok, null)
+					.setMessage(R.string.activate_gps)
+			    	.setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+
+							Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+							startActivity(intent);
+						}
+					})
 			    	.show();
 		}
-		
-		if(v == btnTherapyMode) {
-			Mode.setActiveMode(Mode.therapy);
-			intent = new Intent(this, TherapyAreaActivity.class);
-		}
-		
-		if(intent != null)
-			startActivity(intent);
 	}
 	
-	private void initButtons() {
+	public void triageModeSelected(View v) {
 		
-		btnTriageMode = (Button)findViewById(R.id.buttonTriageMode);
-		btnSalvageMode = (Button)findViewById(R.id.buttonSalvageMode);
-		btnTherapyMode = (Button)findViewById(R.id.buttonTherapyMode);
+		Mode.setActiveMode(Mode.triage);
+		Intent intent = new Intent(this, TriageSelectionActivity.class);
+		startActivity(intent);
+	}
+	
+	public void salvageModeSelected(View v) {
 		
-		btnTriageMode.setOnClickListener(this);
-		btnSalvageMode.setOnClickListener(this);
-		btnTherapyMode.setOnClickListener(this);
+		Mode.setActiveMode(Mode.salvage);
+		Intent intent = new Intent(this, SalvageMap.class);
+		startActivity(intent);
+	}
+	
+	public void therapyModeSelected(View v) {
+		
+		Mode.setActiveMode(Mode.therapy);
+		Intent intent = new Intent(this, TherapyAreaActivity.class);
+		startActivity(intent);
+	}
+	
+	private boolean checkGps() {
+		
+		LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+		return service.isProviderEnabled(LocationManager.GPS_PROVIDER);
 	}
 	
 	@Override

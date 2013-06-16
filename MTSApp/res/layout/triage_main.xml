@@ -24,12 +24,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 
+            <FrameLayout
+                android:layout_width="45dp"
+                android:layout_height="45dp" >
+           
+	            <ImageButton
+	                android:id="@+id/walkInfoButton"
+	                android:layout_width="45dp"
+	                android:layout_height="45dp"
+	                android:onClick="showWalkText"
+	                android:src="@drawable/info_icon" />
+            
+             </FrameLayout>
+
             <TextView
                 android:id="@+id/walk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:onClick="showWalkText"
                 android:text="@string/walk"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -54,12 +65,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 
+            <FrameLayout
+                android:layout_width="45dp"
+                android:layout_height="45dp" >
+           
+	            <ImageButton
+	                android:id="@+id/respiration1InfoButton"
+	                android:layout_width="45dp"
+	                android:layout_height="45dp"
+	                android:onClick="showRespiration1Text"
+	                android:src="@drawable/info_icon" />
+            
+             </FrameLayout>
+
             <TextView
                 android:id="@+id/respiration1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:onClick="showRespiration1Text"
                 android:text="@string/respiration"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -83,14 +105,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 
+            <FrameLayout
+                android:layout_width="45dp"
+                android:layout_height="45dp" >
+           
+	            <ImageButton
+	                android:id="@+id/respiration2InfoButton"
+	                android:layout_width="45dp"
+	                android:layout_height="45dp"
+	                android:onClick="showRespiration2Text"
+	                android:src="@drawable/info_icon" />
+            
+             </FrameLayout>
+
             <TextView
                 android:id="@+id/respiration2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:onClick="showRespiration2Text"
-                android:text="@string/respiration"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/respiration" />
 
             <Button
                 android:id="@+id/respiration_stable"
@@ -112,12 +145,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 
+            <FrameLayout
+                android:layout_width="45dp"
+                android:layout_height="45dp" >
+           
+	            <ImageButton
+	                android:id="@+id/perfusionInfoButton"
+	                android:layout_width="45dp"
+	                android:layout_height="45dp"
+	                android:onClick="showPerfusionText"
+	                android:src="@drawable/info_icon" />
+            
+             </FrameLayout>
+
             <TextView
                 android:id="@+id/perfusion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:onClick="showPerfusionText"
                 android:text="@string/perfusion"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -141,12 +185,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 
+            <FrameLayout
+                android:layout_width="45dp"
+                android:layout_height="45dp" >
+           
+	            <ImageButton
+	                android:id="@+id/mentalInfoButton"
+	                android:layout_width="45dp"
+	                android:layout_height="45dp"
+	                android:onClick="showMentalText"
+	                android:src="@drawable/info_icon" />
+            
+             </FrameLayout>
+
             <TextView
-                android:id="@+id/textViewTriageMain2"
+                android:id="@+id/mental"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:onClick="showMentalText"
                 android:text="@string/mental"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -176,6 +231,7 @@
         <Button
             android:id="@+id/restart"
             android:layout_gravity="left"
+            android:onClick="menuClick"
             android:text="@string/change" />
 
         <Button
@@ -183,6 +239,7 @@
             android:layout_column="0"
             android:layout_gravity="right|top"
             android:layout_row="0"
+            android:onClick="menuClick"
             android:text="@string/save" />
 
         <Button
@@ -190,6 +247,7 @@
             android:layout_column="0"
             android:layout_gravity="center_horizontal|top"
             android:layout_row="0"
+            android:onClick="menuClick"
             android:background="@color/black_overlay"
             android:text="" />
     </GridLayout>

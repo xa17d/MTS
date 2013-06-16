@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:columnCount="1" >
-	
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
     <TextView
-        android:id="@+id/textViewTherapyArea1"
+        android:id="@+id/textViewTherapy2"
         android:layout_column="0"
         android:layout_gravity="left|top"
         android:layout_row="0"
@@ -25,42 +24,39 @@
             android:orientation="vertical" >
 
             <Button
-                android:id="@+id/buttonArea1"
+                android:id="@+id/buttonPersonalData"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="55dp"
-                android:text="@string/area_1"
-                android:onClick="areaSelected"
-                android:textColor="@android:color/holo_red_light" />
+                android:text="@string/personal_data"
+                android:onClick="gotoPersonalData" />
 
             <Button
-                android:id="@+id/buttonArea2"
+                android:id="@+id/buttonVitalParameter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="55dp"
-                android:text="@string/area_2"
-                android:onClick="areaSelected"
-                android:textColor="@android:color/holo_orange_light" />
+                android:text="@string/vital_parameter"
+                android:onClick="gotoVitalParameter" />
 
             <Button
-                android:id="@+id/buttonArea3"
+                android:id="@+id/buttonDiagnosis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="55dp"
-                android:text="@string/area_3"
-                android:onClick="areaSelected"
-                android:textColor="@android:color/holo_green_dark" />
-
+                android:text="@string/diagnosis"
+                android:onClick="gotoDiagnosis" />
+            
             <Button
-                android:id="@+id/buttonArea4"
+                android:id="@+id/buttonTherapy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="55dp"
-                android:text="@string/area_4"
-                android:onClick="areaSelected" />
+                android:text="@string/therapy"
+                android:onClick="gotoTherapy" />
 
         </LinearLayout>
         
     </FrameLayout>
-    
+
 </GridLayout>

@@ -2,6 +2,7 @@ package moco.android.mtsdevice.triage;
 
 import moco.android.mtsdevice.R;
 import moco.android.mtsdevice.handler.MTSListAdapter;
+import moco.android.mtsdevice.handler.SelectedPatient;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,7 +24,7 @@ public class TriageSalvageinfoAdd extends Activity implements OnItemClickListene
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.triage_salvageinfo_add);
         
-        patient = Patient.getSelectedPatient();
+        patient = SelectedPatient.getPatient();
         
         ListAdapter adapter = new MTSListAdapter<SalvageInfo>(getApplicationContext(), R.layout.mts_list, SalvageInfo.getAll());
         

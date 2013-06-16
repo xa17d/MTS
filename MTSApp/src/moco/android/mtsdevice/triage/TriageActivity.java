@@ -1,6 +1,7 @@
 package moco.android.mtsdevice.triage;
 
 import moco.android.mtsdevice.R;
+import moco.android.mtsdevice.ScanTagActivity;
 import moco.android.mtsdevice.handler.DeviceButtons;
 
 import android.app.Activity;
@@ -10,13 +11,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import at.mts.entity.*;
 
 
-public class TriageActivity extends Activity implements OnClickListener {
+public class TriageActivity extends Activity {
 	
 	private TriageCategory category;
 	private Patient patient;
@@ -61,8 +61,11 @@ public class TriageActivity extends Activity implements OnClickListener {
     	tagColor.setBackgroundColor(category.getTriageColor());
     }
     
-	@Override
-	public void onClick(View v) {
+    /**
+     * Menue-Knoepfe
+     * @param v
+     */
+	public void menuClick(View v) {
 
 		/**
 		 * Speichern
@@ -75,15 +78,18 @@ public class TriageActivity extends Activity implements OnClickListener {
 	            	.setNeutralButton(R.string.ok, null)
 	            	.show();
 			}
+			else if(category == TriageCategory.minor) {
+				patient.setCategory(category);
+				
+				Intent intent = new Intent(this, ScanTagActivity.class);
+				startActivity(intent);
+                finish();
+			}
 			else {
 				patient.setCategory(category);
 				
-				/**
-				 * naechste Seite
-				 */
 				Intent intent = new Intent(this, TriageSalvageinfoActivity.class);
                 startActivity(intent);
-                
                 finish();
 			}
 		}
@@ -95,7 +101,14 @@ public class TriageActivity extends Activity implements OnClickListener {
 			new AlertDialog.Builder(this)
         		.setMessage(R.string.question_restart)
         		.setNegativeButton(R.string.no, null)
-        		.setPositiveButton(R.string.yes, new ResetListener(this))
+        		.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						
+						recreate();
+					}
+				})
         		.show();
 		}
 		/**
@@ -105,22 +118,6 @@ public class TriageActivity extends Activity implements OnClickListener {
 			
 			Intent intent = new Intent(this, TriageColorSelection.class);
             startActivity(intent);
-		}
-	}
-	
-	private class ResetListener implements android.content.DialogInterface.OnClickListener {
-
-		TriageActivity activity;
-		
-		public ResetListener(TriageActivity activity) {
-			
-			this.activity = activity;
-		}
-		
-		@Override
-		public void onClick(DialogInterface arg0, int arg1) {
-			
-			activity.recreate();
 		}
 	}
 	
@@ -309,10 +306,6 @@ public class TriageActivity extends Activity implements OnClickListener {
         perfusionCritical.setEnabled(false);
         mentalStable.setEnabled(false);
         mentalCritical.setEnabled(false);
-        
-        save.setOnClickListener(this);
-        restart.setOnClickListener(this);
-        tagColor.setOnClickListener(this);
 	}
 	
 	public void showWalkText(View view) {
