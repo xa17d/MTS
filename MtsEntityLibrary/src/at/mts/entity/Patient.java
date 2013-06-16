@@ -9,10 +9,6 @@ import at.mts.entity.cda.CdaDocument;
 
 public class Patient {
 	
-	private UUID id;
-	private TriageCategory category;
-	private ArrayList<SalvageInfo> salvageinfo = new ArrayList<SalvageInfo>();
-	
 	public Patient(CdaDocument document) {
 		// TODO: Patienten Properties aus CDA-Dokument auslesen
 		
@@ -35,14 +31,17 @@ public class Patient {
 	
 	public Patient() {}
 	
-	/**
-	 * Setter
-	 */
+	private UUID id;
 	public void setId(UUID value) { this.id = value; }
+	public UUID getId() { return id; }
+	
+	private TriageCategory category;
 	public void setCategory(TriageCategory category) { this.category = category; }
+	public TriageCategory getCategory() { return category; }
 	
+	private ArrayList<SalvageInfo> salvageinfo = new ArrayList<SalvageInfo>();
 	public void addSalvageInfo(SalvageInfo info) { this.salvageinfo.add(info); }
-	
+	public ArrayList<SalvageInfo> getSalvageInfo() { return salvageinfo; }
 	public void setSalvageInfo(String salvageInfoString) {
 		getSalvageInfo().clear();
 		
@@ -56,14 +55,6 @@ public class Patient {
 			}
 		}
 	}
-	
-	/**
-	 * Getter
-	 */
-	public UUID getId() { return id; }
-	public ArrayList<SalvageInfo> getSalvageInfo() { return salvageinfo; }
-	public TriageCategory getCategory() { return category; }
-	
 	public String getSalvageInfoString() {
 		
 		String s = "";
@@ -75,10 +66,6 @@ public class Patient {
 		
 		return s;
 	}
-	
-	/**
-	 * Eigenschaften
-	 */
 	
 	private int version;
 	public int getVersion() { return version; }
@@ -120,10 +107,6 @@ public class Patient {
 	public Condition getMentalStatus() { return mentalStatus; }
 	public void setMentalStatus(Condition value) { this.mentalStatus = value; }
 
-	private Treatment treatMent;
-	public Treatment getTreatMent() { return treatMent; }
-	public void setTreatMent(Treatment value) { this.treatMent = value; }
-	
 	private PhaseOfLife phaseOfLife;
 	public PhaseOfLife getPhaseOfLife() { return phaseOfLife; }
 	public void setPhaseOfLife(PhaseOfLife value) { this.phaseOfLife = value; }

@@ -4,7 +4,7 @@ public enum Treatment {
 	sighted, salvaged, transported, notSpecified;
 
 	public static String[] toStringArray() {
-		return new String[] { "child", "adult", "not specified" };
+		return new String[] { "sighted", "salvaged", "transported", "not specified" };
 	}
 
 	public static Treatment getValueOf(String value) {

@@ -13,7 +13,6 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
-import at.mts.entity.Bodyparts;
 import at.mts.entity.Gender;
 import at.mts.entity.Patient;
 /**
@@ -63,7 +62,7 @@ public class CdaDocument {
         body.set("perfusion", patient.getPerfusion().toString());
         body.set("mentalerstatus", patient.getMentalStatus().toString());
         body.set("triagekategorie", patient.getCategory().toString());
-        body.set("behandlung", patient.getTreatMent().toString());
+        body.set("behandlung", patient.getTreatment().toString());
         
         //-----DETAILS
         body.set("gps", patient.getGps());
