@@ -1,5 +1,7 @@
 package at.mts.entity;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -9,8 +11,11 @@ import at.mts.entity.cda.CdaDocument;
 
 public class Patient {
 	
+	private UUID id;
+	private TriageCategory category;
+	private ArrayList<SalvageInfo> salvageinfo = new ArrayList<SalvageInfo>();
+	
 	public Patient(CdaDocument document) {
-		// TODO: Patienten Properties aus CDA-Dokument auslesen
 		
 		setId(document.getPatientId());
 		setNameGiven(document.getPatientNameGiven());
@@ -19,9 +24,47 @@ public class Patient {
 		setGender(document.getPatientGender());        
 		
 		
-		//sollte so klappen.. noch nicht getestet-> setRespiration(Condition.getValueOf(document.getBody().get("respiration")));
-		// TODO: weitere Properties einlesen, z.B.:
-		// setRespiration(Zustand.getValueOf(document.getBody().get(CdaBody.KEY_RESPIRATION)));
+		if(document.getBody().get("gehfaehigkeit").equals("ja"))
+			setWalkable(true);
+		else
+			setWalkable(false);
+		
+		setRespiration(Condition.getValueOf(document.getBody().get("respiration")));
+		setPerfusion(Condition.getValueOf(document.getBody().get("perfusion")));
+		setMentalStatus(Condition.getValueOf(document.getBody().get("mentalerstatus")));
+		setCategory(TriageCategory.getValueOf(document.getBody().get("triagekategory")));
+		setTreatment(Treatment.getValueOf(document.getBody().get("behandlung")));
+		
+		
+		setGps(document.getBody().get("gps"));
+		setPhaseOfLife(PhaseOfLife.getValueOf(document.getBody().get("lebensphase")));
+		setSalvageInfo(document.getBody().get("bergeinformation"));
+		setPlacePosition(document.getBody().get("hilfplatzposition"));
+		setUrgency(Integer.parseInt(document.getBody().get("dringlichkeit")));
+		setDiagnosis(document.getBody().get("diagnose"));
+		
+		String blutdruck= document.getBody().get("blutdruck");
+		String[] sysdia =blutdruck.split(":" , 2);
+		setBloodPressureSystolic(Integer.parseInt(sysdia[0]));
+		setBloodPressureDiastolic(Integer.parseInt(sysdia[1]));
+		
+		setPulse(Integer.parseInt(document.getBody().get("puls")));
+		setCourseOfTreatment(document.getBody().get("behandlungsverlauf"));
+		
+		if(document.getBody().get("transportbereitschaft").equals("ja"))
+			setReadyForTransport(true);
+		else
+			setReadyForTransport(false);
+		
+		setHospital(document.getBody().get("zielkrankenhaus"));
+		setHealthInsurance((document.getBody().get("krankenkasse")));
+		
+	
+		setVersion(document.getIdV().getVersion());
+		setTimestamp(document.getDocumentDate());
+
+			
+		setBodyparts(document.getBodyParts());
 	}
 	
 	public Patient(UUID id) {
@@ -31,17 +74,14 @@ public class Patient {
 	
 	public Patient() {}
 	
-	private UUID id;
+	/**
+	 * Setter
+	 */
 	public void setId(UUID value) { this.id = value; }
-	public UUID getId() { return id; }
-	
-	private TriageCategory category;
 	public void setCategory(TriageCategory category) { this.category = category; }
-	public TriageCategory getCategory() { return category; }
 	
-	private ArrayList<SalvageInfo> salvageinfo = new ArrayList<SalvageInfo>();
 	public void addSalvageInfo(SalvageInfo info) { this.salvageinfo.add(info); }
-	public ArrayList<SalvageInfo> getSalvageInfo() { return salvageinfo; }
+	
 	public void setSalvageInfo(String salvageInfoString) {
 		getSalvageInfo().clear();
 		
@@ -55,6 +95,14 @@ public class Patient {
 			}
 		}
 	}
+	
+	/**
+	 * Getter
+	 */
+	public UUID getId() { return id; }
+	public ArrayList<SalvageInfo> getSalvageInfo() { return salvageinfo; }
+	public TriageCategory getCategory() { return category; }
+	
 	public String getSalvageInfoString() {
 		
 		String s = "";
@@ -66,6 +114,10 @@ public class Patient {
 		
 		return s;
 	}
+	
+	/**
+	 * Eigenschaften
+	 */
 	
 	private int version;
 	public int getVersion() { return version; }
@@ -107,6 +159,10 @@ public class Patient {
 	public Condition getMentalStatus() { return mentalStatus; }
 	public void setMentalStatus(Condition value) { this.mentalStatus = value; }
 
+	private Treatment treatMent;
+	public Treatment getTreatMent() { return treatMent; }
+	public void setTreatMent(Treatment value) { this.treatMent = value; }
+	
 	private PhaseOfLife phaseOfLife;
 	public PhaseOfLife getPhaseOfLife() { return phaseOfLife; }
 	public void setPhaseOfLife(PhaseOfLife value) { this.phaseOfLife = value; }

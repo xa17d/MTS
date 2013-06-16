@@ -18,21 +18,21 @@ public class CdaBody {
 	public static final String KEY_BEHANDLUNG = "behandlung";
 	//TODO : Section/Component-Unterteilung ?
 	
-	/*
+	
 	//Details
 	public static final String KEY_GPS ="gps";
-	public static final String KEY_LEBENSPHASE ="gps";
-	public static final String KEY_BERGEINFORMATION ="gps";
-	public static final String KEY_HILFPLATZPOSITION ="gps";
-	public static final String KEY_DRINGLICHKEIT ="gps";
-	public static final String KEY_DIAGNOSE ="gps";
-	public static final String KEY_BLUTDRUCK ="gps";
-	public static final String KEY_PULS ="gps";
-	public static final String KEY_BEHANDLUNGSVERLAUF ="gps";
-	public static final String KEY_TRANSPORTBEREITSCHAFT ="gps";
-	public static final String KEY_ZIELKRANKENHAUS ="gps";
-	public static final String KEY_KRANKEKASSE ="gps";
-	*/
+	public static final String KEY_LEBENSPHASE ="lebensphase";
+	public static final String KEY_BERGEINFORMATION ="bergeinformation";
+	public static final String KEY_HILFPLATZPOSITION ="hilfplatzposition";
+	public static final String KEY_DRINGLICHKEIT ="dringlichkeit";
+	public static final String KEY_DIAGNOSE ="diagnose";
+	public static final String KEY_BLUTDRUCK ="blutdruck";
+	public static final String KEY_PULS ="puls";
+	public static final String KEY_BEHANDLUNGSVERLAUF ="behandlungsverlauf";
+	public static final String KEY_TRANSPORTBEREITSCHAFT ="transportbereitschaft";
+	public static final String KEY_ZIELKRANKENHAUS ="zielkrankenhaus";
+	public static final String KEY_KRANKEKASSE ="krankenkasse";
+	
 	
 	//Bodyparts
 	public static final String KEY_FRONT_HEAD = "Vorne_Kopf";
@@ -146,4 +146,6 @@ public class CdaBody {
 		}
 		return s.toString();
 	}
+	
+	
 }
