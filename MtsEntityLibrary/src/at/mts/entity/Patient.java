@@ -156,10 +156,6 @@ public class Patient {
 	private Condition mentalStatus;
 	public Condition getMentalStatus() { return mentalStatus; }
 	public void setMentalStatus(Condition value) { this.mentalStatus = value; }
-
-	private Treatment treatMent;
-	public Treatment getTreatMent() { return treatMent; }
-	public void setTreatMent(Treatment value) { this.treatMent = value; }
 	
 	private PhaseOfLife phaseOfLife;
 	public PhaseOfLife getPhaseOfLife() { return phaseOfLife; }
