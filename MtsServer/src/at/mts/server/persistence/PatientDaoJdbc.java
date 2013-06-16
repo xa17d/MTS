@@ -9,8 +9,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
+import at.mts.entity.Bodyparts;
 import at.mts.entity.Condition;
 import at.mts.entity.Gender;
 import at.mts.entity.Patient;
@@ -56,7 +58,8 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 			" v.Timestamp, " +
 			" v.Gps, " +
 			" v.Diagnosis, " +
-			" v.CourseOfTreatment " +
+			" v.CourseOfTreatment, " +
+			" v.Id " +
 			"FROM Patient p JOIN PatientVersion v on p.id = v.Patient ";
 	
 	/**
@@ -100,6 +103,9 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 	private static final String sqlInsertPatient = "INSERT INTO Patient (guid, version) VALUES (?, ?)";
 	
 	private static final String sqlUpdatePatient = "UPDATE Patient SET version = ? WHERE id = ?";
+	
+	private static final String sqlInsertBodyPart = "INSERT INTO Bodypart (patientVersion, key, value) VALUES (?,?,?)";
+	private static final String sqlSelectQueryBodyPart = "SELECT key, value FORM Bodypart WHERE patientVersion = ?";
 	
 	private interface StatementPreparation {
 		public String sql();
@@ -256,9 +262,19 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 			}
 			
 			
-			p = connection.prepareStatement(sqlInsertPatientVersion);
+			p = connection.prepareStatement(sqlInsertPatientVersion, Statement.RETURN_GENERATED_KEYS);
 			setPreparedStatement(p, patient, patientId, version);
 			p.executeUpdate();
+			int patientVersionId = -1;
+			ResultSet keySet = p.getGeneratedKeys();
+			if (keySet != null && keySet.next()) {
+				patientId = keySet.getInt(1);
+				patientVersionId = 1;
+			}
+			else {
+				//log.debug("No keys returned in create");
+				throw new PersistenceAccessException(null);
+			}
 			p.close();
 			
 			p = connection.prepareStatement(sqlUpdatePatient);
@@ -268,6 +284,8 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 			p.close();
 			
 			patient.setVersion(version);
+			
+			insertBodyParts(patient.getBodyparts(), patientVersionId);
 			
 		} catch (SQLIntegrityConstraintViolationException e) {
 			//log.debug("Integrity violation in create", e);
@@ -405,6 +423,9 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 		p.setDiagnosis((String)r.getObject(25));
 		p.setCourseOfTreatment((String)r.getObject(26));
 		
+		int patientVersionId = r.getInt(27);
+		p.setBodyparts(bodypartsById(patientVersionId));
+		
 		return p;
 	}
 	
@@ -484,5 +505,69 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 		statementSetVarchar(s, 24, p.getGps());
 		statementSetLongVarchar(s, 25, p.getDiagnosis());
 		statementSetLongVarchar(s, 26, p.getCourseOfTreatment());
+	}
+	
+	private void insertBodyParts(Bodyparts bodyparts, int patientVersionId) throws SQLException {
+		Set<String> keys = bodyparts.keySet();
+		for (String key : keys) {
+		
+			PreparedStatement p = null;
+			try {
+				p = connection.prepareStatement(sqlInsertBodyPart);
+				p.setInt(1, patientVersionId);
+				p.setString(2, key);
+				p.setString(3, bodyparts.get(key));
+				p.executeUpdate();
+				p.close();
+			}
+			catch (SQLException e) {
+				throw e;
+			}
+			finally {
+				if (p!=null) { 
+					try {
+						p.close();
+					} catch (SQLException e) {
+						//log.debug("Error while closing statement in findAll", e);
+					}
+				}
+			}
+			
+		}
+	}
+	
+	private Bodyparts bodypartsById(int patientVersionId) throws SQLException {
+		Bodyparts items = new Bodyparts();
+		
+		PreparedStatement p = null;
+		try {
+			p = connection.prepareStatement(sqlSelectQueryBodyPart);
+
+			p.setInt(1, patientVersionId);
+			
+			ResultSet r = p.executeQuery();
+			
+			while (r.next())
+			{
+				String key = (String)r.getObject(1);
+				String value = (String)r.getObject(2);
+				
+				items.set(key, value);
+			}
+			
+			p.close();
+		} catch (SQLException e) {
+			throw e;
+		}
+		finally {
+			if (p!=null) { 
+				try {
+					p.close();
+				} catch (SQLException e) {
+					//log.debug("Error while closing statement in findAll", e);
+				}
+			}
+		}
+		return items;
 	}
 }

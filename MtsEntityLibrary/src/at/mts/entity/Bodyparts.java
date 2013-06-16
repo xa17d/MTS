@@ -1,6 +1,7 @@
 package at.mts.entity;
 
 import java.util.HashMap;
+import java.util.Set;
 
 import at.mts.entity.cda.CdaBody;
 
@@ -44,5 +45,5 @@ public class Bodyparts {
 	public void set(String part, String information) { map.put(part, information); }
 	public void remove(String part) { map.remove(part); }
 	public String get(String part) { return map.get(part); }
-
+	public Set<String> keySet() { return map.keySet(); }
 }
