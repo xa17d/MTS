@@ -14,9 +14,7 @@ import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
-import org.xml.sax.InputSource;
 
-import at.mts.entity.Bodyparts;
 import at.mts.entity.Gender;
 import at.mts.entity.Patient;
 /**
@@ -232,10 +230,10 @@ public class CdaDocument {
 	        
 	        
 	        root.getChild("id", NS).setAttribute("extension",getIdV().getId().toString());
-	        root.getChild("versionNumber", NS).setAttribute("value", getIdV().getVersion().toString());
+	        root.getChild("versionNumber", NS).setAttribute("value", Integer.toString(getIdV().getVersion()));
 	        
 	        root.getChild("relatedDocument", NS).getChild("parentDocument", NS).getChild("id", NS).setAttribute("extension", getParentIdV().getId().toString());
-	        root.getChild("relatedDocument", NS).getChild("parentDocument", NS).getChild("versionNumber", NS).setAttribute("value",getParentIdV().getVersion().toString());	
+	        root.getChild("relatedDocument", NS).getChild("parentDocument", NS).getChild("versionNumber", NS).setAttribute("value", Integer.toString(getParentIdV().getVersion()));	
 	        
 	        root.getChild("effectiveTime", NS).setAttribute("value", formatter.format((getDocumentDate()))); 
 	        
