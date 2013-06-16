@@ -53,7 +53,10 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 			" v.HealthInsurance," +
 			" v.Treatment, " +
 			" v.Category, " +
-			" v.Timestamp " +
+			" v.Timestamp, " +
+			" v.Gps, " +
+			" v.Diagnosis, " +
+			" v.CourseOfTreatment " +
 			"FROM Patient p JOIN PatientVersion v on p.id = v.Patient ";
 	
 	/**
@@ -86,10 +89,13 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 			" ReadyForTransport," +
 			" Hospital," +
 			" HealthInsurance," +
-			" Treatment,"+
-			" Category"+
-			" Timestamp"+
-			") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			" Treatment," +
+			" Category," +
+			" Timestamp," +
+			" Gps," +
+			" Diagnosis," +
+			" CourseOfTreatment" +
+			") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	
 	private static final String sqlInsertPatient = "INSERT INTO Patient (guid, version) VALUES (?, ?)";
 	
@@ -374,6 +380,9 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 		p.setTreatment(Treatment.getValueOf(r.getString(21)));
 		p.setCategory(TriageCategory.getValueOf(r.getString(22)));
 		p.setTimestamp((Date)r.getObject(23));
+		p.setGps((String)r.getObject(24));
+		p.setDiagnosis((String)r.getObject(25));
+		p.setCourseOfTreatment((String)r.getObject(26));
 		
 		return p;
 	}
@@ -396,13 +405,17 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 		}
 	}
 	
-	private void statementSetEnum(PreparedStatement s, int index, Object value) throws SQLException {
+	private void statementSetVarchar(PreparedStatement s, int index, Object value) throws SQLException {
 		if (value == null) {
 			s.setNull(index, java.sql.Types.VARCHAR);
 		}
 		else {
 			s.setString(index, value.toString());
 		}
+	}
+	
+	private void statementSetEnum(PreparedStatement s, int index, Object value) throws SQLException {
+		statementSetVarchar(s, index, value);
 	}
 	
 	private void statementSetBoolean(PreparedStatement s, int index, Boolean value) throws SQLException {
@@ -447,5 +460,8 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 		statementSetEnum(s, 21, p.getTreatment());
 		statementSetEnum(s, 22, p.getCategory());
 		statementSetDate(s, 23, p.getTimestamp());
+		statementSetVarchar(s, 24, p.getGps());
+		statementSetLongVarchar(s, 25, p.getDiagnosis());
+		statementSetLongVarchar(s, 26, p.getCourseOfTreatment());
 	}
 }

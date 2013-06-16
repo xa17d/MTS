@@ -23,6 +23,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import at.mts.entity.Patient;
+import at.mts.entity.Treatment;
+import at.mts.entity.TriageCategory;
 import at.mts.entity.cda.CdaDocument;
 import at.mts.server.Server;
 import at.mts.server.service.PatientService;
@@ -139,7 +141,7 @@ public class RestApi {
 			return "";
 		}
 		else {
-			return "<notimplemented />";
+			return new CdaDocument(p).asXml();
 		}
 	}
 	
@@ -151,7 +153,11 @@ public class RestApi {
 			@Context HttpServletRequest servletRequest) {
 		
 		authentificate();
-		return "not implemented yet [t="+triagekategorie+";b="+behandlung+"]"; 
+		
+		TriageCategory category = TriageCategory.getValueOf(triagekategorie);
+		Treatment treatment = Treatment.getValueOf(behandlung);
+	
+		return "";
 	}
 	
 	@GET
