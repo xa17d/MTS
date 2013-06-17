@@ -4,228 +4,289 @@
     android:layout_height="match_parent"
     android:columnCount="1" >
 
-    <TextView
-        android:id="@+id/textViewTriageMain1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/triage_mode"
-        android:layout_gravity="left|top"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <LinearLayout android:orientation="vertical" >
 
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_column="0"
-        android:layout_gravity="center"
-        android:layout_row="0" >
+        <TextView
+            android:id="@+id/textViewTriageMain1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/triage_mode"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <TableRow
-            android:id="@+id/tableRow1"
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" >
+
+                <TableRow
+                    android:id="@+id/TableRow11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/genderTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/gender"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <Button
+                        android:id="@+id/maleButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="genderClick"
+                        android:text="@string/m" />
+
+                    <Button
+                        android:id="@+id/femaleButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="genderClick"
+                        android:text="@string/f" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/TableRow12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/phaseTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/age"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <Button
+                        android:id="@+id/adultButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="phaseClick"
+                        android:text="@string/adult" />
+
+                    <Button
+                        android:id="@+id/childButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="phaseClick"
+                        android:text="@string/child" />
+                </TableRow>
+            </TableLayout>
+
+            <Space />
+
+        </GridLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TableLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 
-            <FrameLayout
-                android:layout_width="45dp"
-                android:layout_height="45dp" >
-           
-	            <ImageButton
-	                android:id="@+id/walkInfoButton"
-	                android:layout_width="45dp"
-	                android:layout_height="45dp"
-	                android:onClick="showWalkText"
-	                android:src="@drawable/info_icon" />
-            
-             </FrameLayout>
-
-            <TextView
-                android:id="@+id/walk"
+            <TableRow
+                android:id="@+id/tableRow1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/walk"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:layout_gravity="center" >
 
-            <Button
-                android:id="@+id/walk_yes"
+                <ImageView
+                    android:id="@+id/walkInfoButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:onClick="showWalkText"
+                    android:src="@drawable/info_icon" />
+
+                <TextView
+                    android:id="@+id/walk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/walk"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Button
+                    android:id="@+id/walk_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="walkClick"
+                    android:text="@string/yes" />
+
+                <Button
+                    android:id="@+id/walk_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="walkClick"
+                    android:text="@string/no" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="walkClick"
-                android:text="@string/yes" />
+                android:layout_height="wrap_content" >
 
-            <Button
-                android:id="@+id/walk_no"
+                <ImageView
+                    android:id="@+id/respiration1InfoButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:onClick="showRespiration1Text"
+                    android:src="@drawable/info_icon" />
+
+                <TextView
+                    android:id="@+id/respiration1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/respiration"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Button
+                    android:id="@+id/respiration_present"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="respiration1Click"
+                    android:text="@string/yes" />
+
+                <Button
+                    android:id="@+id/respiration_notpresent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="respiration1Click"
+                    android:text="@string/no" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow3"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="walkClick"
-                android:text="@string/no" />
+                android:layout_height="wrap_content" >
 
-        </TableRow>
+                <ImageView
+                    android:id="@+id/respiration2InfoButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:onClick="showRespiration2Text"
+                    android:src="@drawable/info_icon" />
 
-        <TableRow
-            android:id="@+id/tableRow2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+                <TextView
+                    android:id="@+id/respiration2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/respiration"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <FrameLayout
-                android:layout_width="45dp"
-                android:layout_height="45dp" >
-           
-	            <ImageButton
-	                android:id="@+id/respiration1InfoButton"
-	                android:layout_width="45dp"
-	                android:layout_height="45dp"
-	                android:onClick="showRespiration1Text"
-	                android:src="@drawable/info_icon" />
-            
-             </FrameLayout>
+                <Button
+                    android:id="@+id/respiration_stable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="respiration2Click"
+                    android:text="@string/stable" />
 
-            <TextView
-                android:id="@+id/respiration1"
+                <Button
+                    android:id="@+id/respiration_critical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="respiration2Click"
+                    android:text="@string/critical" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow4"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/respiration"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:layout_height="wrap_content" >
 
-            <Button
-                android:id="@+id/respiration_present"
+                <ImageView
+                    android:id="@+id/perfusionInfoButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:onClick="showPerfusionText"
+                    android:src="@drawable/info_icon" />
+
+                <TextView
+                    android:id="@+id/perfusion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/perfusion"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Button
+                    android:id="@+id/perfusion_stable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="perfusionClick"
+                    android:text="@string/stable" />
+
+                <Button
+                    android:id="@+id/perfusion_critical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="perfusionClick"
+                    android:text="@string/critical" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow5"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="respiration1Click"
-                android:text="@string/yes" />
+                android:layout_height="wrap_content" >
 
-            <Button
-                android:id="@+id/respiration_notpresent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="respiration1Click"
-                android:text="@string/no" />
-        </TableRow>
-        
-        <TableRow
-            android:id="@+id/tableRow3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+                <ImageView
+                    android:id="@+id/mentalInfoButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:onClick="showMentalText"
+                    android:src="@drawable/info_icon" />
 
-            <FrameLayout
-                android:layout_width="45dp"
-                android:layout_height="45dp" >
-           
-	            <ImageButton
-	                android:id="@+id/respiration2InfoButton"
-	                android:layout_width="45dp"
-	                android:layout_height="45dp"
-	                android:onClick="showRespiration2Text"
-	                android:src="@drawable/info_icon" />
-            
-             </FrameLayout>
+                <TextView
+                    android:id="@+id/mental"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mental"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <TextView
-                android:id="@+id/respiration2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/respiration" />
+                <Button
+                    android:id="@+id/mental_stable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="mentalClick"
+                    android:text="@string/stable" />
 
-            <Button
-                android:id="@+id/respiration_stable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="respiration2Click"
-                android:text="@string/stable" />
+                <Button
+                    android:id="@+id/mental_critical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="mentalClick"
+                    android:text="@string/critical" />
+            </TableRow>
+        </TableLayout>
 
-            <Button
-                android:id="@+id/respiration_critical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="respiration2Click"
-                android:text="@string/critical" />
-        </TableRow>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-        <TableRow
-            android:id="@+id/tableRow4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-            <FrameLayout
-                android:layout_width="45dp"
-                android:layout_height="45dp" >
-           
-	            <ImageButton
-	                android:id="@+id/perfusionInfoButton"
-	                android:layout_width="45dp"
-	                android:layout_height="45dp"
-	                android:onClick="showPerfusionText"
-	                android:src="@drawable/info_icon" />
-            
-             </FrameLayout>
-
-            <TextView
-                android:id="@+id/perfusion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/perfusion"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <Button
-                android:id="@+id/perfusion_stable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="perfusionClick"
-                android:text="@string/stable" />
-
-            <Button
-                android:id="@+id/perfusion_critical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="perfusionClick"
-                android:text="@string/critical" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <FrameLayout
-                android:layout_width="45dp"
-                android:layout_height="45dp" >
-           
-	            <ImageButton
-	                android:id="@+id/mentalInfoButton"
-	                android:layout_width="45dp"
-	                android:layout_height="45dp"
-	                android:onClick="showMentalText"
-	                android:src="@drawable/info_icon" />
-            
-             </FrameLayout>
-
-            <TextView
-                android:id="@+id/mental"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mental"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <Button
-                android:id="@+id/mental_stable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="mentalClick"
-                android:text="@string/stable" />
-
-            <Button
-                android:id="@+id/mental_critical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="mentalClick"
-                android:text="@string/critical" />
-
-        </TableRow>
-    </TableLayout>
+    </LinearLayout>
     
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="false"
+        android:layout_gravity="bottom"
         android:columnCount="1" >
 
         <Button

@@ -60,5 +60,22 @@
     <string name="therapy">Behandlung</string>
     <string name="record_death">Tod feststellen</string>
     <string name="reason_death">Todesursache</string>
+    <string name="gender">Geschlecht</string>
+    <string name="age">Alter</string>
+    <string name="f">W</string>
+    <string name="m">M</string>
+    <string name="child">Kind</string>
+    <string name="adult">Erw</string>
+    <string name="error_wrong_area">Der gescannte Patient ist nicht auf den gewählten Behandlungsplatz!</string>
+    <string name="firstname">Vorname</string>
+    <string name="lastname">Nachname</string>
+    <string name="street">Straße</string>
+    <string name="city">Ort</string>
+    <string name="birthdate">Geb.datum</string>
+    <string name="zip">PLZ</string>
+    <string name="insurance_nr">SVNr</string>
+    <string name="insurance">Versicherung</string>
+    <string name="add_diagnosis">Diagnose hinzufügen</string>
+    <string name="error_no_reason">Sie müssen zuerst eine Todesursache angeben, bevor der Tod festgestellt werden kann!</string>
 
 </resources>

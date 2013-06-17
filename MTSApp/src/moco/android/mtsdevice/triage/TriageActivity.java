@@ -3,6 +3,7 @@ package moco.android.mtsdevice.triage;
 import moco.android.mtsdevice.R;
 import moco.android.mtsdevice.ScanTagActivity;
 import moco.android.mtsdevice.handler.DeviceButtons;
+import moco.android.mtsdevice.handler.SelectedPatient;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -32,6 +33,11 @@ public class TriageActivity extends Activity {
 	private Button mentalStable;
 	private Button mentalCritical;
 	
+	private Button genderMale;
+	private Button genderFemale;
+	private Button phaseAdult;
+	private Button phaseChild;
+	
 	private Button save;
 	private Button restart;
 	private Button tagColor;
@@ -41,7 +47,7 @@ public class TriageActivity extends Activity {
     	
     	//TODO nur zum Testen
     	patient = new Patient();
-    	Patient.setSelectedPatient(patient);
+    	SelectedPatient.setPatient(patient);
     	
         super.onCreate(savedInstanceState);
         setContentView(R.layout.triage_main);
@@ -119,6 +125,44 @@ public class TriageActivity extends Activity {
 			Intent intent = new Intent(this, TriageColorSelection.class);
             startActivity(intent);
 		}
+	}
+	
+	/**
+	 * Geschlecht waehlen
+	 * @param v View
+	 */
+	public void genderClick(View v) {
+		
+		if(v == genderMale) {
+			patient.setGender(Gender.male);
+			genderMale.setBackgroundColor(Color.GREEN);
+		}
+		else {
+			patient.setGender(Gender.female);
+			genderFemale.setBackgroundColor(Color.GREEN);
+		}
+		
+		genderMale.setClickable(false);
+		genderFemale.setClickable(false);
+	}
+	
+	/**
+	 * Lebensphase waehlen
+	 * @param v View
+	 */
+	public void phaseClick(View v) {
+		
+		if(v == phaseAdult) {
+			patient.setPhaseOfLife(PhaseOfLife.adult);
+			phaseAdult.setBackgroundColor(Color.GREEN);
+		}
+		else {
+			patient.setPhaseOfLife(PhaseOfLife.child);
+			phaseChild.setBackgroundColor(Color.GREEN);
+		}
+		
+		phaseAdult.setClickable(false);
+		phaseChild.setClickable(false);
 	}
 	
 	
@@ -278,6 +322,12 @@ public class TriageActivity extends Activity {
 	}
 	
 	private void initButtons() {
+		
+		genderMale = (Button)findViewById(R.id.maleButton);
+		genderFemale = (Button)findViewById(R.id.femaleButton);
+		
+		phaseAdult = (Button)findViewById(R.id.adultButton);
+		phaseChild = (Button)findViewById(R.id.childButton);
 		
 		walkYes = (Button)findViewById(R.id.walk_yes);
         walkNo = (Button)findViewById(R.id.walk_no);

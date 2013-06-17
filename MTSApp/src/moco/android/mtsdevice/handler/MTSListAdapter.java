@@ -43,8 +43,10 @@ public class MTSListAdapter<T> extends ArrayAdapter<T> {
             
             if(Mode.getActiveMode() == Mode.therapy)
             	text.setText(((Patient)items.get(position)).toTherapyOverviewString());
-            else if(Mode.getActiveMode() == Mode.salvage)
+            else if(Mode.getActiveMode() == Mode.salvage) {
             	text.setText(((Patient)items.get(position)).toSalvageOverviewString());
+            	text.setTextColor(((Patient)items.get(position)).getCategory().getTriageColor());
+            }
             else
                 text.setText(items.get(position).toString());
         }

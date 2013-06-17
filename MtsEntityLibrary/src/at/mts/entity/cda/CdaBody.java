@@ -6,7 +6,6 @@ import java.util.Set;
 
 /**
  * Body eines CdaDocument. Beeinhaltet Key-Value-Paare.
- * @author Daniel Gehrer
  */
 public class CdaBody {
 	

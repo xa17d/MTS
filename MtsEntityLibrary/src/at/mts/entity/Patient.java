@@ -1,7 +1,9 @@
 package at.mts.entity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.UUID;
 
@@ -69,12 +71,11 @@ public class Patient {
 		setBodyparts(bodyParts);
 	}
 	
-	public Patient(UUID id) {
+	public Patient() {
 		
-		setId(id);
+		setNameGiven("John");
+		setNameFamily("Doe");
 	}
-	
-	public Patient() {}
 	
 	/**
 	 * Setter
@@ -140,6 +141,27 @@ public class Patient {
 	private Date birthTime;
 	public Date getBirthTime() { return birthTime; }
 	public void setBirthTime(Date value) { this.birthTime = value; }
+	
+	public String getAge() {
+		if(birthTime == null) 
+			return "--";
+		
+		GregorianCalendar dob = new GregorianCalendar();
+		dob.setTime(birthTime);
+	
+		GregorianCalendar today = new GregorianCalendar();
+	
+		int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+	
+		if (today.get(Calendar.MONTH) < dob.get(Calendar.MONTH)) {
+			age--;
+		} else if (today.get(Calendar.MONTH) == dob.get(Calendar.MONTH)
+				&& today.get(Calendar.DATE) < dob.get(Calendar.DATE)) {
+			age--;
+		}
+	
+		return String.valueOf(age);
+	}
 
 	private Gender gender;
 	public Gender getGender() { return gender; }
@@ -232,7 +254,7 @@ public class Patient {
 				"salvageInfo: "+getSalvageInfoString()+"; "+
 				"placePosition: "+placePosition+"; "+
 				"urgency: "+urgency+"; "+
-				"pressure: "+bloodPressureSystolic+":"+bloodPressureDiastolic+"; "+
+				"pressure: "+bloodPressureSystolic+"/"+bloodPressureDiastolic+"; "+
 				"pulse: "+pulse+"; "+
 				"readyForTransport: "+readyForTransport+"; "+
 				"hospital: "+hospital+"; "+
@@ -241,16 +263,62 @@ public class Patient {
 				
 	}
 	
-	/**
-	 * statisch aktuellen Patienten definieren
-	 */
-	private static Patient selectedPatient;
 	
-	public static Patient getSelectedPatient() {
-		return selectedPatient;
+	public String toTherapyOverviewString() {
+		return nameFamily + ", " + nameGiven + " (" + getAge() + ")\nPos: " + placePosition + " / Urg: " + urgency;		
 	}
 	
-	public static void setSelectedPatient(Patient p) {
-		selectedPatient = p;
+	public String toSalvageOverviewString() {
+		return category + " (" + gender + " / " + phaseOfLife + ")\nKoordinaten: " + gps;		
+	}
+	
+	public final static int RED = -65536;
+	public final static int YELLOW = -256;
+	public final static int GREEN = -16711936;
+	
+	
+	public int getPersonalDataStatusColor() {
+		
+		if(nameGiven.equals("John") && nameFamily.equals("Doe"))
+			 return RED;
+		
+		if(birthTime != null)
+			 return YELLOW;
+		
+		return GREEN;
+	}
+	
+	public int getVitalParameterStatusColor() {
+		
+		if(category == TriageCategory.deceased)
+			return RED;
+		else {
+			if(pulse == null)
+				return RED;
+			
+			if(bloodPressureSystolic == null || bloodPressureSystolic == null)
+				 return YELLOW;
+			
+			return GREEN;
+		}
+	}
+	
+	public int getDiagnosisStatusColor() {
+		
+		if(diagnosis == null)
+			return RED;
+		
+		return GREEN;
+	}
+	
+	public int getTherapyStatusColor() {
+		
+		if(courseOfTreatment == null)
+			return -65536;			//RED;
+		
+		if(readyForTransport == null)
+			 return -256;			//YELLOW;
+		
+		return -16711936;			//GREEN;
 	}
 }

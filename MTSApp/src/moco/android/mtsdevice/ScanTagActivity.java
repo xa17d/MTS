@@ -1,9 +1,13 @@
 package moco.android.mtsdevice;
 
+import java.util.GregorianCalendar;
+
+import moco.android.mtsdevice.handler.Area;
 import moco.android.mtsdevice.handler.DeviceButtons;
 import moco.android.mtsdevice.handler.Mode;
 import moco.android.mtsdevice.handler.SelectedPatient;
 import moco.android.mtsdevice.salvage.SalvageActivity;
+import moco.android.mtsdevice.therapy.TherapySelectionActivity;
 import moco.android.mtsdevice.therapy.TherapyVitalParameterActivity;
 import moco.android.mtsdevice.triage.TriageSelectionActivity;
 import android.app.Activity;
@@ -20,6 +24,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 import at.mts.entity.Patient;
+import at.mts.entity.TriageCategory;
 
 public class ScanTagActivity extends Activity implements LocationListener {
 	
@@ -82,22 +87,6 @@ public class ScanTagActivity extends Activity implements LocationListener {
 			intent = new Intent(ScanTagActivity.this, TriageSelectionActivity.class);
 			startActivity(intent);
 			finish();
-			
-			/*
-			new AlertDialog.Builder(this) 
-            	.setMessage(R.string.info_saved + "\nGPS: " + locationString)
-            	.setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						
-						Intent intent = new Intent(ScanTagActivity.this, TriageSelectionActivity.class);
-						startActivity(intent);
-						finish();
-					}
-				})
-            	.show();
-            */
 		}
 		
 		if(Mode.getActiveMode() == Mode.salvage) {
@@ -109,20 +98,27 @@ public class ScanTagActivity extends Activity implements LocationListener {
 		
 		if(Mode.getActiveMode() == Mode.therapy) {
 			
-			//TODO Kategorie unterscheiden (minor und deceased zuerst stammdaten / immediate und delayed zuerst med Infos)
-			
 			if(SelectedPatient.getPatient() == null) {
 				Patient p = new Patient();			//TESTPATIENT
 				p.setNameFamily("Dobler");
 				p.setNameGiven("Lucas");
+				p.setCategory(TriageCategory.immediate);
+				GregorianCalendar date = new GregorianCalendar(1991, 1, 15);
+				p.setBirthTime(date.getTime());
 				p.setPulse(95);
 				
 				SelectedPatient.setPatient(p);
 			}
 			
-			
-			intent = new Intent(this, TherapyVitalParameterActivity.class);
-			startActivity(intent);
+			if(Area.getActiveArea().matchesCategory(SelectedPatient.getPatient().getCategory())) {
+				intent = new Intent(this, TherapySelectionActivity.class);
+				startActivity(intent);
+			}
+			else
+				new AlertDialog.Builder(this) 
+			        	.setMessage(R.string.error_wrong_area)
+			        	.setNeutralButton(R.string.ok, null)
+			        	.show();
 		}
 	}
 	

@@ -53,19 +53,49 @@
             
         </activity>
         
-        <activity android:name="moco.android.mtsdevice.triage.TriageActivity"></activity>
-        <activity android:name="moco.android.mtsdevice.triage.TriageColorSelection"></activity>
-        <activity android:name="moco.android.mtsdevice.triage.TriageSelectionActivity"></activity>
-        <activity android:name="moco.android.mtsdevice.triage.TriageSalvageinfoActivity"></activity>
-        <activity android:name="moco.android.mtsdevice.triage.TriageSalvageinfoAdd"></activity>
+        <activity android:name="moco.android.mtsdevice.triage.TriageActivity"
+            	  android:screenOrientation="portrait"></activity>
+        <activity android:name="moco.android.mtsdevice.triage.TriageColorSelection"
+            	  android:screenOrientation="portrait"></activity>
+        <activity android:name="moco.android.mtsdevice.triage.TriageSelectionActivity"
+            	  android:screenOrientation="portrait"></activity>
+        <activity android:name="moco.android.mtsdevice.triage.TriageSalvageinfoActivity"
+            	  android:screenOrientation="portrait"></activity>
+        <activity android:name="moco.android.mtsdevice.triage.TriageSalvageinfoAdd"
+            	  android:screenOrientation="portrait"></activity>
         
-        <activity android:name="moco.android.mtsdevice.salvage.SalvageActivity"></activity>
+        <activity android:name="moco.android.mtsdevice.salvage.SalvageActivity"
+            	  android:screenOrientation="portrait"></activity>
+        <activity android:name="moco.android.mtsdevice.salvage.SalvageListActivity"
+            	  android:screenOrientation="portrait"></activity>
+        <activity android:name="moco.android.mtsdevice.salvage.SalvageSingleViewActivity"
+            	  android:screenOrientation="portrait"></activity>
         
-        <activity android:name="moco.android.mtsdevice.therapy.TherapyListActivity"></activity>
-        <activity android:name="moco.android.mtsdevice.therapy.TherapyAreaActivity"></activity>
-        <activity android:name="moco.android.mtsdevice.therapy.TherapyVitalParameterActivity"></activity>
+        <activity android:name="moco.android.mtsdevice.therapy.TherapyListActivity"
+            	  android:screenOrientation="portrait"></activity>
+        <activity android:name="moco.android.mtsdevice.therapy.TherapyAreaActivity"
+            	  android:screenOrientation="portrait"></activity>
+        <activity android:name="moco.android.mtsdevice.therapy.TherapySelectionActivity"
+            	  android:screenOrientation="portrait"></activity>
+        <activity android:name="moco.android.mtsdevice.therapy.TherapyPersonalDataActivity"
+            	  android:screenOrientation="portrait"></activity>
+        <activity android:name="moco.android.mtsdevice.therapy.TherapyVitalParameterActivity"
+            	  android:screenOrientation="portrait"></activity>
+        <activity android:name="moco.android.mtsdevice.therapy.TherapyDiagnosisActivity"
+            	  android:screenOrientation="portrait"></activity>
+        <activity android:name="moco.android.mtsdevice.therapy.TherapyRecordDeathActivity"
+            	  android:screenOrientation="portrait"></activity>
+        <activity android:name="moco.android.mtsdevice.therapy.TherapyMinorActivity"
+            	  android:screenOrientation="portrait"></activity>
+        <activity android:name="moco.android.mtsdevice.therapy.TherapyImmediateActivity"
+            	  android:screenOrientation="portrait"></activity>
         
-        <activity android:name="moco.android.mtsdevice.maps.SalvageMap"></activity>
+        <activity android:name="moco.android.mtsdevice.therapy.BodyViewActivity"
+            	  android:screenOrientation="portrait"></activity>
+        
+        
+        <activity android:name="moco.android.mtsdevice.maps.SalvageMap"
+            	  android:screenOrientation="portrait"></activity>
         
     </application>
     

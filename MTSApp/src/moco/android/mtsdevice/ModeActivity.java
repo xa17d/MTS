@@ -3,6 +3,7 @@ package moco.android.mtsdevice;
 import moco.android.mtsdevice.handler.DeviceButtons;
 import moco.android.mtsdevice.handler.Mode;
 import moco.android.mtsdevice.maps.SalvageMap;
+import moco.android.mtsdevice.salvage.SalvageListActivity;
 import moco.android.mtsdevice.therapy.TherapyAreaActivity;
 import moco.android.mtsdevice.triage.TriageSelectionActivity;
 import android.app.Activity;
@@ -51,7 +52,7 @@ public class ModeActivity extends Activity {
 	public void salvageModeSelected(View v) {
 		
 		Mode.setActiveMode(Mode.salvage);
-		Intent intent = new Intent(this, SalvageMap.class);
+		Intent intent = new Intent(this, SalvageListActivity.class);
 		startActivity(intent);
 	}
 	
