@@ -24,10 +24,13 @@ public class TherapyListActivity extends Activity {
 	private ListView patientView;
 	private ListAdapter adapter;
 	
+	//TODO
 	private ArrayList<Patient> patientListIm;
 	private ArrayList<Patient> patientListDel;
 	private ArrayList<Patient> patientListMin;
 	private ArrayList<Patient> patientListDec;
+	
+	private ArrayList<Patient> patientList;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -36,8 +39,11 @@ public class TherapyListActivity extends Activity {
 		
 		createSomePatients();
 		
-		if(Area.getActiveArea() == Area.I)
+		if(Area.getActiveArea() == Area.I) {
+			//TODO
+			//patientList = 
 			adapter = new MTSListAdapter<Patient>(getApplicationContext(), R.layout.mts_list, patientListIm);
+		}
 		
 		if(Area.getActiveArea() == Area.II)
 			adapter = new MTSListAdapter<Patient>(getApplicationContext(), R.layout.mts_list, patientListDel);
@@ -131,7 +137,6 @@ public class TherapyListActivity extends Activity {
 		
 		Intent intent = new Intent(this, ScanTagActivity.class);
         startActivity(intent);
-        finish();
 	}
 	
 	@Override

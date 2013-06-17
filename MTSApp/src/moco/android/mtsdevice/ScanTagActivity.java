@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.Toast;
 import at.mts.entity.Patient;
 import at.mts.entity.TriageCategory;
+import at.mts.entity.cda.CdaDocument;
 
 public class ScanTagActivity extends Activity implements LocationListener {
 	
@@ -76,13 +77,13 @@ public class ScanTagActivity extends Activity implements LocationListener {
 			
 			
 			selectedPatient = SelectedPatient.getPatient();
+			selectedPatient.setGps(locationString + ";" + locationAccuracyString);
 			
-			//TODO GPS Koordinaten speichern
-			
-			//TODO Daten versenden
+			CdaDocument doc = new CdaDocument(selectedPatient);
+			System.out.print(doc);
 			
 			Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
-			Toast.makeText(this, "GPS-Koordinaten: " + locationString + "\nGenauigkeit: " + locationAccuracyString, Toast.LENGTH_LONG).show();
+			//Toast.makeText(this, "GPS-Koordinaten: " + locationString + "\nGenauigkeit: " + locationAccuracyString, Toast.LENGTH_LONG).show();
 			
 			intent = new Intent(ScanTagActivity.this, TriageSelectionActivity.class);
 			startActivity(intent);
@@ -113,6 +114,7 @@ public class ScanTagActivity extends Activity implements LocationListener {
 			if(Area.getActiveArea().matchesCategory(SelectedPatient.getPatient().getCategory())) {
 				intent = new Intent(this, TherapySelectionActivity.class);
 				startActivity(intent);
+				finish();
 			}
 			else
 				new AlertDialog.Builder(this) 
