@@ -5,6 +5,9 @@ import java.util.UUID;
 
 import moco.android.mtsdevice.R;
 import moco.android.mtsdevice.ScanTagActivity;
+import moco.android.mtsdevice.TestActivity;
+import moco.android.mtsdevice.communication.CommunicationException;
+import moco.android.mtsdevice.communication.ServerCommunication;
 import moco.android.mtsdevice.handler.Area;
 import moco.android.mtsdevice.handler.DeviceButtons;
 import moco.android.mtsdevice.handler.MTSListAdapter;
@@ -16,6 +19,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import at.mts.entity.Patient;
+import at.mts.entity.PatientList;
 import at.mts.entity.TriageCategory;
 
 public class TherapyListActivity extends Activity {
@@ -30,15 +34,32 @@ public class TherapyListActivity extends Activity {
 	private ArrayList<Patient> patientListMin;
 	private ArrayList<Patient> patientListDec;
 	
-	private ArrayList<Patient> patientList;
+	private PatientList patientList;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.therapy_list);
 		
-		createSomePatients();
+		ServerCommunication com = new ServerCommunication();
+		String s = "";
+		try {
+			s = com.loadAllPatients();
+		} catch (CommunicationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		TestActivity.setTestText(s);
+		
+		//TEST
+		Intent intent = new Intent(this, TestActivity.class);
+		startActivity(intent);
+		finish();
+
+		
+		//createSomePatients();
+		/*
 		if(Area.getActiveArea() == Area.I) {
 			//TODO
 			//patientList = 
@@ -55,6 +76,7 @@ public class TherapyListActivity extends Activity {
 			adapter = new MTSListAdapter<Patient>(getApplicationContext(), R.layout.mts_list, patientListDec);
 		
 		initContent();
+		*/
 	}
 	
 	private void initContent() {

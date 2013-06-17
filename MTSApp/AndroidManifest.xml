@@ -101,6 +101,10 @@
         <activity android:name="moco.android.mtsdevice.maps.SalvageMap"
             	  android:screenOrientation="portrait"></activity>
         
+        
+        <activity android:name="moco.android.mtsdevice.TestActivity"
+            	  android:screenOrientation="portrait"></activity>
+        
     </application>
     
     <meta-data
