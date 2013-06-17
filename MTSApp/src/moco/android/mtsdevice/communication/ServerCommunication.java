@@ -35,8 +35,6 @@ public class ServerCommunication {
 
 		String urlString = mtsServerAddress;
 		
-		resetPolicy();
-		
 		String xmlResult = this.getData(urlString);
 		
 		return new PatientList(xmlResult);
@@ -103,6 +101,11 @@ public class ServerCommunication {
 	 * ### Daten versenden ###
 	 */
 	
+	/**
+	 * sendet einen Patienten an den Server
+	 * @param patient neuer Server
+	 * @throws CommunicationException
+	 */
 	public void savePatient(Patient patient) throws CommunicationException {
 		
 		String urlString = mtsServerAddress + patient.getId();
@@ -113,6 +116,12 @@ public class ServerCommunication {
 		this.putData(urlString, xmlData);
 	}
 	
+	/**
+	 * sendet die Daten an den Server, der die Daten dann speichert
+	 * @param urlString URL
+	 * @param xmlData Daten
+	 * @throws CommunicationException
+	 */
 	private void putData(String urlString, String xmlData) throws CommunicationException {
 		
 		resetPolicy();
@@ -123,10 +132,8 @@ public class ServerCommunication {
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
 			con.setDoOutput(true);
-			
 			con.setRequestMethod("PUT");
 
-			
 			OutputStreamWriter writer = new OutputStreamWriter(con.getOutputStream());
 			writer.write(xmlData);
 			writer.close();

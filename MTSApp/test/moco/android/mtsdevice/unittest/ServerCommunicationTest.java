@@ -8,7 +8,7 @@ import moco.android.mtsdevice.communication.CommunicationException;
 import moco.android.mtsdevice.communication.ServerCommunication;
 
 import org.junit.After;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 import at.mts.entity.Gender;
@@ -19,10 +19,10 @@ import at.mts.entity.TriageCategory;
 
 public class ServerCommunicationTest {
 
-	private static ServerCommunication com;
+	private ServerCommunication com;
 	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		
 		com = ServerCommunication.getInstance();
 		com.changeMtsServerAddress("LOCAL HOST");
