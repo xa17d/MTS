@@ -79,5 +79,6 @@
     <string name="error_no_reason">Sie müssen zuerst eine Todesursache angeben, bevor der Tod festgestellt werden kann!</string>
     <string name="front_body">Vorderkörper</string>
     <string name="back_body">Hinterkörper</string>
+    <string name="change_patient">Wollen Sie den Patienten wechseln?</string>
 
 </resources>

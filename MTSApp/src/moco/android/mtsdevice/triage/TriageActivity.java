@@ -85,6 +85,11 @@ public class TriageActivity extends Activity {
 	            	.show();
 			}
 			else if(category == TriageCategory.minor) {
+				/*
+				 * ++TODO++
+				 * nachfrage ob er selbst zum hilfsplatz laeuft
+				 */
+				
 				patient.setCategory(category);
 				
 				Intent intent = new Intent(this, ScanTagActivity.class);
@@ -181,8 +186,14 @@ public class TriageActivity extends Activity {
 			respirationStable.setBackgroundColor(Color.GREEN);
 			perfusionStable.setBackgroundColor(Color.GREEN);
 			mentalStable.setBackgroundColor(Color.GREEN);
+			
 			category = TriageCategory.minor;
 			patient.setCategory(category);
+			
+			patient.setWalkable(true);
+			patient.setRespiration(Condition.stable);
+			patient.setPerfusion(Condition.stable);
+			patient.setMentalStatus(Condition.stable);
 		}
 		/**
 		 * Patient kann nicht laufen --> Atmung kontrollieren
@@ -191,6 +202,8 @@ public class TriageActivity extends Activity {
 			walkNo.setBackgroundColor(Color.RED);
 			respirationYes.setEnabled(true);
 			respirationNo.setEnabled(true);
+			
+			patient.setWalkable(true);
 		}
 		
 		walkYes.setEnabled(false);
@@ -213,8 +226,13 @@ public class TriageActivity extends Activity {
 			respirationCritical.setBackgroundColor(Color.RED);
 			perfusionCritical.setBackgroundColor(Color.RED);
 			mentalCritical.setBackgroundColor(Color.RED);
+			
 			category = TriageCategory.deceased;
 			patient.setCategory(category);
+			
+			patient.setRespiration(Condition.critical);
+			patient.setPerfusion(Condition.critical);
+			patient.setMentalStatus(Condition.critical);
 		}
 		/**
 		 * Atmung vorhanden --> Atemgeschwindigkeit kontrollieren
@@ -223,6 +241,8 @@ public class TriageActivity extends Activity {
 			respirationYes.setBackgroundColor(Color.GREEN);
 			respirationStable.setEnabled(true);
 			respirationCritical.setEnabled(true);
+			
+			patient.setRespiration(Condition.stable);
 		}
 		
 		respirationYes.setEnabled(false);
@@ -244,8 +264,13 @@ public class TriageActivity extends Activity {
 			respirationCritical.setBackgroundColor(Color.RED);
 			perfusionCritical.setBackgroundColor(Color.RED);
 			mentalCritical.setBackgroundColor(Color.RED);
+			
 			category = TriageCategory.immediate;
 			patient.setCategory(category);
+			
+			patient.setRespiration(Condition.critical);
+			patient.setPerfusion(Condition.critical);
+			patient.setMentalStatus(Condition.critical);
 		}
 		/**
 		 * Atmung vorhanden --> Perfusion kontrollieren
@@ -254,6 +279,8 @@ public class TriageActivity extends Activity {
 			respirationStable.setBackgroundColor(Color.GREEN);
 			perfusionStable.setEnabled(true);
 			perfusionCritical.setEnabled(true);
+			
+			patient.setRespiration(Condition.stable);
 		}
 		
 		respirationStable.setEnabled(false);
@@ -264,7 +291,7 @@ public class TriageActivity extends Activity {
 	
 	/**
 	 * Stabiler Blutkreislauf vorhanden?
-	 * @param v
+	 * @param v View
 	 */
 	public void perfusionClick(View v) {
 		
@@ -274,8 +301,12 @@ public class TriageActivity extends Activity {
 		if(v == perfusionCritical) {
 			perfusionCritical.setBackgroundColor(Color.RED);
 			mentalCritical.setBackgroundColor(Color.RED);
+			
 			category = TriageCategory.immediate;
 			patient.setCategory(category);
+			
+			patient.setPerfusion(Condition.critical);
+			patient.setMentalStatus(Condition.critical);
 		}
 		/**
 		 * stabiler Blutkreislauf vorhanden --> Mentaler Status kontrollieren
@@ -284,6 +315,8 @@ public class TriageActivity extends Activity {
 			perfusionStable.setBackgroundColor(Color.GREEN);
 			mentalStable.setEnabled(true);
 			mentalCritical.setEnabled(true);
+			
+			patient.setPerfusion(Condition.stable);
 		}
 		
 		perfusionStable.setEnabled(false);
@@ -303,8 +336,11 @@ public class TriageActivity extends Activity {
 		 */
 		if(v == mentalCritical) {
 			mentalCritical.setBackgroundColor(Color.RED);
+			
 			category = TriageCategory.immediate;
 			patient.setCategory(category);
+			
+			patient.setMentalStatus(Condition.critical);
 		}
 		/**
 		 * ausreichendes Reaktionsvermögen --> DELAYED
@@ -313,6 +349,8 @@ public class TriageActivity extends Activity {
 			mentalStable.setBackgroundColor(Color.GREEN);
 			category = TriageCategory.delayed;
 			patient.setCategory(category);
+			
+			patient.setMentalStatus(Condition.stable);
 		}
 		
 		mentalStable.setEnabled(false);
