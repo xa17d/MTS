@@ -42,7 +42,8 @@ public class TherapyListActivity extends Activity {
 		setContentView(R.layout.therapy_list);
 		
 		ServerCommunication com = new ServerCommunication();
-		String s = "";
+		/*
+		PatientList s = new PatientList();
 		try {
 			s = com.loadAllPatients();
 		} catch (CommunicationException e) {
@@ -50,7 +51,19 @@ public class TherapyListActivity extends Activity {
 			e.printStackTrace();
 		}
 		
-		TestActivity.setTestText(s);
+		TestActivity.setTestText(s.toString());
+		*/
+		
+		String p = null;
+		try {
+			p = com.getBody("http://88.116.105.228:30104/MtsServer/restApi/patients/204c4fea-9827-4614-9793-f7c8b3c98e18");
+		} catch (CommunicationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		TestActivity.setTestText(p);
+		//TestActivity.setTestText(p.getNameGiven() + " " + p.getNameFamily() + "(" + p.getAge() + ")");
 		
 		//TEST
 		Intent intent = new Intent(this, TestActivity.class);
