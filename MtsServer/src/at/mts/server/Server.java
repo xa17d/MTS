@@ -3,9 +3,6 @@ package at.mts.server;
 import java.sql.Connection;
 import java.util.UUID;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import at.mts.server.persistence.HsqldbConnection;
 import at.mts.server.persistence.PatientDao;
 import at.mts.server.persistence.PatientDaoJdbc;
@@ -19,7 +16,7 @@ import at.mts.server.service.PatientServiceImpl;
  */
 public class Server {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(Server.class);
+	private static final Logger LOG = Logger.forClass(Server.class);
 	
 	private Server() throws ServerException {
 		
@@ -59,7 +56,7 @@ public class Server {
 			LOG.info("singleton created");
 			return server;
 		} catch (ServerException e) {
-			LOG.error("create singleton failed");
+			LOG.error("create singleton failed", e);
 			throw new RuntimeException(e);
 		}
 	}

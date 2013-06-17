@@ -22,15 +22,13 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import at.mts.entity.Patient;
 import at.mts.entity.PatientList;
 import at.mts.entity.PatientListItem;
 import at.mts.entity.Treatment;
 import at.mts.entity.TriageCategory;
 import at.mts.entity.cda.CdaDocument;
+import at.mts.server.Logger;
 import at.mts.server.Server;
 import at.mts.server.service.PatientService;
 import at.mts.server.service.ServiceException;
@@ -38,7 +36,7 @@ import at.mts.server.service.ServiceException;
 @Path("/restApi")
 public class RestApi {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(RestApi.class);
+	private static final Logger LOG = Logger.forClass(RestApi.class);
 
 	@Context
 	HttpServletRequest request;

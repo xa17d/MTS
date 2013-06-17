@@ -1,6 +1,7 @@
 package at.mts.entity.cda;
 import at.mts.entity.Bodyparts;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.text.DateFormat;
@@ -19,8 +20,12 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
+import at.mts.entity.Condition;
 import at.mts.entity.Gender;
 import at.mts.entity.Patient;
+import at.mts.entity.PhaseOfLife;
+import at.mts.entity.Treatment;
+import at.mts.entity.TriageCategory;
 /**
  * CDA-Dokument.
  * Ermoeglicht das einlesen oder erzeugen eines CDA-Dokuments.
@@ -66,24 +71,27 @@ public class CdaDocument {
         //#############--BODY--#############*/
         body = new CdaBody();
         //-----VITALZEICHEN
-        setBody(body, "gehfaehigkeit", patient.getWalkable());
-        setBody(body, "respiration", patient.getRespiration());
-        setBody(body, "perfusion", patient.getPerfusion());
-        setBody(body, "mentalerstatus", patient.getMentalStatus());
-        setBody(body, "triagekategorie", patient.getCategory());
-        setBody(body, "behandlung", patient.getTreatment());
+        setBody(body, "gehfaehigkeit", patient.getWalkable(), CdaBoolean.asCdaValue(patient.getWalkable()));
+        setBody(body, "respiration", patient.getRespiration(), Condition.asCdaValue(patient.getRespiration()));
+        setBody(body, "perfusion", patient.getPerfusion(), Condition.asCdaValue(patient.getPerfusion()));
+        setBody(body, "mentalerstatus", patient.getMentalStatus(), Condition.asCdaValue(patient.getMentalStatus()));
+        setBody(body, "triagekategorie", patient.getCategory(), TriageCategory.asCdaValue(patient.getCategory()));
+        setBody(body, "behandlung", patient.getTreatment(), Treatment.asCdaValue(patient.getTreatment()));
                 
                 //-----DETAILS
         setBody(body, "gps", patient.getGps());
-        setBody(body, "lebensphase", patient.getPhaseOfLife());
+        setBody(body, "lebensphase",  patient.getPhaseOfLife(), PhaseOfLife.asCdaValue(patient.getPhaseOfLife()));
         setBody(body, "bergeinformation", patient.getSalvageInfoString());
         setBody(body, "hilfplatzposition", patient.getPlacePosition());
-        setBody(body, "dringlichkeit", patient.getUrgency());
+        setBody(body, "dringlichkeit", patient.getUrgency(), patient.getUrgency());
         setBody(body, "diagnose", patient.getDiagnosis());
-        setBody(body, "blutdruck", patient.getBloodPressureSystolic());
-        setBody(body, "puls", patient.getPulse());
+        
+        if (patient.getBloodPressureSystolic() != null && patient.getBloodPressureDiastolic() != null) {
+        	setBody(body, "blutdruck", patient.getBloodPressureSystolic()+":"+patient.getBloodPressureDiastolic());
+        }
+        setBody(body, "puls", patient.getPulse(), patient.getPulse());
         setBody(body, "behandlungsverlauf", patient.getCourseOfTreatment());
-        setBody(body, "transportbereitschaft", patient.getReadyForTransport());
+        setBody(body, "transportbereitschaft", patient.getReadyForTransport(), CdaBoolean.asCdaValue(patient.getReadyForTransport()));
         setBody(body, "zielkrankenhaus", patient.getHospital());
         setBody(body, "krankenkasse", patient.getHealthInsurance());
         //-----VERLETZUNGEN
@@ -97,9 +105,13 @@ public class CdaDocument {
         }
 	}
 	
-	private void setBody(CdaBody body, String key, Object value) {
+	private void setBody(CdaBody body, String key, String value) {
+		setBody(body, key, value, value);
+	}
+	
+	private void setBody(CdaBody body, String key, Object value, Object cdaValue) {
 		if (value != null) {
-			body.set(key, value.toString());
+			body.set(key, cdaValue.toString());
 		}
 	}
 	
@@ -113,7 +125,7 @@ public class CdaDocument {
 		try{
 			
 			body = new CdaBody(); // Body loeschen
-			Document doc = new SAXBuilder().build(document);
+			Document doc = new SAXBuilder().build(new ByteArrayInputStream(document.getBytes("UTF-8")));
 	        Namespace NS = Namespace.getNamespace("urn:hl7-org:v3");
 	        
 	        Element root = doc.getRootElement();
@@ -135,9 +147,11 @@ public class CdaDocument {
 	        int versionNr = Integer.parseInt(root.getChild("versionNumber", NS).getAttributeValue("value"));	
 	        setIdV(new CdaIdV(idFromCda,versionNr));
 	        
-	        UUID idFromCdaParent =UUID.fromString(root.getChild("relatedDocument", NS).getChild("parentDocument", NS).getChild("id", NS).getAttributeValue("extension"));
-	        int versionNrParent = Integer.parseInt(root.getChild("relatedDocument", NS).getChild("parentDocument", NS).getChild("versionNumber", NS).getAttributeValue("value"));	
-	        setParentIdV(new CdaIdV(idFromCdaParent, versionNrParent));
+	        if (root.getChild("relatedDocument", NS) != null && root.getChild("relatedDocument", NS).getChild("parentDocument", NS) != null) {
+		        UUID idFromCdaParent =UUID.fromString(root.getChild("relatedDocument", NS).getChild("parentDocument", NS).getChild("id", NS).getAttributeValue("extension"));
+		        int versionNrParent = Integer.parseInt(root.getChild("relatedDocument", NS).getChild("parentDocument", NS).getChild("versionNumber", NS).getAttributeValue("value"));	
+		        setParentIdV(new CdaIdV(idFromCdaParent, versionNrParent));
+	        }
 	        
 	        String effectiveTime = root.getChild("effectiveTime", NS).getAttributeValue("value"); 
 	        setDocumentDate((Date) formatter.parse(effectiveTime));
@@ -148,20 +162,19 @@ public class CdaDocument {
 	        //-----VITALZEICHEN
 
 	        String textVital = root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChildText("text", NS);
-	        String[] ttextVital =textVital.split("\\r?\\n");
-	        	
-	        splitInfo(ttextVital);
+
+	        splitInfo(textVital);
 	        
 	        //-----DETAILS
 	        List <Element> liste = root.getChild("component", NS).getChild("structuredBody",NS).getChildren();
-	        String[] ttextDetails =liste.get(1).getChild("section", NS).getChild("text",NS).getText().split("\\r?\\n");
+	        String textDetails =liste.get(1).getChild("section", NS).getChild("text",NS).getText();
 
-	        splitInfo(ttextDetails);
+	        splitInfo(textDetails);
 	        
 	        //-----VERLETZUNGEN
-	        String[] ttextInjury =liste.get(1).getChild("section", NS).getChild("component",NS).getChild("section",NS).getChild("text",NS).getText().split("\\r?\\n");
+	        String textInjury =liste.get(1).getChild("section", NS).getChild("component",NS).getChild("section",NS).getChild("text",NS).getText();
 
-	        splitInfo(ttextInjury);
+	        splitInfo(textInjury);
 	        
 		} 
 		catch (Exception e) {
@@ -173,16 +186,18 @@ public class CdaDocument {
 	 * Setzt/Aktualisiert alle Property-Werte aus dem CDA-Body
 	 * @param info ist eine Section aus dem CDA-Body
 	 */
-	private void splitInfo(String[] info){
-		String[] keypair;
-		for(String e : info){
-        	keypair = e.split(":", 2);
-        	keypair[0]=keypair[0].replaceAll("\\s", "");
-        	if(!keypair[0].isEmpty()){	
-        		keypair[1]= keypair[1].replaceAll("\\s", "");
-        		body.set(keypair[0], keypair[1]);
-        	}	
-        }
+	private void splitInfo(String bodyValue){
+		
+		String[] lines = bodyValue.split("<br ?/?>");
+		
+		for (String line : lines) {
+			String[] keypair = line.trim().split(":", 2);
+			if (keypair.length > 1) {
+				String key = keypair[0].trim();
+				String value = keypair[1].trim();
+				body.set(key, value);
+			}
+		}
 	}
 	
 
@@ -223,7 +238,7 @@ public class CdaDocument {
 	        
 	        Element relatedDocument = root.getChild("relatedDocument", NS);
 	        if (getParentIdV() == null) {
-	        	relatedDocument.removeChild("parentDocument");
+	        	relatedDocument.removeChild("parentDocument", NS);
 	        }
 	        else {
 		        root.getChild("relatedDocument", NS).getChild("parentDocument", NS).getChild("id", NS).setAttribute("extension", getParentIdV().getId().toString());
