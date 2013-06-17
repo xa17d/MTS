@@ -161,18 +161,18 @@ public class CdaDocument {
 	        //#############--BODY--#############*/
 	        //-----VITALZEICHEN
 
-	        String textVital = root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChildText("text", NS);
+	        Element textVital = root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text",NS);
 
 	        splitInfo(textVital);
 	        
 	        //-----DETAILS
 	        List <Element> liste = root.getChild("component", NS).getChild("structuredBody",NS).getChildren();
-	        String textDetails =liste.get(1).getChild("section", NS).getChild("text",NS).getText();
+	        Element textDetails =liste.get(1).getChild("section", NS).getChild("text",NS);
 
 	        splitInfo(textDetails);
 	        
 	        //-----VERLETZUNGEN
-	        String textInjury =liste.get(1).getChild("section", NS).getChild("component",NS).getChild("section",NS).getChild("text",NS).getText();
+	        Element textInjury =liste.get(1).getChild("section", NS).getChild("component",NS).getChild("section",NS).getChild("text",NS);
 
 	        splitInfo(textInjury);
 	        
@@ -186,8 +186,9 @@ public class CdaDocument {
 	 * Setzt/Aktualisiert alle Property-Werte aus dem CDA-Body
 	 * @param info ist eine Section aus dem CDA-Body
 	 */
-	private void splitInfo(String bodyValue){
-		
+	private void splitInfo(Element element){
+
+		String bodyValue = element.getText();
 		String[] lines = bodyValue.split("<br ?/?>");
 		
 		for (String line : lines) {
@@ -252,104 +253,89 @@ public class CdaDocument {
 	        //#############--BODY--#############*/
 	        //-----VITALZEICHEN
 	        
-	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).setText("");
+	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).removeContent();
 	        
 	        // System.out.println(vital);
 	        
 	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent(new Comment(" gehfaehigkeit? Werte: ja/nein "));
-	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent("gehfaehigkeit: "+body.get("gehfaehigkeit")+"<br /> ");
+	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent("gehfaehigkeit: "+body.get("gehfaehigkeit"));
+	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent("<br />"); // (new Element("br",NS));
 	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent(new Comment(" respiration? Werte: stabil/kritisch "));
-	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent("respiration: "+body.get("respiration")+" <br /> ");
+	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent("respiration: "+body.get("respiration"));
+	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent("<br />"); // (new Element("br",NS));
 	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent(new Comment(" perfusion? Werte: stabil/kritisch "));
-	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent("perfusion: "+body.get("perfusion")+" <br />");
+	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent("perfusion: "+body.get("perfusion"));
+	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent("<br />"); // (new Element("br",NS));
 	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent(new Comment(" mentalerstatus? Werte: stabil/kritisch "));
-	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent("mentalerstatus: "+body.get("mentalerstatus")+" <br /> ");
+	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent("mentalerstatus: "+body.get("mentalerstatus"));
+	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent("<br />"); // (new Element("br",NS));
 	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent(new Comment(" Werte: immediate, delayed, minor, deceased "));
-	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent("triagekategorie: "+body.get("triagekategorie")+" <br /> ");
+	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent("triagekategorie: "+body.get("triagekategorie"));
+	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent("<br />"); // (new Element("br",NS));
 	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent(new Comment(" Werte: undefiniert, gesichtet, geborgen, abtransportiert "));
-	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent("behandlung: "+body.get("behandlung")+" <br />");
+	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent("behandlung: "+body.get("behandlung"));
 	           
 	        //-----DETAILS
 	       
 	        List <Element> liste = root.getChild("component", NS).getChild("structuredBody",NS).getChildren();
-	        liste.get(1).getChild("section", NS).getChild("text",NS).setText("");
+	        liste.get(1).getChild("section", NS).getChild("text",NS).removeContent();
 	        
 	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent(new Comment(" Format: 46.992365,10.022476,5.0 wobei die erste Zahl die geographische Breite, die zweite Zahl die geographische LŠnge in Grad und die dritte Zahl die Genauigkeit in Meter. Oder kA wenn keine Position vorhanden "));
-	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("gps: "+body.get("gps")+" <br />");
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("gps: "+body.get("gps"));
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("<br />"); // (new Element("br",NS));
 	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent(new Comment(" Werte: Kind, Erwachsen "));
-	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("lebensphase: "+body.get("lebensphase")+" <br />");
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("lebensphase: "+body.get("lebensphase"));
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("<br />"); // (new Element("br",NS));
 	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent(new Comment(" Werte: Freitext String"));
-	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("bergeinformation: "+body.get("bergeinformation")+" <br />");
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("bergeinformation: "+body.get("bergeinformation"));
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("<br />"); // (new Element("br",NS));
 	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent(new Comment(" Werte: Freitext String"));
-	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("hilfplatzposition: "+body.get("hilfplatzposition")+" <br />");
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("hilfplatzposition: "+body.get("hilfplatzposition"));
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("<br />"); // (new Element("br",NS));
 	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent(new Comment(" Werte: 1-5 (5 am Dringlichsten) "));
-	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("dringlichkeit: "+body.get("dringlichkeit")+" <br />");
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("dringlichkeit: "+body.get("dringlichkeit"));
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("<br />"); // (new Element("br",NS));
 	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent(new Comment(" Werte: ICD10-Code - getrennt durch ; "));
-	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("diagnose: "+body.get("diagnose")+" <br />");
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("diagnose: "+body.get("diagnose"));
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("<br />"); // (new Element("br",NS));
 	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent(new Comment(" Werte: int systolisch : int diastolisch "));
-	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("blutdruck: "+body.get("blutdruck")+" <br /> ");
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("blutdruck: "+body.get("blutdruck"));
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("<br />"); // (new Element("br",NS));
 	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent(new Comment(" Werte: int bpm "));
-	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("puls: "+body.get("puls")+" <br />");
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("puls: "+body.get("puls"));
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("<br />"); // (new Element("br",NS));
 	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent(new Comment(" Werte: Freitext String - getrennt durch ; "));
-	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("behandlungsverlauf: "+body.get("behandlungsverlauf")+"<br />");
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("behandlungsverlauf: "+body.get("behandlungsverlauf"));
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("<br />"); // (new Element("br",NS));
 	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent(new Comment(" Werte: ja/nein "));
-	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("transportbereitschaft: "+body.get("transportbereitschaft")+"<br />");
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("transportbereitschaft: "+body.get("transportbereitschaft"));
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("<br />"); // (new Element("br",NS));
 	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent(new Comment(" Freitext String "));
-	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("zielkrankenhaus: "+body.get("zielkrankenhaus")+"<br />");
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("zielkrankenhaus: "+body.get("zielkrankenhaus"));
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("<br />"); // (new Element("br",NS));
 	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent(new Comment(" Werte: Freitext String "));
-	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("krankenkasse: "+body.get("krankenkasse")+"<br /> ");
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("krankenkasse: "+body.get("krankenkasse"));
+	        liste.get(1).getChild("section", NS).getChild("text",NS).addContent("<br />"); // (new Element("br",NS));
 	        
 	        //-----VERLETZUNGEN
 	        
-	        String verletzungen=
-            	"				Vorne_Kopf: "+body.get("Vorne_Kopf")+"<br />\n"
-            	+"				Vorne_Hals: "+body.get("Vorne_Hals")+"<br />\n"
-            	+"				Vorne_Brust: "+body.get("Vorne_Brust")+"<br />\n"
-            	+"				Vorne_Bauch: "+body.get("Vorne_Bauch")+"<br />\n"
-            	+"				Vorne_ROberarm: "+body.get("Vorne_ROberarm")+"<br />\n"
-            	+"				Vorne_LOberarm: "+body.get("Vorne_LOberarm")+"<br />\n"
-            	+"				Vorne_RUnterarm: "+body.get("Vorne_RUnterarm")+"<br />\n"
-            	+"				Vorne_LUnterarm: "+body.get("Vorne_LUnterarm")+"<br />\n"
-            	+"				Vorne_RHand: "+body.get("Vorne_RHand")+"<br />\n"
-            	+"				Vorne_LHand: "+body.get("Vorne_LHand")+"<br />\n"
-            	+"				Vorne_LOberschenkel: "+body.get("Vorne_LOberschenkel")+"<br />\n"
-            	+"				Vorne_ROberschenkel: "+body.get("Vorne_ROberschenkel")+"<br />\n"
-            	+"				Vorne_LUnterschenkel: "+body.get("Vorne_LUnterschenkel")+"<br />\n"
-            	+"				Vorne_RUnterschenkel: "+body.get("Vorne_RUnterschenkel")+"<br />\n"
-            	+"				Vorne_LFuss: "+body.get("Vorne_LFuss")+"<br />\n"
-            	+"				Vorne_RFuss: "+body.get("Vorne_RFuss")+"<br />\n"
-            	+"				Hinten_Kopf: "+body.get("Hinten_Kopf")+"<br />\n"
-            	+"				Hinten_Hals: "+body.get("Hinten_Hals")+"<br />\n"
-            	+"				Hinten_Brust: "+body.get("Hinten_Brust")+"<br />\n"
-            	+"				Hinten_Bauch: "+body.get("Hinten_Bauch")+"<br />\n"
-            	+"				Hinten_ROberarm: "+body.get("Hinten_ROberarm")+"<br />\n"
-            	+"				Hinten_LOberarm: "+body.get("Hinten_LOberarm")+"<br />\n"
-            	+"				Hinten_RUnterarm: "+body.get("Hinten_RUnterarm")+"<br />\n"
-            	+"				Hinten_LUnterarm: "+body.get("Hinten_LUnterarm")+"<br />\n"
-            	+"				Hinten_RHand: "+body.get("Hinten_RHand")+"<br />\n"
-            	+"				Hinten_LHand: "+body.get("Hinten_LHand")+"<br />\n"
-            	+"				Hinten_LOberschenkel: "+body.get("Hinten_LOberschenkel")+"<br />\n"
-            	+"				Hinten_ROberschenkel: "+body.get("Hinten_ROberschenkel")+"<br />\n"
-            	+"				Hinten_LUnterschenkel: "+body.get("Hinten_LUnterschenkel")+"<br />\n"
-            	+"				Hinten_RUnterschenkel: "+body.get("Hinten_RUnterschenkel")+"<br />\n"
-            	+"				Hinten_LFuss: "+body.get("Hinten_LFuss")+"<br />\n"
-            	+"				Hinten_RFuss: "+body.get("Hinten_RFuss")+"<br />\n";
-	        
 	        liste.get(1).getChild("section", NS).getChild("component",NS).getChild("section",NS).getChild("text",NS).setText("");
-	        liste.get(1).getChild("section", NS).getChild("component",NS).getChild("section",NS).getChild("text",NS).addContent(new Comment("Werte: Freitext String †BERALL"));
+	        liste.get(1).getChild("section", NS).getChild("component",NS).getChild("section",NS).getChild("text",NS).addContent(new Comment("Werte: Freitext String UEBERALL"));
 	        
-	        liste.get(1).getChild("section", NS).getChild("component",NS).getChild("section",NS).getChild("text",NS).addContent(verletzungen);
-	        
-	        
+	        for (String key : Bodyparts.Keys) {
+	        	String text = body.get(key);
+				if (text != null) {
+					liste.get(1).getChild("section", NS).getChild("component",NS).getChild("section",NS).getChild("text",NS).addContent(key+": "+text);
+					liste.get(1).getChild("section", NS).getChild("component",NS).getChild("section",NS).getChild("text",NS).addContent("<br />"); // (new Element("br",NS));
+				}
+			}
+   
 	        Format format = Format.getPrettyFormat();
 	        format.setEncoding("UTF-8");
 	        
 			XMLOutputter outputter = new XMLOutputter(format);
 			outputter.escapeAttributeEntities("&lt;");
 	        xml = outputter.outputString(doc);
-	        
-	       
-	        System.out.println(xml);
 		}
     	catch (Exception e) {
 			e.printStackTrace();

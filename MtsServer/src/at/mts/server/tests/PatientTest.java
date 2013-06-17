@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import at.mts.entity.Bodyparts;
 import at.mts.entity.Condition;
 import at.mts.entity.Gender;
 import at.mts.entity.Patient;
@@ -68,9 +69,15 @@ public class PatientTest {
 		p.setVersion(1);
 		p.setWalkable(true);
 		
+		p.getBodyparts().set(Bodyparts.FRONT_HEAD, "nix im Kopf");
+		p.getBodyparts().set(Bodyparts.BACK_L_FOOT, "aua am Fuss");
+		
+		
 		p.setId(UUID.randomUUID());
 		CdaDocument doc = new CdaDocument(p);
 		String xml = doc.asXml();
+		
+        System.out.println(xml);
 		
 		assertFalse("".equals(xml));
 		
@@ -79,6 +86,8 @@ public class PatientTest {
 		
 		String xml2 = fromX.asXml();
 		
-		if (xml2.equals(xml)) {System.out.println("Muss gleich sein, FAIL");}else{System.out.println("awesome");}
+        System.out.println(xml2);
+		
+		if (!xml2.equals(xml)) {System.out.println("Muss gleich sein, FAIL");}else{System.out.println("awesome");}
 	}
 }

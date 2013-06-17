@@ -36,7 +36,12 @@ public class Patient {
 		setPhaseOfLife(PhaseOfLife.getValueOf(document.getBody().get("lebensphase")));
 		setSalvageInfo(document.getBody().get("bergeinformation"));
 		setPlacePosition(document.getBody().get("hilfplatzposition"));
-		setUrgency(Integer.parseInt(document.getBody().get("dringlichkeit")));
+		
+		String dringlichkeit = document.getBody().get("dringlichkeit");
+		if (dringlichkeit != null) {
+			setUrgency(Integer.parseInt(dringlichkeit));
+		}
+		
 		setDiagnosis(document.getBody().get("diagnose"));
 		
 		String blutdruck= document.getBody().get("blutdruck");
