@@ -17,7 +17,21 @@ public enum PhaseOfLife {
 		if (value.toLowerCase().equals("adult")) {
 			return PhaseOfLife.adult;
 		}
+		if (value.toLowerCase().equals("kind")) {
+			return PhaseOfLife.child;
+		}
+		if (value.toLowerCase().equals("erwachsen")) {
+			return PhaseOfLife.adult;
+		}
 
 		return PhaseOfLife.notSpecified;
+	}
+	
+	public static String asCdaValue(PhaseOfLife phaseOfLife) {
+		switch (phaseOfLife) {
+			case child: return "Kind";
+			case adult: return "Erwachsen";
+			default: return "UN";
+		}
 	}
 }

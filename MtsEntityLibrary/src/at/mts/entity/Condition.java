@@ -2,7 +2,7 @@ package at.mts.entity;
 
 public enum Condition {
 	
-	yes, no, stable, critical, notSpecified;
+	stable, critical, notSpecified;
 
 	public static String[] toStringArray() {
 		return new String[] { "critical", "stable" };
@@ -18,12 +18,15 @@ public enum Condition {
 		if (value.toLowerCase().equals("stable")) {
 			return Condition.stable;
 		}
-		if (value.toLowerCase().equals("yes")) {
-			return Condition.yes;
-		}
-		if (value.toLowerCase().equals("no")) {
-			return Condition.no;
-		}
+
 		return Condition.notSpecified;
+	}
+	
+	public static String asCdaValue(Condition condition) {
+		switch (condition) {
+			case stable: return "stabil";
+			case critical: return "kritisch";
+			default: return "kA";
+		}
 	}
 }

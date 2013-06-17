@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.BitSet;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.UUID;
@@ -32,6 +33,7 @@ public class CdaDocument {
 	 * Erzeugt ein neues, leeres CDA-Dokument
 	 */
 	public CdaDocument() {
+		setDocumentDate(new Date());
 		setIdV(new CdaIdV(UUID.randomUUID(), 1));
 	}
 	
@@ -40,6 +42,7 @@ public class CdaDocument {
 	 * @param document CDA Dokument als XML-String
 	 */
 	public CdaDocument(String document) {
+		setDocumentDate(new Date());
 		load(document);
 	}
 	
@@ -48,7 +51,8 @@ public class CdaDocument {
 	 * @param patient Patientendaten
 	 */
 	public CdaDocument(Patient patient) {
-		setIdV(new CdaIdV(UUID.randomUUID(), 1));
+		
+		setIdV(new CdaIdV(patient.getId(), patient.getVersion()));
 		
         setPatientNameGiven(patient.getNameGiven());
         setPatientNameFamily(patient.getNameFamily());
@@ -56,7 +60,7 @@ public class CdaDocument {
         setPatientGender(patient.getGender());
         setPatientBirthTime(patient.getBirthTime());
         
-        setParentIdV(getIdV());  //??
+        setParentIdV(null);  //??
         setDocumentDate(patient.getTimestamp());
         
         //#############--BODY--#############*/
@@ -165,7 +169,6 @@ public class CdaDocument {
 		}
 	}
 	
-	
 	/**
 	 * Setzt/Aktualisiert alle Property-Werte aus dem CDA-Body
 	 * @param info ist eine Section aus dem CDA-Body
@@ -207,19 +210,29 @@ public class CdaDocument {
 	        root.getChild("recordTarget", NS).getChild("patientRole",NS).getChild("patient", NS).getChild("name", NS).getChild("given", NS).setText(getPatientNameGiven());
 	        root.getChild("recordTarget", NS).getChild("patientRole",NS).getChild("patient", NS).getChild("name", NS).getChild("family", NS).setText(getPatientNameFamily());
 	        root.getChild("recordTarget", NS).getChild("patientRole",NS).getChild("id", NS).setAttribute("extension", getPatientId().toString());
-	        root.getChild("recordTarget", NS).getChild("patientRole",NS).getChild("patient", NS).getChild("administrativeGenderCode", NS).setAttribute("code",getPatientGender().toString());
+	        root.getChild("recordTarget", NS).getChild("patientRole",NS).getChild("patient", NS).getChild("administrativeGenderCode", NS).setAttribute("code", Gender.asCdaValue(getPatientGender()));
 
 	        DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-	        root.getChild("recordTarget", NS).getChild("patientRole",NS).getChild("patient", NS).getChild("birthTime", NS).setAttribute("value", formatter.format((getPatientBirthTime())));
+	        Date birthTime = getPatientBirthTime();
+	        if (birthTime == null) { birthTime = formatter.parse("18000101"); }
+	        root.getChild("recordTarget", NS).getChild("patientRole",NS).getChild("patient", NS).getChild("birthTime", NS).setAttribute("value", formatter.format(birthTime));
 	        
 	        
-	        root.getChild("id", NS).setAttribute("extension",getIdV().getId().toString());
+	        root.getChild("id", NS).setAttribute("extension", getIdV().getId().toString());
 	        root.getChild("versionNumber", NS).setAttribute("value", Integer.toString(getIdV().getVersion()));
 	        
-	        root.getChild("relatedDocument", NS).getChild("parentDocument", NS).getChild("id", NS).setAttribute("extension", getParentIdV().getId().toString());
-	        root.getChild("relatedDocument", NS).getChild("parentDocument", NS).getChild("versionNumber", NS).setAttribute("value", Integer.toString(getParentIdV().getVersion()));	
+	        Element relatedDocument = root.getChild("relatedDocument", NS);
+	        if (getParentIdV() == null) {
+	        	relatedDocument.removeChild("parentDocument");
+	        }
+	        else {
+		        root.getChild("relatedDocument", NS).getChild("parentDocument", NS).getChild("id", NS).setAttribute("extension", getParentIdV().getId().toString());
+		        root.getChild("relatedDocument", NS).getChild("parentDocument", NS).getChild("versionNumber", NS).setAttribute("value", Integer.toString(getParentIdV().getVersion()));	
+	        }
 	        
-	        root.getChild("effectiveTime", NS).setAttribute("value", formatter.format((getDocumentDate()))); 
+	        Date effectiveTime = getDocumentDate();
+	        if (effectiveTime == null) { effectiveTime = new Date(); }
+	        root.getChild("effectiveTime", NS).setAttribute("value", formatter.format(effectiveTime)); 
 	        
 	        //#############--BODY--#############*/
 	        //-----VITALZEICHEN
@@ -508,46 +521,5 @@ public class CdaDocument {
 	 * @return CDA-Body
 	 */
 	public CdaBody getBody() { return body; }
-	
-	public Bodyparts getBodyParts(){
-		Bodyparts allparts = new Bodyparts();
-		
-		
-		allparts.set("Vorne_Kopf",body.get("Vorne_Kopf"));
-		allparts.set("Vorne_Hals" ,body.get("Vorne_Hals"));
-		allparts.set("Vorne_Brust" ,body.get("Vorne_Brust"));
-    	allparts.set("Vorne_Bauch" ,body.get("Vorne_Bauch"));
-    	allparts.set("Vorne_ROberarm",body.get("Vorne_ROberarm"));
-    	allparts.set("Vorne_LOberarm" ,body.get("Vorne_LOberarm"));
-    	allparts.set("Vorne_RUnterarm" ,body.get("Vorne_RUnterarm"));
-    	allparts.set("Vorne_LUnterarm" ,body.get("Vorne_LUnterarm"));
-    	allparts.set("Vorne_RHand" ,body.get("Vorne_RHand"));
-    	allparts.set("Vorne_LHand" ,body.get("Vorne_LHand"));
-    	allparts.set("Vorne_LOberschenkel" ,body.get("Vorne_LOberschenkel"));
-    	allparts.set("Vorne_ROberschenkel" ,body.get("Vorne_ROberschenkel"));
-    	allparts.set("Vorne_LUnterschenkel" ,body.get("Vorne_LUnterschenkel"));
-    	allparts.set("Vorne_RUnterschenkel" ,body.get("Vorne_RUnterschenkel"));
-    	allparts.set("Vorne_LFuss" ,body.get("Vorne_LFuss"));
-    	allparts.set("Vorne_RFuss" ,body.get("Vorne_RFuss"));
-    	allparts.set("Hinten_Kopf" ,body.get("Hinten_Kopf"));
-    	allparts.set("Hinten_Hals" ,body.get("Hinten_Hals"));
-    	allparts.set("Hinten_Brust" ,body.get("Hinten_Brust"));
-    	allparts.set("Hinten_Bauch" ,body.get("Hinten_Bauch"));
-    	allparts.set("Hinten_ROberarm" ,body.get("Hinten_ROberarm"));
-    	allparts.set("Hinten_LOberarm" ,body.get("Hinten_LOberarm"));
-    	allparts.set("Hinten_RUnterarm" ,body.get("Hinten_RUnterarm"));
-    	allparts.set("Hinten_LUnterarm" ,body.get("Hinten_LUnterarm"));
-    	allparts.set("Hinten_RHand" ,body.get("Hinten_RHand"));
-    	allparts.set("Hinten_LHand" ,body.get("Hinten_LHand"));
-    	allparts.set("Hinten_LOberschenkel" ,body.get("Hinten_LOberschenkel"));
-    	allparts.set("Hinten_ROberschenkel" ,body.get("Hinten_ROberschenkel"));
-    	allparts.set("Hinten_LUnterschenkel" ,body.get("Hinten_LUnterschenkel"));
-    	allparts.set("Hinten_RUnterschenkel" ,body.get("Hinten_RUnterschenkel"));
-    	allparts.set("Hinten_LFuss" ,body.get("Hinten_LFuss"));
-    	allparts.set("Hinten_RFuss" ,body.get("Hinten_RFuss"));;
-		
-		
-		return allparts;
-	}
 	
 }

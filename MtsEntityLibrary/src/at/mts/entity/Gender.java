@@ -19,4 +19,13 @@ public enum Gender {
 		}
 		return Gender.notSpecified;
 	}
+	
+	public static String asCdaValue(Gender gender) {
+		if (gender == null) { gender = notSpecified; }
+		switch (gender) {
+			case male: return "M";
+			case female: return "F";
+			default: return "UN";
+		}
+	}
 }
