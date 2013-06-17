@@ -28,10 +28,11 @@ public enum PhaseOfLife {
 	}
 	
 	public static String asCdaValue(PhaseOfLife phaseOfLife) {
+		if (phaseOfLife == null) { phaseOfLife = notSpecified; }
 		switch (phaseOfLife) {
 			case child: return "Kind";
 			case adult: return "Erwachsen";
-			default: return "UN";
+			default: return "kA";
 		}
 	}
 }

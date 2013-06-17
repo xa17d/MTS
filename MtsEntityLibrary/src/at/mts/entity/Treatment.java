@@ -33,4 +33,14 @@ public enum Treatment {
 
 		return Treatment.notSpecified;
 	}
+	
+	public static String asCdaValue(Treatment treatment) {
+		if (treatment == null) { treatment = notSpecified; }
+		switch (treatment) {
+			case sighted: return "gesichtet";
+			case salvaged: return "geborgen";
+			case transported: return "abtransportiert";
+			default: return "undefiniert";
+		}
+	}
 }

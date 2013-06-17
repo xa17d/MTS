@@ -23,6 +23,7 @@ public enum Condition {
 	}
 	
 	public static String asCdaValue(Condition condition) {
+		if (condition == null) { condition = notSpecified; }
 		switch (condition) {
 			case stable: return "stabil";
 			case critical: return "kritisch";

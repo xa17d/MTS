@@ -34,4 +34,15 @@ public enum TriageCategory {
 		}
 		return TriageCategory.notSpecified;
 	}
+	 
+	public static String asCdaValue(TriageCategory triageCategory) {
+		if (triageCategory == null) { triageCategory = notSpecified; }
+		switch (triageCategory) {
+			case immediate: return "immediate";
+			case delayed: return "delayed";
+			case minor: return "minor";
+			case deceased: return "deceased";
+			default: return "kA";
+		}
+	}
 }
