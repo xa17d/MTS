@@ -4,11 +4,16 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Klasse zum erzeugen von Hsqldb Datenbank-Verbindungen
  * @author Daniel
  */
 public class HsqldbConnection {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(HsqldbConnection.class);
 	
 	/**
 	 * Erzeugt eine neue Hsqldb-Verbindung zu einer bestimmten Adresse
@@ -64,9 +69,13 @@ public class HsqldbConnection {
 	 */
 	public static Connection getConnection() throws PersistenceException {
 		
+		LOG.info("establishing HSQLDB connection...");
+		
 		if (connection == null) {
 			connection = new HsqldbConnection("jdbc:hsqldb:hsql://localhost/MTS");
 		}
+		
+		LOG.info("HSQLDB connected");
 		
 		return connection.getSqlConnection();
 	}

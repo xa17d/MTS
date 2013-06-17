@@ -22,6 +22,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import at.mts.entity.Patient;
 import at.mts.entity.PatientList;
 import at.mts.entity.PatientListItem;
@@ -34,6 +37,8 @@ import at.mts.server.service.ServiceException;
 
 @Path("/restApi")
 public class RestApi {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(RestApi.class);
 
 	@Context
 	HttpServletRequest request;
@@ -91,9 +96,12 @@ public class RestApi {
 			@FormParam("document") String document) throws IOException {
 		authentificate();
 	    
+		LOG.info("PUT patients/{id}");
+		
 		try {
 			patientService.update(new CdaDocument(document), new Date());
 		} catch (ServiceException e) {
+			LOG.error("error", e);
 			response.sendError(404, "Service Error: "+e.getMessage());
 		}
 	}
@@ -109,10 +117,13 @@ public class RestApi {
 			@FormParam("timestamp") String timestamp) throws IOException {
 		
 		authentificate();
+		
+		LOG.info("POST patients/{id}");
 	    
 		try {			
 			patientService.update(new CdaDocument(document), parseTimestamp(timestamp));
 		} catch (ServiceException e) {
+			LOG.error("error", e);
 			response.sendError(404, "Service Error: "+e.getMessage());
 		}
 	}
@@ -126,6 +137,8 @@ public class RestApi {
 		
 		authentificate();
 		
+		LOG.info("GET patients/{id}");
+		
 		Patient p = null;
 		
 		try {
@@ -136,15 +149,19 @@ public class RestApi {
 			}
 
 		} catch (ServiceException e) {
+			LOG.error("error", e);
 			response.sendError(404, "Service Error: "+e.getMessage());
 		}
 		
 		if (p == null) {
+			LOG.warn("Patient not found");
 			response.sendError(404, "Patient nicht gefunden");
 			return "";
 		}
 		else {
+			LOG.info("Generate CDA");
 			String xml = new CdaDocument(p).asXml();
+			LOG.info("CDA ready");
 			return xml;
 		}
 	}
@@ -157,6 +174,8 @@ public class RestApi {
 			@Context HttpServletRequest servletRequest) throws IOException {
 		
 		authentificate();
+		
+		LOG.info("GET patients");
 		
 		try {
 			TriageCategory category = TriageCategory.getValueOf(triagekategorie);
@@ -174,6 +193,7 @@ public class RestApi {
 			return patientList.asXml();
 			
 		} catch (ServiceException e) {
+			LOG.error("error", e);
 			response.sendError(404, e.getMessage());
 			return "";
 		}
@@ -183,6 +203,8 @@ public class RestApi {
 	@Path("status")
 	@Produces(MediaType.TEXT_HTML)
 	public String status(@Context HttpServletRequest servletRequest) {
+		
+		LOG.info("GET status");
 		
 		StringBuilder r = new StringBuilder();
 		r.append("<h1>Status</h1>\n"); 

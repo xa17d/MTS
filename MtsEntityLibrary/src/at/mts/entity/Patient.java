@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.UUID;
 
+import at.mts.entity.cda.CdaBoolean;
 import at.mts.entity.cda.CdaDocument;
 
 public class Patient {
@@ -21,18 +22,13 @@ public class Patient {
 		setBirthTime(document.getPatientBirthTime());
 		setGender(document.getPatientGender());        
 		
-		
-		if(document.getBody().get("gehfaehigkeit").equals("ja"))
-			setWalkable(true);
-		else
-			setWalkable(false);
+		setWalkable(CdaBoolean.getValueOf(document.getBody().get("gehfaehigkeit")));
 		
 		setRespiration(Condition.getValueOf(document.getBody().get("respiration")));
 		setPerfusion(Condition.getValueOf(document.getBody().get("perfusion")));
 		setMentalStatus(Condition.getValueOf(document.getBody().get("mentalerstatus")));
 		setCategory(TriageCategory.getValueOf(document.getBody().get("triagekategory")));
 		setTreatment(Treatment.getValueOf(document.getBody().get("behandlung")));
-		
 		
 		setGps(document.getBody().get("gps"));
 		setPhaseOfLife(PhaseOfLife.getValueOf(document.getBody().get("lebensphase")));
@@ -42,17 +38,20 @@ public class Patient {
 		setDiagnosis(document.getBody().get("diagnose"));
 		
 		String blutdruck= document.getBody().get("blutdruck");
-		String[] sysdia =blutdruck.split(":" , 2);
-		setBloodPressureSystolic(Integer.parseInt(sysdia[0]));
-		setBloodPressureDiastolic(Integer.parseInt(sysdia[1]));
+		if (blutdruck != null) {
+			String[] sysdia =blutdruck.split(":" , 2);
+			setBloodPressureSystolic(Integer.parseInt(sysdia[0]));
+			setBloodPressureDiastolic(Integer.parseInt(sysdia[1]));
+		}
 		
-		setPulse(Integer.parseInt(document.getBody().get("puls")));
+		String puls = document.getBody().get("puls");
+		if (puls != null) {
+			setPulse(Integer.parseInt(puls));
+		}
+		
 		setCourseOfTreatment(document.getBody().get("behandlungsverlauf"));
 		
-		if(document.getBody().get("transportbereitschaft").equals("ja"))
-			setReadyForTransport(true);
-		else
-			setReadyForTransport(false);
+		setReadyForTransport(CdaBoolean.getValueOf(document.getBody().get("transportbereitschaft")));
 		
 		setHospital(document.getBody().get("zielkrankenhaus"));
 		setHealthInsurance((document.getBody().get("krankenkasse")));
@@ -61,8 +60,13 @@ public class Patient {
 		setVersion(document.getIdV().getVersion());
 		setTimestamp(document.getDocumentDate());
 
-			
-		setBodyparts(document.getBodyParts());
+		Bodyparts bodyParts = new Bodyparts();
+		for (String key : document.getBody().keySet()) {
+			if (Bodyparts.isBodypart(key)) {
+				bodyParts.set(key, document.getBody().get(key));
+			}
+		}
+		setBodyparts(bodyParts);
 	}
 	
 	public Patient(UUID id) {

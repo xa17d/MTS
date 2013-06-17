@@ -1,6 +1,8 @@
 package at.mts.entity.cda;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Body eines CdaDocument. Beeinhaltet Key-Value-Paare.
@@ -147,5 +149,13 @@ public class CdaBody {
 		return s.toString();
 	}
 	
-	
+	public Set<String> keySet() {
+		HashSet<String> result = new HashSet<String>();
+		
+		for (Key key : bodyValues.keySet()) {
+			result.add(key.key);
+		}
+		
+		return result;
+	}
 }

@@ -3,6 +3,9 @@ package at.mts.server;
 import java.sql.Connection;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import at.mts.server.persistence.HsqldbConnection;
 import at.mts.server.persistence.PatientDao;
 import at.mts.server.persistence.PatientDaoJdbc;
@@ -15,6 +18,9 @@ import at.mts.server.service.PatientServiceImpl;
  * ganzen Anwendung verwendet werden kann.
  */
 public class Server {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(Server.class);
+	
 	private Server() throws ServerException {
 		
 		Connection connection = null;
@@ -46,9 +52,14 @@ public class Server {
 	
 	private static Server createInstance() 
 	{
+		LOG.info("create singleton...");
+		
 		try {
-			return new Server();
+			Server server = new Server();
+			LOG.info("singleton created");
+			return server;
 		} catch (ServerException e) {
+			LOG.error("create singleton failed");
 			throw new RuntimeException(e);
 		}
 	}
