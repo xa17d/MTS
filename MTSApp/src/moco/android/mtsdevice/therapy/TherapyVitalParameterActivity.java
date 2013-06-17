@@ -36,9 +36,15 @@ public class TherapyVitalParameterActivity extends Activity {
 		loadData();
 	}
 	
-	public void openBodyView(View v) {
+	public void openFrontBody(View v) {
 		
-		Intent intent = new Intent(this, BodyViewActivity.class);
+		Intent intent = new Intent(this, BodyViewFrontActivity.class);
+		startActivity(intent);
+	}
+	
+	public void openBackBody(View v) {
+		
+		Intent intent = new Intent(this, BodyViewBackActivity.class);
 		startActivity(intent);
 	}
 	

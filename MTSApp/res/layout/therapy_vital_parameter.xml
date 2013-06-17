@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_gravity="fill_horizontal"
         android:orientation="vertical" >
-        
+
         <TextView
             android:id="@+id/textViewTherapy"
             android:layout_width="wrap_content"
@@ -21,159 +21,167 @@
             android:layout_height="wrap_content"
             android:text="@string/vital_parameter"
             android:textAppearance="?android:attr/textAppearanceLarge" />
-        
-        
-         <TableLayout
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content" >
-	
-		    <TableRow
-		        android:id="@+id/tableRow1"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content" >
-		
-		        <TextView
-		            android:id="@+id/vitalPatientName"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:text="@string/error"
-		            android:textAppearance="?android:attr/textAppearanceMedium" />
-		    </TableRow>
-		
-		    <TableRow
-		        android:id="@+id/tableRow2"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content" >
-		
-		        <TextView
-		            android:id="@+id/textViewTherapyIm1"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:layout_gravity="center_vertical"
-		            android:text="@string/bloodpressure"
-		            android:textAppearance="?android:attr/textAppearanceMedium" />
-		
-		        <LinearLayout
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content" >
-		
-		            <EditText
-		                android:id="@+id/bloodPressureSystolic"
-		                android:layout_width="64dp"
-		                android:layout_height="wrap_content"
-		                android:ems="10"
-		                android:inputType="number"
-		                android:textSize="@dimen/textfield_size" >
-		
-		                <requestFocus />
-		            </EditText>
-		
-		            <TextView
-		                android:id="@+id/textViewTherapyIm2"
-		                android:layout_width="wrap_content"
-		                android:layout_height="wrap_content"
-		                android:text="/"
-		                android:textAppearance="?android:attr/textAppearanceLarge" />
-		
-		            <EditText
-		                android:id="@+id/bloodPressureDiastolic"
-		                android:layout_width="64dp"
-		                android:layout_height="wrap_content"
-		                android:ems="10"
-		                android:inputType="number"
-		                android:textSize="@dimen/textfield_size" />
-		        </LinearLayout>
-		    </TableRow>
-		
-		    <TableRow
-		        android:id="@+id/tableRow3"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content" >
-		
-		        <TextView
-		            android:id="@+id/textViewTherapyIm3"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:layout_gravity="center_vertical"
-		            android:text="@string/s_o2"
-		            android:textAppearance="?android:attr/textAppearanceMedium" />
-		
-		        <LinearLayout
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content" >
-		
-		            <EditText
-		                android:id="@+id/bloodOxygen"
-		                android:layout_width="64dp"
-		                android:layout_height="wrap_content"
-		                android:ems="10"
-		                android:inputType="number"
-		                android:textSize="@dimen/textfield_size" />
-		        </LinearLayout>
-		    </TableRow>
-		
-		    <TableRow
-		        android:id="@+id/tableRow4"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content" >
-		
-		        <TextView
-		            android:id="@+id/textViewTherapyIm4"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:layout_gravity="center_vertical"
-		            android:text="@string/pulse"
-		            android:textAppearance="?android:attr/textAppearanceMedium" />
-		
-		        <LinearLayout
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content" >
-		
-		            <EditText
-		                android:id="@+id/bloodPulse"
-		                android:layout_width="64dp"
-		                android:layout_height="wrap_content"
-		                android:layout_weight="0.00"
-		                android:ems="10"
-		                android:inputType="number"
-		                android:textSize="@dimen/textfield_size" />
-		        </LinearLayout>
-		    </TableRow>
-		
-		    <TableRow
-		        android:id="@+id/tableRow5"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content" >
 
-		        <TextView
-		            android:id="@+id/textView1"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:text=""
-		            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
 
-		    </TableRow>
-		
-		    <TableRow
-		        android:id="@+id/tableRow6"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content" >
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
 
-		        <Button
-		            android:id="@+id/buttonBodyView"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:onClick="openBodyView"
-		            android:text="BODYPARTS" />
+                <TextView
+                    android:id="@+id/vitalPatientName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/error"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </TableRow>
 
-		    </TableRow>
-	    
-	    </TableLayout>
-        
-        
+            <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/textViewTherapyIm1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/bloodpressure"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <EditText
+                        android:id="@+id/bloodPressureSystolic"
+                        android:layout_width="64dp"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:textSize="@dimen/textfield_size" >
+
+                        <requestFocus />
+                    </EditText>
+
+                    <TextView
+                        android:id="@+id/textViewTherapyIm2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/"
+                        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                    <EditText
+                        android:id="@+id/bloodPressureDiastolic"
+                        android:layout_width="64dp"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:textSize="@dimen/textfield_size" />
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/textViewTherapyIm3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/s_o2"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <EditText
+                        android:id="@+id/bloodOxygen"
+                        android:layout_width="64dp"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:textSize="@dimen/textfield_size" />
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/textViewTherapyIm4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/pulse"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <EditText
+                        android:id="@+id/bloodPulse"
+                        android:layout_width="64dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.00"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:textSize="@dimen/textfield_size" />
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/buttonFrontBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="openFrontBody"
+                android:text="@string/front_body" />
+
+            <Button
+                android:id="@+id/buttonBackBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="openBackBody"
+                android:text="@string/back_body" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="130dp"
+            android:text="@string/no_info"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
     </LinearLayout>
-
-   
     
     <Button
        android:id="@+id/saveTherapyIm"

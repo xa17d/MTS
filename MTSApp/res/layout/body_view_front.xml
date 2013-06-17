@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:columnCount="1" >
+
+    <ImageView
+        android:id="@+id/imageViewBodyFront"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@android:drawable/btn_dialog" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_column="0"
+        android:layout_gravity="left|top"
+        android:layout_row="0" >
+        
+        <ImageView
+            android:id="@+id/ImageViewHead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:onClick="openHead"
+            android:src="@android:drawable/ic_delete" />
+
+        <ImageView
+            android:id="@+id/ImageViewRArm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ImageViewHead"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="80dp"
+            android:layout_toLeftOf="@+id/ImageViewHead"
+            android:onClick="openRightArm"
+            android:src="@android:drawable/ic_delete" />
+
+        <ImageView
+            android:id="@+id/ImageViewLArm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ImageViewHead"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="80dp"
+            android:layout_toRightOf="@+id/ImageViewHead"
+            android:onClick="openLeftArm"
+            android:src="@android:drawable/ic_delete" />
+
+        <ImageView
+            android:id="@+id/ImageViewRLeg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           android:layout_below="@+id/ImageViewHead"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="230dp"
+            android:layout_toLeftOf="@+id/ImageViewHead"
+            android:onClick="openRightLeg"
+            android:src="@android:drawable/ic_delete" />
+
+        <ImageView
+            android:id="@+id/ImageViewLLeg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ImageViewHead"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="230dp"
+            android:layout_toRightOf="@+id/ImageViewHead"
+            android:onClick="openLeftLeg"
+            android:src="@android:drawable/ic_delete" />
+
+        <ImageView
+            android:id="@+id/ImageViewCest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ImageViewHead"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:onClick="openChest"
+            android:src="@android:drawable/ic_delete" />
+        
+        <ImageView
+            android:id="@+id/ImageViewAbdomen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ImageViewHead"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="110dp"
+            android:onClick="openAbdomen"
+            android:src="@android:drawable/ic_delete" />
+
+    </RelativeLayout>
+
+</GridLayout>

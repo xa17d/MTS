@@ -90,7 +90,11 @@
         <activity android:name="moco.android.mtsdevice.therapy.TherapyImmediateActivity"
             	  android:screenOrientation="portrait"></activity>
         
-        <activity android:name="moco.android.mtsdevice.therapy.BodyViewActivity"
+        <activity android:name="moco.android.mtsdevice.therapy.BodyViewFrontActivity"
+            	  android:screenOrientation="portrait"></activity>
+        <activity android:name="moco.android.mtsdevice.therapy.BodyViewBackActivity"
+            	  android:screenOrientation="portrait"></activity>
+        <activity android:name="moco.android.mtsdevice.therapy.BodySelectionList"
             	  android:screenOrientation="portrait"></activity>
         
         
