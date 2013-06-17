@@ -80,5 +80,6 @@
     <string name="front_body">Vorderkörper</string>
     <string name="back_body">Hinterkörper</string>
     <string name="change_patient">Wollen Sie den Patienten wechseln?</string>
+    <string name="error_save_data">Beim Speichern der Daten ist ein Fehler aufgetreten!</string>
 
 </resources>

@@ -9,6 +9,8 @@ import org.jdom2.JDOMException;
 import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
 
+import moco.android.mtsdevice.communication.CommunicationException;
+import moco.android.mtsdevice.communication.ServerCommunication;
 import moco.android.mtsdevice.handler.Area;
 import moco.android.mtsdevice.handler.DeviceButtons;
 import moco.android.mtsdevice.handler.Mode;
@@ -79,32 +81,38 @@ public class ScanTagActivity extends Activity implements LocationListener {
 		*/
 		
 		/**
+		 * Triage-Modus
 		 * Patient mit GPS-Koordinaten speichern und an Backend senden
 		 */
 		if(Mode.getActiveMode() == Mode.triage) {
-			
 			
 			selectedPatient = SelectedPatient.getPatient();
 			selectedPatient.setGps(locationString + ";" + locationAccuracyString);
 			selectedPatient.setTreatment(Treatment.sighted);
 			
-			CdaDocument doc = new CdaDocument(selectedPatient);
-			TestActivity.setTestText(doc.asXml());
+			ServerCommunication com = ServerCommunication.getInstance();
 			
-			//TEST
-			intent = new Intent(this, TestActivity.class);
-			startActivity(intent);
+			try {
+				com.savePatient(selectedPatient);
+			} catch (CommunicationException e) {
+				new AlertDialog.Builder(this) 
+		        	.setMessage(R.string.error_save_data)
+		        	.setNeutralButton(R.string.ok, null)
+		        	.show();
+			}
 			
-			/* TODO
 			Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
 			//Toast.makeText(this, "GPS-Koordinaten: " + locationString + "\nGenauigkeit: " + locationAccuracyString, Toast.LENGTH_LONG).show();
 			
 			intent = new Intent(ScanTagActivity.this, TriageSelectionActivity.class);
 			startActivity(intent);
 			finish();
-			*/
 		}
 		
+		/**
+		 * Berge-Modus
+		 * Patientendaten laden
+		 */
 		if(Mode.getActiveMode() == Mode.salvage) {
 			
 			SelectedPatient.setPatient(selectedPatient);
@@ -112,6 +120,10 @@ public class ScanTagActivity extends Activity implements LocationListener {
 			startActivity(intent);
 		}
 		
+		/**
+		 * Behandlungs-Modus
+		 * Patientendaten laden
+		 */
 		if(Mode.getActiveMode() == Mode.therapy) {
 			
 			if(SelectedPatient.getPatient() == null) {

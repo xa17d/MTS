@@ -41,7 +41,7 @@ public class TherapyListActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.therapy_list);
 		
-		ServerCommunication com = new ServerCommunication();
+		ServerCommunication com = ServerCommunication.getInstance();
 		/*
 		PatientList s = new PatientList();
 		try {
@@ -54,16 +54,15 @@ public class TherapyListActivity extends Activity {
 		TestActivity.setTestText(s.toString());
 		*/
 		
-		String p = null;
+		Patient p = null;
 		try {
-			p = com.getBody("http://88.116.105.228:30104/MtsServer/restApi/patients/204c4fea-9827-4614-9793-f7c8b3c98e18");
+			p = com.loadPatientByUrl("http://88.116.105.228:30104/MtsServer/restApi/patients/204c4fea-9827-4614-9793-f7c8b3c98e18");
 		} catch (CommunicationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		TestActivity.setTestText(p);
-		//TestActivity.setTestText(p.getNameGiven() + " " + p.getNameFamily() + "(" + p.getAge() + ")");
+		TestActivity.setTestText(p.getNameGiven() + " " + p.getNameFamily() + "(" + p.getAge() + ")");
 		
 		//TEST
 		Intent intent = new Intent(this, TestActivity.class);
@@ -74,8 +73,6 @@ public class TherapyListActivity extends Activity {
 		//createSomePatients();
 		/*
 		if(Area.getActiveArea() == Area.I) {
-			//TODO
-			//patientList = 
 			adapter = new MTSListAdapter<Patient>(getApplicationContext(), R.layout.mts_list, patientListIm);
 		}
 		

@@ -453,6 +453,7 @@ containing a value of this type.
         public static final int error_category_missing=0x7f070024;
         public static final int error_gps=0x7f070049;
         public static final int error_no_reason=0x7f070060;
+        public static final int error_save_data=0x7f070064;
         public static final int error_wrong_area=0x7f070056;
         public static final int f=0x7f070052;
         public static final int firstname=0x7f070057;
