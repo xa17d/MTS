@@ -58,15 +58,10 @@ public class TherapyListActivity extends Activity {
 		area.setText("Behandlungsplatz " + Area.getActiveArea().toString());
 		area.setTextColor(Area.getAreaColor());
 		
-		patientView = (ListView)findViewById(R.id.patientView); 
+		patientView = (ListView)findViewById(R.id.patientTherapyView); 
 		patientView.setAdapter(adapter);
 		patientView.setClickable(false);
 	}
-	
-	
-//	private String patientToString(Patient p) {
-//		return p.getNameGiven() + " " + p.getNameFamily() + "\n[Dringlichkeit : " + p.getUrgency() + " / Pos: " + p.getPlacePosition() + "]";
-//	}
 	
 	private void createSomePatients() {
 		Patient p;

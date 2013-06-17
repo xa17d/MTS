@@ -3,17 +3,22 @@ package moco.android.mtsdevice.therapy;
 import moco.android.mtsdevice.R;
 import moco.android.mtsdevice.handler.Area;
 import moco.android.mtsdevice.handler.DeviceButtons;
+import moco.android.mtsdevice.handler.SelectedPatient;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import at.mts.entity.Patient;
 
 public class TherapySelectionActivity extends Activity {
 
+	private Button btnPersonalData;
 	private Button btnVitalParameter;
 	private Button btnDiagnosis;
 	private Button btnTherapy;
+	
+	private Patient selectedPatient;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -21,13 +26,27 @@ public class TherapySelectionActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.therapy_selection);
 		
+		selectedPatient = SelectedPatient.getPatient();
+		
 		initButtons();
+	}
+	
+	@Override
+	public void onResume() {
+		
+		super.onResume();
+				
+		btnPersonalData.setTextColor(selectedPatient.getPersonalDataStatusColor());
+		btnVitalParameter.setTextColor(selectedPatient.getVitalParameterStatusColor());
+		btnDiagnosis.setTextColor(selectedPatient.getDiagnosisStatusColor());
+		btnTherapy.setTextColor(selectedPatient.getTherapyStatusColor());
 	}
 	
 	private void initButtons() {
 		
-		btnVitalParameter = (Button)findViewById(R.id.buttonDiagnosis);
-		btnDiagnosis = (Button)findViewById(R.id.buttonVitalParameter);
+		btnPersonalData = (Button)findViewById(R.id.buttonPersonalData);
+		btnVitalParameter = (Button)findViewById(R.id.buttonVitalParameter);
+		btnDiagnosis = (Button)findViewById(R.id.buttonDiagnosis);
 		btnTherapy = (Button)findViewById(R.id.buttonTherapy);
 		
 		if(Area.getActiveArea() == Area.IV) {
@@ -54,7 +73,7 @@ public class TherapySelectionActivity extends Activity {
 		startActivity(intent);
 	}
 	
-	public void buttonDiagnosis(View v) {
+	public void gotoDiagnosis(View v) {
 		
 		Intent intent = new Intent(this, TherapyDiagnosisActivity.class);
 		startActivity(intent);

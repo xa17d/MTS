@@ -11,28 +11,28 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/textViewTherapyList1"
+            android:id="@+id/textViewSalvageMain1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/therapy_mode"
+            android:text="@string/salvage_mode"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
-            android:id="@+id/textViewTherapyListArea"
+            android:id="@+id/textViewSalvageMain2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/error"
+            android:text="@string/salvageinfo"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <ListView
-            android:id="@+id/patientTherapyView"
-            android:layout_width="wrap_content"
-            android:layout_height="362dp"
-            android:text=""
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
+        <TextView
+            android:id="@+id/textViewSalvageSingleSalvageText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/no_info"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>
-
+    
     <Button
         android:id="@+id/btnScanPatient"
         android:layout_column="0"

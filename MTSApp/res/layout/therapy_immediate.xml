@@ -3,5 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
     
+    <LinearLayout
+        android:layout_gravity="fill_horizontal"
+        android:orientation="vertical" >
+    
+	    <TextView
+	            android:id="@+id/textViewTherapy"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/therapy_mode"
+	            android:textAppearance="?android:attr/textAppearanceLarge" />
+	    
+	    <TextView
+            android:id="@+id/textViewTherapyIm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/therapy"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+	    
+    </LinearLayout>
+    
+    <Button
+        android:id="@+id/saveTherapyIm"
+        android:layout_column="0"
+        android:layout_gravity="right|bottom"
+        android:layout_row="0"
+        android:onClick="save"
+        android:text="@string/save" />
+    
 
 </GridLayout>

@@ -3,5 +3,123 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
     
+    <LinearLayout
+        android:layout_gravity="fill_horizontal"
+        android:orientation="vertical" >
+        
+        <TextView
+            android:id="@+id/textViewTherapy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/therapy_mode"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/textViewTherapyDiag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/diagnosis"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:layout_gravity="fill_horizontal"
+                android:orientation="vertical" >
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:text="@string/no_info"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </FrameLayout>
+
+                <Button
+                    android:id="@+id/button1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="addDiagnosis"
+                    android:text="@string/add_diagnosis" />
+            </LinearLayout>
+
+        </GridLayout>
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+		    
+	    <LinearLayout
+	        android:id="@+id/tableRow100"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+	
+	        <TextView
+	            android:id="@+id/textViewTherapyIm100"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center_vertical"
+	            android:text="@string/urgent"
+	            android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	        <RadioGroup
+	            android:id="@+id/radioGroup1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal" >
+	
+	            <RadioButton
+	                android:id="@+id/radio1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:checked="true"
+	                android:text="1" />
+	
+	            <RadioButton
+	                android:id="@+id/radio2"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="2" />
+	
+	            <RadioButton
+	                android:id="@+id/radio3"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:checked="true"
+	                android:text="3" />
+	
+	            <RadioButton
+	                android:id="@+id/radio4"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="4" />
+	
+	            <RadioButton
+	                android:id="@+id/radio5"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="5" />
+	        </RadioGroup>
+	
+	    </LinearLayout>
+		    
+   </LinearLayout>
+   
+   <Button
+      android:id="@+id/saveTherapyIm"
+      android:layout_column="0"
+      android:layout_gravity="right|bottom"
+      android:layout_row="0"
+      android:onClick="save"
+      android:text="@string/save" />
 
 </GridLayout>

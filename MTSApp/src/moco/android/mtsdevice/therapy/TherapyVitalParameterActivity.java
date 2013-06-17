@@ -2,10 +2,8 @@ package moco.android.mtsdevice.therapy;
 
 import moco.android.mtsdevice.R;
 import moco.android.mtsdevice.handler.SelectedPatient;
-import moco.android.mtsdevice.triage.TriageSelectionActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -31,17 +29,21 @@ public class TherapyVitalParameterActivity extends Activity {
 		
 		patient = SelectedPatient.getPatient();
 		
-		TextView txtName = (TextView)findViewById(R.id.immediatePatientName);
+		TextView txtName = (TextView)findViewById(R.id.vitalPatientName);
 		txtName.setText(patient.getNameFamily() + " " + patient.getNameGiven());
 		
 		initControls();
 		loadData();
 	}
 	
+	public void openBodyView(View v) {
+		
+		Intent intent = new Intent(this, BodyViewActivity.class);
+		startActivity(intent);
+	}
+	
 	public void save(View v) {
-		
-		Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
-		
+				
 		try {
 			
 			if(textSystolic.getText() != null)
@@ -63,8 +65,7 @@ public class TherapyVitalParameterActivity extends Activity {
 		    		.show();
 		}
 		
-		Intent intent = new Intent(this , TherapyListActivity.class);
-		startActivity(intent);
+		Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
 		finish();		
 	}
 	

@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 /**
  * Body eines CdaDocument. Beeinhaltet Key-Value-Paare.
- * @author Daniel Gehrer
  */
 public class CdaBody {
 	
