@@ -1,6 +1,13 @@
 package moco.android.mtsdevice;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.GregorianCalendar;
+
+import org.jdom2.Document;
+import org.jdom2.JDOMException;
+import org.jdom2.Namespace;
+import org.jdom2.input.SAXBuilder;
 
 import moco.android.mtsdevice.handler.Area;
 import moco.android.mtsdevice.handler.DeviceButtons;
@@ -24,6 +31,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 import at.mts.entity.Patient;
+import at.mts.entity.Treatment;
 import at.mts.entity.TriageCategory;
 import at.mts.entity.cda.CdaDocument;
 
@@ -78,16 +86,23 @@ public class ScanTagActivity extends Activity implements LocationListener {
 			
 			selectedPatient = SelectedPatient.getPatient();
 			selectedPatient.setGps(locationString + ";" + locationAccuracyString);
+			selectedPatient.setTreatment(Treatment.sighted);
 			
 			CdaDocument doc = new CdaDocument(selectedPatient);
-			System.out.print(doc);
+			TestActivity.setTestText(doc.asXml());
 			
+			//TEST
+			intent = new Intent(this, TestActivity.class);
+			startActivity(intent);
+			
+			/* TODO
 			Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
 			//Toast.makeText(this, "GPS-Koordinaten: " + locationString + "\nGenauigkeit: " + locationAccuracyString, Toast.LENGTH_LONG).show();
 			
 			intent = new Intent(ScanTagActivity.this, TriageSelectionActivity.class);
 			startActivity(intent);
 			finish();
+			*/
 		}
 		
 		if(Mode.getActiveMode() == Mode.salvage) {
@@ -146,7 +161,7 @@ public class ScanTagActivity extends Activity implements LocationListener {
 	protected void onResume() {
 		
 		super.onResume();
-		locationManager.requestLocationUpdates(provider, 2000, 2, this);
+		locationManager.requestLocationUpdates(provider, 200, 1, this);
 	}
 
 	@Override
@@ -181,7 +196,6 @@ public class ScanTagActivity extends Activity implements LocationListener {
 		
 	}
 
-	
 	@Override
 	public void onBackPressed() {
 
