@@ -1,8 +1,11 @@
 package at.mts.entity.cda;
 import at.mts.entity.Bodyparts;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.UUID;
 import java.util.Date;
@@ -59,61 +62,41 @@ public class CdaDocument {
         //#############--BODY--#############*/
         body = new CdaBody();
         //-----VITALZEICHEN
-        body.set("gehfaehigkeit", patient.getWalkable().toString());
-        body.set("respiration", patient.getRespiration().toString());
-        body.set("perfusion", patient.getPerfusion().toString());
-        body.set("mentalerstatus", patient.getMentalStatus().toString());
-        body.set("triagekategorie", patient.getCategory().toString());
-        body.set("behandlung", patient.getTreatMent().toString());
-        
-        //-----DETAILS
-        body.set("gps", patient.getGps());
-        body.set("lebensphase", patient.getPhaseOfLife().toString());
-        body.set("bergeinformation", patient.getSalvageInfoString());
-        body.set("hilfplatzposition", patient.getPlacePosition());
-        body.set("dringlichkeit", patient.getUrgency().toString()); 
-        body.set("diagnose", patient.getDiagnosis());
-        body.set("blutdruck", patient.getBloodPressureSystolic().toString()+":"+patient.getBloodPressureDiastolic().toString());
-        body.set("puls", patient.getPulse().toString());
-        body.set("behandlungsverlauf", patient.getCourseOfTreatment()); //
-        body.set("transportbereitschaft", patient.getReadyForTransport().toString());
-        body.set("zielkrankenhaus", patient.getHospital().toString());
-        body.set("krankenkasse", patient.getHealthInsurance().toString());
+        setBody(body, "gehfaehigkeit", patient.getWalkable());
+        setBody(body, "respiration", patient.getRespiration());
+        setBody(body, "perfusion", patient.getPerfusion());
+        setBody(body, "mentalerstatus", patient.getMentalStatus());
+        setBody(body, "triagekategorie", patient.getCategory());
+        setBody(body, "behandlung", patient.getTreatment());
+                
+                //-----DETAILS
+        setBody(body, "gps", patient.getGps());
+        setBody(body, "lebensphase", patient.getPhaseOfLife());
+        setBody(body, "bergeinformation", patient.getSalvageInfoString());
+        setBody(body, "hilfplatzposition", patient.getPlacePosition());
+        setBody(body, "dringlichkeit", patient.getUrgency());
+        setBody(body, "diagnose", patient.getDiagnosis());
+        setBody(body, "blutdruck", patient.getBloodPressureSystolic());
+        setBody(body, "puls", patient.getPulse());
+        setBody(body, "behandlungsverlauf", patient.getCourseOfTreatment());
+        setBody(body, "transportbereitschaft", patient.getReadyForTransport());
+        setBody(body, "zielkrankenhaus", patient.getHospital());
+        setBody(body, "krankenkasse", patient.getHealthInsurance());
         //-----VERLETZUNGEN
         //set(String part, String information)
-        body.set("FRONT_HEAD",patient.getBodyparts().get("FRONT_HEAD"));
-        body.set("FRONT_NECK",patient.getBodyparts().get("FRONT_NECK"));   
-        body.set("FRONT_CHEST",patient.getBodyparts().get("FRONT_CHEST"));
-        body.set("FRONT_ABDOMEN",patient.getBodyparts().get("FRONT_ABDOMEN"));
-        body.set("FRONT_R_UPPERARM",patient.getBodyparts().get("FRONT_R_UPPERARM"));
-        body.set("FRONT_L_UPPERARM",patient.getBodyparts().get("FRONT_L_UPPERARM"));
-        body.set("FRONT_R_FOREARM",patient.getBodyparts().get("FRONT_R_FOREARM"));
-        body.set("FRONT_L_FOREARM",patient.getBodyparts().get("FRONT_L_FOREARM"));
-        body.set("FRONT_R_HAND",patient.getBodyparts().get("FRONT_R_HAND"));
-        body.set("FRONT_L_HAND",patient.getBodyparts().get("FRONT_L_HAND"));
-        body.set("FRONT_L_UPPERLEG",patient.getBodyparts().get("FRONT_L_UPPERLEG"));
-        body.set("FRONT_R_UPPERLEG",patient.getBodyparts().get("FRONT_R_UPPERELG"));
-        body.set("FRONT_L_SHANK",patient.getBodyparts().get("FRONT_L_SHANK"));
-        body.set("FRONT_R_SHANK",patient.getBodyparts().get("FRONT_R_SHANK"));
-        body.set("FRONT_L_FOOT",patient.getBodyparts().get("FRONT_L_FOOT"));
-        body.set("FRONT_R_FOOT",patient.getBodyparts().get("FRONT_R_FOOT"));
-        body.set("BACK_HEAD",patient.getBodyparts().get("BACK_HEAD"));
-        body.set("BACK_NECK",patient.getBodyparts().get("BACK_NECK"));
-        body.set("BACK_UPPERBACK",patient.getBodyparts().get("BACK_UPPERBACK"));
-        body.set("BACK_LOWERBACK",patient.getBodyparts().get("BACK_LOWERBACK"));
-        body.set("BACK_R_UPPERARM",patient.getBodyparts().get("BACK_R_UPPERARM"));
-        body.set("BACK_L_UPPERARM",patient.getBodyparts().get("BACK_L_UPPERARM"));
-        body.set("BACK_R_FOREARM",patient.getBodyparts().get("BACK_R_FOREARM"));
-        body.set("BACK_L_FOREARM",patient.getBodyparts().get("BACK_L_FOREARM"));
-        body.set("BACK_R_HAND",patient.getBodyparts().get("BACK_R_HAND"));
-        body.set("BACK_L_HAND",patient.getBodyparts().get("BACK_L_HAND"));
-        body.set("BACK_L_UPPERLEG",patient.getBodyparts().get("BACK_L_UPPERLEG"));
-        body.set("BACK_R_UPPERLEG",patient.getBodyparts().get("BACK_R_UPPERLEG"));
-        body.set("BACK_L_SHANK",patient.getBodyparts().get("BACK_L_SHANK"));
-        body.set("BACK_R_SHANK",patient.getBodyparts().get("BACK_R_SHANK"));
-        body.set("BACK_L_FOOT",patient.getBodyparts().get("BACK_L_FOOT"));
-        body.set("BACK_R_FOOT",patient.getBodyparts().get("BACK_R_FOOT"));
-		
+        Bodyparts bodyparts = patient.getBodyparts();
+        if (bodyparts != null) {
+        
+        	for (String key : bodyparts.keySet()) {
+				body.set(key, bodyparts.get(key));
+			}
+        }
+	}
+	
+	private void setBody(CdaBody body, String key, Object value) {
+		if (value != null) {
+			body.set(key, value.toString());
+		}
 	}
 	
 	/**
@@ -208,7 +191,8 @@ public class CdaDocument {
 	public String asXml() {
 		String xml="";
 		try{
-			Document doc = new SAXBuilder().build("blank.xml");
+			InputStream stream = getClass().getResourceAsStream("/at/mts/entity/resources/blank.xml");
+			Document doc = new SAXBuilder().build(stream);
 	        Namespace NS = Namespace.getNamespace("urn:hl7-org:v3");     
 	        
 	        

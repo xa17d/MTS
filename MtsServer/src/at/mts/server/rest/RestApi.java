@@ -144,7 +144,8 @@ public class RestApi {
 			return "";
 		}
 		else {
-			return new CdaDocument(p).asXml();
+			String xml = new CdaDocument(p).asXml();
+			return xml;
 		}
 	}
 	

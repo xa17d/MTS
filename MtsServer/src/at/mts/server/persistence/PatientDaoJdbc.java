@@ -105,7 +105,7 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 	private static final String sqlUpdatePatient = "UPDATE Patient SET version = ? WHERE id = ?";
 	
 	private static final String sqlInsertBodyPart = "INSERT INTO Bodypart (patientVersion, key, value) VALUES (?,?,?)";
-	private static final String sqlSelectQueryBodyPart = "SELECT key, value FORM Bodypart WHERE patientVersion = ?";
+	private static final String sqlSelectQueryBodyPart = "SELECT key, value FROM Bodypart WHERE patientVersion = ?";
 	
 	private interface StatementPreparation {
 		public String sql();
