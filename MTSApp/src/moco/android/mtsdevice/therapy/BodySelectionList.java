@@ -55,7 +55,7 @@ public class BodySelectionList extends Activity implements OnItemClickListener{
 		
 		String diagnosis = injuryView.getAdapter().getItem(arg2).toString();
 		selectedPatient.setDiagnosis(diagnosis);
-		Toast.makeText(this, diagnosis + R.string._diagnosis_added, Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, diagnosis + " " + R.string.diagnosis_added, Toast.LENGTH_SHORT).show();
 		finish();
 	}
 }

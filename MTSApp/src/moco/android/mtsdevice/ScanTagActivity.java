@@ -61,7 +61,6 @@ public class ScanTagActivity extends Activity implements LocationListener {
 	/*
 	private void startNfcScan() {
 		
-		//TODO Testen
 		NdefMessage[] msgs = null;
 		Intent intent = getIntent();
 		
@@ -123,26 +122,43 @@ public class ScanTagActivity extends Activity implements LocationListener {
 		 */
 		if(Mode.getActiveMode() == Mode.triage) {
 			
-			selectedPatient = SelectedPatient.getPatient();
-			selectedPatient.setId(scannedId);
-			selectedPatient.setGps(locationString);
-			selectedPatient.setTreatment(Treatment.sighted);
+			Patient errorLoad = null;
+			try {
+				errorLoad = service.loadPatientById(scannedId);
+			} catch (ServiceException e1) {
+				new AlertDialog.Builder(this) 
+			        	.setMessage(R.string.error_save_data)
+			        	.setNeutralButton(R.string.ok, null)
+			        	.show();
+			}
 			
-//			try {
-//				service.saveNewPatient(selectedPatient);
-//			} catch (ServiceException e) {
-//				new AlertDialog.Builder(this) 
-//		        	.setMessage(R.string.error_save_data)
-//		        	.setNeutralButton(R.string.ok, null)
-//		        	.show();
-//			}
+			if(errorLoad != null) {
 			
-			Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
-			Toast.makeText(this, "GPS-Koordinaten: " + locationString, Toast.LENGTH_LONG).show();
-			
-			intent = new Intent(ScanTagActivity.this, TriageSelectionActivity.class);
-			startActivity(intent);
-			finish();
+				selectedPatient = SelectedPatient.getPatient();
+				selectedPatient.setId(scannedId);
+				selectedPatient.setGps(locationString);
+				selectedPatient.setTreatment(Treatment.sighted);
+				
+				try {
+					service.saveNewPatient(selectedPatient);
+				} catch (ServiceException e) {
+					new AlertDialog.Builder(this) 
+			        	.setMessage(R.string.error_save_data)
+			        	.setNeutralButton(R.string.ok, null)
+			        	.show();
+				}
+				
+				Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
+				
+				intent = new Intent(this, TriageSelectionActivity.class);
+				startActivity(intent);
+				finish();
+			}
+			else
+				new AlertDialog.Builder(this) 
+			        	.setMessage(R.string.patient_already_registered)
+			        	.setNeutralButton(R.string.ok, null)
+			        	.show();
 		}
 		
 		/**
@@ -151,26 +167,26 @@ public class ScanTagActivity extends Activity implements LocationListener {
 		 */
 		if(Mode.getActiveMode() == Mode.salvage) {
 			
-//			try {
-//				selectedPatient = service.loadPatientById(scannedId);
-//			} catch (ServiceException e) {
-//				new AlertDialog.Builder(this) 
-//			        	.setMessage(R.string.error_load_data)
-//			        	.setNeutralButton(R.string.ok, null)
-//			        	.show();
-//			}
-//			
-//			if(selectedPatient.getTreatment() == Treatment.sighted) {
-//				SelectedPatient.setPatient(selectedPatient);
+			try {
+				selectedPatient = service.loadPatientById(scannedId);
+			} catch (ServiceException e) {
+				new AlertDialog.Builder(this) 
+			        	.setMessage(R.string.error_load_data)
+			        	.setNeutralButton(R.string.ok, null)
+			        	.show();
+			}
+			
+			if(selectedPatient.getTreatment() == Treatment.sighted) {
+				SelectedPatient.setPatient(selectedPatient);
 				
 				intent = new Intent(this, SalvageActivity.class);
 				startActivity(intent);
-//			}
-//			else
-//				new AlertDialog.Builder(this) 
-//		        	.setMessage(R.string.error_not_on_salvagelist)
-//		        	.setNeutralButton(R.string.ok, null)
-//		        	.show();
+			}
+			else
+				new AlertDialog.Builder(this) 
+		        	.setMessage(R.string.error_not_on_salvagelist)
+		        	.setNeutralButton(R.string.ok, null)
+		        	.show();
 		}
 		
 		/**
@@ -178,18 +194,7 @@ public class ScanTagActivity extends Activity implements LocationListener {
 		 * Patientendaten laden
 		 */
 		if(Mode.getActiveMode() == Mode.therapy) {
-			
-			//TODO TESTPATIENT
-			Patient p = new Patient();
-			p.setNameFamily("Dobler");
-			p.setNameGiven("Lucas");
-			p.setCategory(TriageCategory.immediate);
-			GregorianCalendar date = new GregorianCalendar(1991, 1, 15);
-			p.setBirthTime(date.getTime());
-			p.setPulse(95);
-			selectedPatient = p;
-			SelectedPatient.setPatient(selectedPatient);
-			
+						
 			try {
 				selectedPatient = service.loadPatientById(scannedId);
 			} catch (ServiceException e) {
@@ -201,16 +206,16 @@ public class ScanTagActivity extends Activity implements LocationListener {
 			
 			SelectedPatient.setPatient(selectedPatient);
 			
-			if(Area.getActiveArea().matchesCategory(selectedPatient.getCategory()) && selectedPatient.getTreatment() == Treatment.salvaged) {
+			//if(Area.getActiveArea().matchesCategory(selectedPatient.getCategory()) && selectedPatient.getTreatment() == Treatment.salvaged) {
 				intent = new Intent(this, TherapySelectionActivity.class);
 				startActivity(intent);
 				finish();
-			}
-			else
-				new AlertDialog.Builder(this) 
-			        	.setMessage(R.string.error_wrong_area)
-			        	.setNeutralButton(R.string.ok, null)
-			        	.show();
+			//}
+			//else
+			//	new AlertDialog.Builder(this) 
+			//        	.setMessage(R.string.error_wrong_area)
+			//        	.setNeutralButton(R.string.ok, null)
+			//        	.show();
 		}
 	}
 	

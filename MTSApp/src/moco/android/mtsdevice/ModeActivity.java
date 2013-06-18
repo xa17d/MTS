@@ -2,7 +2,6 @@ package moco.android.mtsdevice;
 
 import moco.android.mtsdevice.handler.DeviceButtons;
 import moco.android.mtsdevice.handler.Mode;
-import moco.android.mtsdevice.maps.SalvageMap;
 import moco.android.mtsdevice.salvage.SalvageListActivity;
 import moco.android.mtsdevice.therapy.TherapyAreaActivity;
 import moco.android.mtsdevice.triage.TriageSelectionActivity;

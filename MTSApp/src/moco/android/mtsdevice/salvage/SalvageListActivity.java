@@ -1,13 +1,12 @@
 package moco.android.mtsdevice.salvage;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 import moco.android.mtsdevice.R;
 import moco.android.mtsdevice.ScanTagActivity;
 import moco.android.mtsdevice.handler.DeviceButtons;
 import moco.android.mtsdevice.handler.SelectedPatient;
-import moco.android.mtsdevice.handler.listadapter.MTSListSalvageAdapter;
+import moco.android.mtsdevice.handler.listadapter.MTSListAdapter;
 import moco.android.mtsdevice.service.PatientService;
 import moco.android.mtsdevice.service.PatientServiceImpl;
 import moco.android.mtsdevice.service.ServiceException;
@@ -22,7 +21,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import at.mts.entity.Patient;
 import at.mts.entity.PatientListItem;
-import at.mts.entity.TriageCategory;
 
 public class SalvageListActivity extends Activity implements OnItemClickListener {
 
@@ -32,7 +30,6 @@ public class SalvageListActivity extends Activity implements OnItemClickListener
 	private ListAdapter adapter;
 	
 	private ArrayList<PatientListItem> patientList;
-	private ArrayList<Patient> patientListTemp;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -40,28 +37,22 @@ public class SalvageListActivity extends Activity implements OnItemClickListener
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.salvage_list);
 		
-//		service = PatientServiceImpl.getInstance();
-//		
-//		try {
-//			patientList = service.loadAllPatients();
-//		} catch (ServiceException e) {
-//			new AlertDialog.Builder(this) 
-//		        	.setMessage(R.string.error_load_data)
-//		        	.setNeutralButton(R.string.ok, null)
-//		        	.show();
-//		}
-//		
-//		adapter = new MTSListAdapter<PatientListItem>(getApplicationContext(), R.layout.mts_list, patientList);
-//		
-//		initContent();
+		service = PatientServiceImpl.getInstance();
 		
+		try {
+			patientList = service.loadAllPatients();
+		} catch (ServiceException e) {
+			new AlertDialog.Builder(this) 
+		        	.setMessage(R.string.error_load_data)
+		        	.setNeutralButton(R.string.ok, null)
+		        	.show();
+		}
 		
-		//TODO delete
-		createSomePatients();
-		
-		adapter = new MTSListSalvageAdapter<Patient>(getApplicationContext(), R.layout.mts_list, patientListTemp);
+		adapter = new MTSListAdapter<PatientListItem>(getApplicationContext(), R.layout.mts_list, patientList);
 		
 		initContent();
+		
+		
 	}
 	
 	public void scanTag(View view) {
@@ -92,72 +83,5 @@ public class SalvageListActivity extends Activity implements OnItemClickListener
 	public void onBackPressed() {
 		
 		DeviceButtons.getToModeSelection(this);
-	}
-	
-	
-	//TODO DELETE
-	private void createSomePatients() {
-		Patient p;
-		patientListTemp = new ArrayList<Patient>();
-		
-		/**
-		 * 7 IMMEDIATE
-		 */
-		for(int i = 0; i < 7; i++) {
-			p = new Patient();
-			p.setCategory(TriageCategory.immediate);
-			p.setId(new UUID(4,i));
-			p.setPlacePosition(String.valueOf((i * (2 * i * i - 2 * (i + 3)) + 7)));
-			
-			if(i == 5) {
-				p.setNameGiven("Fritz");
-				p.setNameFamily("Fantom");
-				p.setUrgency(4);
-				p.setSalvageInfo("Feuerwehr;\nSchaufeltrage;\nVakuummatratze;");
-			}
-			if(i == 6) {
-				p.setNameGiven("Hans");
-				p.setNameFamily("Wurst");
-				p.setUrgency(2);
-			}
-			
-			patientListTemp.add(p);
-		}
-		
-		/**
-		 * 0 DELAYED
-		 */
-		p = new Patient();
-		p.setCategory(TriageCategory.delayed);
-		p.setId(new UUID(4,7));
-		p.setNameGiven("Max");
-		p.setNameFamily("Mustermann");
-		patientListTemp.add(p);
-		
-		/**
-		 * 2 MINOR
-		 */		
-		p = new Patient();
-		p.setCategory(TriageCategory.minor);
-		p.setId(new UUID(4,7));
-		p.setNameGiven("Max");
-		p.setNameFamily("Mustermann");
-		patientListTemp.add(p);
-		
-		p = new Patient();
-		p.setCategory(TriageCategory.minor);
-		p.setId(new UUID(4,8));
-		p.setNameGiven("Lucas");
-		p.setNameFamily("Dobler");
-		patientListTemp.add(p);
-		
-		/**
-		 * 1 DECEASED
-		 */
-		p = new Patient();
-		p.setCategory(TriageCategory.deceased);
-		p.setId(new UUID(4,15));
-		p.setPlacePosition("1");
-		patientListTemp.add(p);
 	}
 }

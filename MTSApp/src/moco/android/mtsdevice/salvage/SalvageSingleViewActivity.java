@@ -3,7 +3,6 @@ package moco.android.mtsdevice.salvage;
 import java.text.NumberFormat;
 
 import moco.android.mtsdevice.R;
-import moco.android.mtsdevice.ScanTagActivity;
 import moco.android.mtsdevice.handler.Mode;
 import moco.android.mtsdevice.handler.SelectedPatient;
 import moco.android.mtsdevice.service.PatientService;
@@ -12,13 +11,11 @@ import moco.android.mtsdevice.service.ServiceException;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import at.mts.entity.Patient;
@@ -55,18 +52,14 @@ public class SalvageSingleViewActivity extends Activity implements LocationListe
 		
 		selectedPatientItem = SelectedPatient.getPatientItem();
 		
-//		try {
-//			service.loadPatientByUrl(selectedPatientItem.getUrl());
-//		} catch (ServiceException e) {
-//			new AlertDialog.Builder(this) 
-//		        	.setMessage(R.string.error_load_data)
-//		        	.setNeutralButton(R.string.ok, null)
-//		        	.show();
-//		}	
-		
-		selectedPatient = new Patient();
-		selectedPatient.setUrgency(3);
-		selectedPatient.setGps("48.211488; 16.310658; 25");
+		try {
+			service.loadPatientByUrl(selectedPatientItem.getUrl());
+		} catch (ServiceException e) {
+			new AlertDialog.Builder(this) 
+		        	.setMessage(R.string.error_load_data)
+		        	.setNeutralButton(R.string.ok, null)
+		        	.show();
+		}
 	}
 	
 	private void initContent() {

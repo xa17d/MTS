@@ -51,55 +51,36 @@ public class TherapyListActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.therapy_list);
 		
-//		service = PatientServiceImpl.getInstance();
-//		
-//		try {
-//			patientList = service.loadAllPatients();
-//		} catch (ServiceException e) {
-//			new AlertDialog.Builder(this) 
-//			    	.setMessage(R.string.error_load_data)
-//			    	.setNeutralButton(R.string.ok, null)
-//			    	.show();
-//		}
-//		
-//		PatientListItem patientItem;
-//		Iterator<PatientListItem> it = patientList.iterator();
-//		
-//		while(it.hasNext()) {
-//			patientItem = it.next();
-//			
-//			/**
-//			 * wenn gewaehlter Patient noch nicht geborgen (oder bereits abtransportiert) wurde
-//			 * ODER
-//			 * Patient an anderem Behandlungsplatz
-//			 * ==> aus Liste entfernen
-//			 */
-//			if(patientItem.getTreatment() != Treatment.salvaged || !Area.getActiveArea().matchesCategory(patientItem.getCategory()))
-//				patientList.remove(patientItem);
-//		}
-//		
-//		//TODO falls geschwindigkeit es zulaesst: alle daten laden
-//		adapter = new MTSListAdapter<PatientListItem>(getApplicationContext(), R.layout.mts_list, patientList);
-//
-//		initContent();
+		service = PatientServiceImpl.getInstance();
 		
-		
-		//TODO REMOVE
-		createSomePatients();
-
-		if(Area.getActiveArea() == Area.I) {
-			adapter = new MTSListTherapyAdapter<Patient>(getApplicationContext(), R.layout.mts_list, patientListIm);
+		try {
+			patientList = service.loadAllPatients();
+		} catch (ServiceException e) {
+			new AlertDialog.Builder(this) 
+			    	.setMessage(R.string.error_load_data)
+			    	.setNeutralButton(R.string.ok, null)
+			    	.show();
 		}
 		
-		if(Area.getActiveArea() == Area.II)
-			adapter = new MTSListTherapyAdapter<Patient>(getApplicationContext(), R.layout.mts_list, patientListDel);
+		PatientListItem patientItem;
+		Iterator<PatientListItem> it = patientList.iterator();
 		
-		if(Area.getActiveArea() == Area.III)
-			adapter = new MTSListTherapyAdapter<Patient>(getApplicationContext(), R.layout.mts_list, patientListMin);
+		while(it.hasNext()) {
+			patientItem = it.next();
+			
+			/**
+			 * wenn gewaehlter Patient noch nicht geborgen (oder bereits abtransportiert) wurde
+			 * ODER
+			 * Patient an anderem Behandlungsplatz
+			 * ==> aus Liste entfernen
+			 */
+			if(patientItem.getTreatment() != Treatment.salvaged || !Area.getActiveArea().matchesCategory(patientItem.getCategory()))
+				patientList.remove(patientItem);
+		}
 		
-		if(Area.getActiveArea() == Area.IV)
-			adapter = new MTSListTherapyAdapter<Patient>(getApplicationContext(), R.layout.mts_list, patientListDec);
-		
+		//TODO falls geschwindigkeit es zulaesst: alle daten laden
+		adapter = new MTSListAdapter<PatientListItem>(getApplicationContext(), R.layout.mts_list, patientList);
+
 		initContent();
 	}
 	
@@ -114,70 +95,6 @@ public class TherapyListActivity extends Activity {
 		patientView.setAdapter(adapter);
 		
 		//TODO Listener
-	}
-	
-	private void createSomePatients() {
-		Patient p;
-		
-		/**
-		 * 7 IMMEDIATE
-		 */
-		patientListIm = new ArrayList<Patient>();
-		
-		for(int i = 0; i < 7; i++) {
-			p = new Patient();
-			p.setCategory(TriageCategory.immediate);
-			p.setId(new UUID(4,i));
-			p.setPlacePosition(String.valueOf((i * (2 * i * i - 2 * (i + 3)) + 7)));
-			
-			if(i == 5) {
-				p.setNameGiven("Fritz");
-				p.setNameFamily("Fantom");
-				p.setUrgency(4);
-			}
-			if(i == 6) {
-				p.setNameGiven("Hans");
-				p.setNameFamily("Wurst");
-				p.setUrgency(2);
-			}
-			
-			patientListIm.add(p);
-		}
-		
-		/**
-		 * 0 DELAYED
-		 */
-		patientListDel = new ArrayList<Patient>();
-		
-		/**
-		 * 2 MINOR
-		 */
-		patientListMin = new ArrayList<Patient>();
-		
-		p = new Patient();
-		p.setCategory(TriageCategory.minor);
-		p.setId(new UUID(4,7));
-		p.setNameGiven("Max");
-		p.setNameFamily("Mustermann");
-		patientListMin.add(p);
-		
-		p = new Patient();
-		p.setCategory(TriageCategory.minor);
-		p.setId(new UUID(4,8));
-		p.setNameGiven("Lucas");
-		p.setNameFamily("Dobler");
-		patientListMin.add(p);
-		
-		/**
-		 * 1 DECEASED
-		 */
-		patientListDec = new ArrayList<Patient>();
-		
-		p = new Patient();
-		p.setCategory(TriageCategory.deceased);
-		p.setId(new UUID(4,15));
-		p.setPlacePosition("1");
-		patientListDec.add(p);
 	}
 	
 	public void scanTag(View view) {

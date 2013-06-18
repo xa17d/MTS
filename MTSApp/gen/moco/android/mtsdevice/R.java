@@ -374,7 +374,6 @@ containing a value of this type.
         public static final int triage_selection=0x7f030019;
     }
     public static final class string {
-        public static final int _diagnosis_added=0x7f070067;
         public static final int activate_gps=0x7f070047;
         public static final int add=0x7f070029;
         public static final int add_diagnosis=0x7f07005f;
@@ -462,6 +461,7 @@ containing a value of this type.
         public static final int create_patient=0x7f070035;
         public static final int critical=0x7f070020;
         public static final int diagnosis=0x7f07004b;
+        public static final int diagnosis_added=0x7f070067;
         public static final int distance=0x7f07006a;
         public static final int edit_patient=0x7f070036;
         public static final int error=0x7f070021;
@@ -504,6 +504,7 @@ containing a value of this type.
         public static final int no_support=0x7f07006e;
         public static final int nothing=0x7f07003b;
         public static final int ok=0x7f070028;
+        public static final int patient_already_registered=0x7f070071;
         public static final int perfusion=0x7f07001b;
         public static final int perfusion_criteria=0x7f070041;
         public static final int personal_data=0x7f07004c;
