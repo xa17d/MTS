@@ -26,6 +26,7 @@ public class PatientServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		service = PatientServiceImpl.getInstance();
+		service.changeMtsServerAddress("YOUR_LOCALHOST");
 	}
 
 	@After
@@ -51,7 +52,7 @@ public class PatientServiceTest {
 			service.saveNewPatient(p);
 		} catch (ServiceException e) {
 			System.out.print(e.getMessage());
-			fail("Es darf beim Speichern keine CommunicationException geworfen werden!");
+			fail("Es darf beim Speichern keine ServiceException geworfen werden!");
 		}
 		
 		
@@ -59,7 +60,7 @@ public class PatientServiceTest {
 			pResult = service.loadPatientById(p.getId());
 		} catch (ServiceException e) {
 			System.out.print(e.getMessage());
-			fail("Es darf beim Laden keine CommunicationException geworfen werden!");
+			fail("Es darf beim Laden keine ServiceException geworfen werden!");
 		}
 		
 		assertEquals(p, pResult);
@@ -100,14 +101,14 @@ public class PatientServiceTest {
 			service.saveNewPatient(p3);
 		} catch (ServiceException e) {
 			System.out.print(e.getMessage());
-			fail("Es darf beim Speichern keine CommunicationException geworfen werden!");
+			fail("Es darf beim Speichern keine ServiceException geworfen werden!");
 		}
 		
 		try {
 			listResult = service.loadAllPatients();
 		} catch (ServiceException e) {
 			System.out.print(e.getMessage());
-			fail("Es darf beim Laden keine CommunicationException geworfen werden!");
+			fail("Es darf beim Laden keine ServiceException geworfen werden!");
 		}
 		
 		//assertTrue(listResult.size() == 3);

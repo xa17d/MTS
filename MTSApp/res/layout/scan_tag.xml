@@ -39,12 +39,12 @@
     </FrameLayout>
 
     <Button
-        android:id="@+id/buttonTagScanned"
+        android:id="@+id/buttonQrScan"
         style="?android:attr/buttonStyleSmall"
         android:layout_column="0"
         android:layout_gravity="center_horizontal|bottom"
         android:layout_row="0"
-        android:onClick="tagScanned"
-        android:text="**TAG GESCANNT**" />
+        android:onClick="scanQr"
+        android:text="@string/scan_qr" />
 
 </GridLayout>

@@ -68,8 +68,15 @@ public class PatientServiceImpl implements PatientService {
 		
 		String urlString = mtsUrl + patient.getId();
 		
-		CdaDocument doc = new CdaDocument(patient);
-		String xmlData = doc.asXml();
+		//CdaDocument doc = new CdaDocument(patient);
+		//String xmlData = doc.asXml();
+		String xmlData = null;
+		try {
+			xmlData = com.getData("http://88.116.105.228:30104/MtsServer/restApi/patients/204c4fea-9827-4614-9793-f7c8b3c98e18");
+		} catch (CommunicationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		try {
 			com.putData(urlString, xmlData);

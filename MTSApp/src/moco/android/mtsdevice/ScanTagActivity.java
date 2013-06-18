@@ -24,6 +24,7 @@ import android.location.LocationManager;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Toast;
 import at.mts.entity.Patient;
@@ -32,8 +33,6 @@ import at.mts.entity.TriageCategory;
 import at.mts.entity.cda.CdaDocument;
 
 public class ScanTagActivity extends Activity implements LocationListener {
-	
-	//private NdefMessage[] msgs = null;
 	
 	private PatientService service;
 	
@@ -57,13 +56,15 @@ public class ScanTagActivity extends Activity implements LocationListener {
 		service = PatientServiceImpl.getInstance();
 		
 		initGps();
-		startScan();
+		//startNfcScan();
 	}
 	
-	private void startScan() {
+	private void startNfcScan() {
 		
-		/*
 		//TODO Testen
+		NdefMessage[] msgs = null;
+		Intent intent = null;
+		
 		if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
 	        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
 	        if (rawMsgs != null) {
@@ -75,17 +76,46 @@ public class ScanTagActivity extends Activity implements LocationListener {
 	    }
 		
 		try {
-			scanText.setText(msgs[0].toString());
-			scannedId = msgs[0].toString()
+			scannedId = UUID.fromString(msgs[0].toString());
 		} catch(Exception e) {
-			scanText.setText("kein Tag gescannt");
+			new AlertDialog.Builder(this) 
+		        	.setMessage(R.string.error_scan_tag)
+		        	.setNeutralButton(R.string.ok, null)
+		        	.show();
 		}
 		
-		tagScanned(null);
-		*/
+		tagScanned();
 	}
 	
-	public void tagScanned(View v) {
+	
+	/**
+	 * alternativer QR-Scan
+	 */
+	public void scanQr(View v) {
+		
+		Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+        intent.setPackage("com.google.zxing.client.android");
+        intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+        startActivityForResult(intent, 0);
+	}
+	
+	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+	    if (requestCode == 0) {
+	        if (resultCode == RESULT_OK) {
+	        	scannedId = UUID.fromString(intent.getStringExtra("SCAN_RESULT"));
+	            //String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
+	            
+	            tagScanned();
+	            
+	        } else if (resultCode == RESULT_CANCELED) {
+	            // do nothing
+	        }
+	    }
+	}
+	
+	
+	
+	private void tagScanned() {
 		
 		Intent intent;
 		
@@ -96,19 +126,18 @@ public class ScanTagActivity extends Activity implements LocationListener {
 		if(Mode.getActiveMode() == Mode.triage) {
 			
 			selectedPatient = SelectedPatient.getPatient();
-			scannedId = UUID.randomUUID();				//TODO zuweisung fuer Test
 			selectedPatient.setId(scannedId);
 			selectedPatient.setGps(locationString + ";" + locationAccuracyString);
 			selectedPatient.setTreatment(Treatment.sighted);
 			
-//			try {
-//				service.saveNewPatient(selectedPatient);
-//			} catch (ServiceException e) {
-//				new AlertDialog.Builder(this) 
-//		        	.setMessage(R.string.error_save_data)
-//		        	.setNeutralButton(R.string.ok, null)
-//		        	.show();
-//			}
+			try {
+				service.saveNewPatient(selectedPatient);
+			} catch (ServiceException e) {
+				new AlertDialog.Builder(this) 
+		        	.setMessage(R.string.error_save_data)
+		        	.setNeutralButton(R.string.ok, null)
+		        	.show();
+			}
 			
 			Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
 			Toast.makeText(this, "GPS-Koordinaten: " + locationString + "\nGenauigkeit: " + locationAccuracyString, Toast.LENGTH_LONG).show();
@@ -165,27 +194,27 @@ public class ScanTagActivity extends Activity implements LocationListener {
 				SelectedPatient.setPatient(selectedPatient);
 			}
 			
-//			try {
-//				selectedPatient = service.loadPatientById(scannedId);
-//			} catch (ServiceException e) {
-//				new AlertDialog.Builder(this) 
-//			        	.setMessage(R.string.error_load_data)
-//			        	.setNeutralButton(R.string.ok, null)
-//			        	.show();
-//			}
-//			
-//			SelectedPatient.setPatient(selectedPatient);
-//			
-//			if(Area.getActiveArea().matchesCategory(selectedPatient.getCategory()) && selectedPatient.getTreatment() == Treatment.salvaged) {
+			try {
+				selectedPatient = service.loadPatientById(scannedId);
+			} catch (ServiceException e) {
+				new AlertDialog.Builder(this) 
+			        	.setMessage(R.string.error_load_data)
+			        	.setNeutralButton(R.string.ok, null)
+			        	.show();
+			}
+			
+			SelectedPatient.setPatient(selectedPatient);
+			
+			if(Area.getActiveArea().matchesCategory(selectedPatient.getCategory()) && selectedPatient.getTreatment() == Treatment.salvaged) {
 				intent = new Intent(this, TherapySelectionActivity.class);
 				startActivity(intent);
 				finish();
-//			}
-//			else
-//				new AlertDialog.Builder(this) 
-//			        	.setMessage(R.string.error_wrong_area)
-//			        	.setNeutralButton(R.string.ok, null)
-//			        	.show();
+			}
+			else
+				new AlertDialog.Builder(this) 
+			        	.setMessage(R.string.error_wrong_area)
+			        	.setNeutralButton(R.string.ok, null)
+			        	.show();
 		}
 	}
 	
@@ -203,7 +232,7 @@ public class ScanTagActivity extends Activity implements LocationListener {
 		// Initialize the location fields
 		if (location != null) {
 			onLocationChanged(location);
-		} else {
+		} else if(Mode.getActiveMode() == Mode.triage) {
 			Toast.makeText(this, R.string.error_gps, Toast.LENGTH_LONG).show();
 		}
 	}
@@ -231,20 +260,17 @@ public class ScanTagActivity extends Activity implements LocationListener {
 	
 	@Override
 	public void onProviderDisabled(String provider) {
-		// TODO Auto-generated method stub
-		
+		//do nothing
 	}
 
 	@Override
 	public void onProviderEnabled(String provider) {
-		// TODO Auto-generated method stub
-		
+		//do nothing
 	}
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
-		// TODO Auto-generated method stub
-		
+		//do nothing
 	}
 
 	@Override

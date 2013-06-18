@@ -11,10 +11,17 @@
         android:text="@string/error"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <ExpandableListView
-        android:id="@+id/expandableBodyInjuryList"
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ListView
+        android:id="@+id/bodyInjuryList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-    </ExpandableListView>
+    </ListView>
     
 </LinearLayout>

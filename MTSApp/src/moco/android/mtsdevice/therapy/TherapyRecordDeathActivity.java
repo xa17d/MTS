@@ -27,7 +27,7 @@ public class TherapyRecordDeathActivity extends Activity {
 	
 	public void recordDeath(View v) {
 		
-		if(txtReason.equals("")) {
+		if(txtReason.getText().equals("")) {
 			new AlertDialog.Builder(this) 
 		        	.setMessage(R.string.error_no_reason)
 		        	.setNeutralButton(R.string.ok, null)
