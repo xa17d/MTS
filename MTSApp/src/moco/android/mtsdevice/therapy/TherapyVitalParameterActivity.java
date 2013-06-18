@@ -42,7 +42,7 @@ public class TherapyVitalParameterActivity extends Activity {
 		super.onResume();
 		
 		if(selectedPatient.getDiagnosis() != null);
-			txtDiagnosis.setText(selectedPatient.getDiagnosis());
+			txtDiagnosis.setText(selectedPatient.getDiagnosisString());
 	}
 	
 	public void openFrontBody(View v) {

@@ -42,7 +42,7 @@ public class TherapyImmediateActivity extends Activity {
 		
 		selectedPatient = SelectedPatient.getPatient();	
 		if(selectedPatient.getCourseOfTreatment() != null)
-			txtTherapy.setText(selectedPatient.getCourseOfTreatment());
+			txtTherapy.setText(selectedPatient.getCourseOfTreatmentString());
 	}
 	
 	public void addTherapy(View v) {
