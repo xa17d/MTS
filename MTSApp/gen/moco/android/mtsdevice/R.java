@@ -226,9 +226,9 @@ containing a value of this type.
         public static final int buttonEditPatient=0x7f060094;
         public static final int buttonFrontBody=0x7f060067;
         public static final int buttonPersonalData=0x7f06005a;
+        public static final int buttonQrScan=0x7f060026;
         public static final int buttonRecordDeath=0x7f060058;
         public static final int buttonSalvageMode=0x7f060016;
-        public static final int buttonTagScanned=0x7f060026;
         public static final int buttonTherapy=0x7f06005d;
         public static final int buttonTherapyMode=0x7f060017;
         public static final int buttonTriageMode=0x7f060015;
@@ -458,6 +458,7 @@ containing a value of this type.
         public static final int error_no_reason=0x7f070060;
         public static final int error_not_on_salvagelist=0x7f070066;
         public static final int error_save_data=0x7f070064;
+        public static final int error_scan_tag=0x7f070069;
         public static final int error_wrong_area=0x7f070056;
         public static final int f=0x7f070052;
         public static final int firstname=0x7f070057;
@@ -507,6 +508,7 @@ containing a value of this type.
         public static final int salvagemap=0x7f070032;
         public static final int save=0x7f070022;
         public static final int scan_new_tag=0x7f07002b;
+        public static final int scan_qr=0x7f070068;
         public static final int scan_tag=0x7f070033;
         public static final int select_mode=0x7f070034;
         public static final int skip=0x7f070037;
