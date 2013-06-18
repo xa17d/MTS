@@ -1,9 +1,7 @@
 package moco.android.mtsdevice;
 
-import java.util.GregorianCalendar;
 import java.util.UUID;
 
-import moco.android.mtsdevice.handler.Area;
 import moco.android.mtsdevice.handler.DeviceButtons;
 import moco.android.mtsdevice.handler.Mode;
 import moco.android.mtsdevice.handler.SelectedPatient;
@@ -29,8 +27,6 @@ import android.view.View;
 import android.widget.Toast;
 import at.mts.entity.Patient;
 import at.mts.entity.Treatment;
-import at.mts.entity.TriageCategory;
-import at.mts.entity.cda.CdaDocument;
 
 public class ScanTagActivity extends Activity implements LocationListener {
 	
@@ -123,16 +119,17 @@ public class ScanTagActivity extends Activity implements LocationListener {
 		if(Mode.getActiveMode() == Mode.triage) {
 			
 			Patient errorLoad = null;
+			
 			try {
 				errorLoad = service.loadPatientById(scannedId);
-			} catch (ServiceException e1) {
+			} catch (ServiceException e) {
 				new AlertDialog.Builder(this) 
 			        	.setMessage(R.string.error_save_data)
 			        	.setNeutralButton(R.string.ok, null)
 			        	.show();
 			}
 			
-			if(errorLoad != null) {
+			if(errorLoad == null) {
 			
 				selectedPatient = SelectedPatient.getPatient();
 				selectedPatient.setId(scannedId);
