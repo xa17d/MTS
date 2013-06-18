@@ -123,13 +123,12 @@ public class CdaDocument {
 	public void load(String document) {
 		
 		try{
-			
+            
 			body = new CdaBody(); // Body loeschen
 			Document doc = new SAXBuilder().build(new ByteArrayInputStream(document.getBytes("UTF-8")));
-	        Namespace NS = Namespace.getNamespace("urn:hl7-org:v3");
-	        
+	        Namespace NS = Namespace.getNamespace("urn:hl7-org:v3"); 
 	        Element root = doc.getRootElement();
-	        
+
 	        setAuthorNameGiven(root.getChild("author", NS).getChild("assignedAuthor",NS).getChild("assignedPerson", NS).getChild("name", NS).getChild("given", NS).getText());
 	        setAuthorNameFamily(root.getChild("author", NS).getChild("assignedAuthor",NS).getChild("assignedPerson", NS).getChild("name", NS).getChild("family", NS).getText());
 	        setAuthorId(UUID.fromString((root.getChild("author", NS).getChild("assignedAuthor",NS).getChild("id", NS).getAttributeValue("extension"))));
@@ -162,7 +161,7 @@ public class CdaDocument {
 	        //-----VITALZEICHEN
 
 	        Element textVital = root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text",NS);
-
+	        
 	        splitInfo(textVital);
 	        
 	        //-----DETAILS
@@ -188,15 +187,22 @@ public class CdaDocument {
 	 */
 	private void splitInfo(Element element){
 
-		String bodyValue = element.getText();
-		String[] lines = bodyValue.split("<br ?/?>");
-		
+		String bodyValue = element.getValue();
+		String[] lines = bodyValue.split("\\r?\\n"); //"  <br ?/?>
+		String prekey="";
 		for (String line : lines) {
 			String[] keypair = line.trim().split(":", 2);
+			
 			if (keypair.length > 1) {
 				String key = keypair[0].trim();
 				String value = keypair[1].trim();
 				body.set(key, value);
+				prekey=key;
+			}
+			else
+			{
+				if(keypair[0].length()>0)
+					body.set(prekey, body.get(prekey) + "\n				"+ keypair[0]);
 			}
 		}
 	}
@@ -325,8 +331,7 @@ public class CdaDocument {
 	        for (String key : Bodyparts.Keys) {
 	        	String text = body.get(key);
 				if (text != null) {
-					liste.get(1).getChild("section", NS).getChild("component",NS).getChild("section",NS).getChild("text",NS).addContent(key+": "+text);
-					liste.get(1).getChild("section", NS).getChild("component",NS).getChild("section",NS).getChild("text",NS).addContent("<br />"); // (new Element("br",NS));
+					liste.get(1).getChild("section", NS).getChild("component",NS).getChild("section",NS).getChild("text",NS).addContent("		"+key+": "+text+"<br />"+"\n");
 				}
 			}
    
@@ -334,8 +339,7 @@ public class CdaDocument {
 	        format.setEncoding("UTF-8");
 	        
 			XMLOutputter outputter = new XMLOutputter(format);
-			outputter.escapeAttributeEntities("&lt;");
-	        xml = outputter.outputString(doc);
+	        xml = outputter.outputString(doc).replaceAll("&lt;br /&gt;", "<br />");
 		}
     	catch (Exception e) {
 			e.printStackTrace();
