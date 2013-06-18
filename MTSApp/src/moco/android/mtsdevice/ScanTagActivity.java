@@ -190,27 +190,27 @@ public class ScanTagActivity extends Activity implements LocationListener {
 			selectedPatient = p;
 			SelectedPatient.setPatient(selectedPatient);
 			
-//			try {
-//				selectedPatient = service.loadPatientById(scannedId);
-//			} catch (ServiceException e) {
-//				new AlertDialog.Builder(this) 
-//			        	.setMessage(R.string.error_load_data)
-//			        	.setNeutralButton(R.string.ok, null)
-//			        	.show();
-//			}
-//			
-//			SelectedPatient.setPatient(selectedPatient);
-//			
-//			if(Area.getActiveArea().matchesCategory(selectedPatient.getCategory()) && selectedPatient.getTreatment() == Treatment.salvaged) {
+			try {
+				selectedPatient = service.loadPatientById(scannedId);
+			} catch (ServiceException e) {
+				new AlertDialog.Builder(this) 
+			        	.setMessage(R.string.error_load_data)
+			        	.setNeutralButton(R.string.ok, null)
+			        	.show();
+			}
+			
+			SelectedPatient.setPatient(selectedPatient);
+			
+			if(Area.getActiveArea().matchesCategory(selectedPatient.getCategory()) && selectedPatient.getTreatment() == Treatment.salvaged) {
 				intent = new Intent(this, TherapySelectionActivity.class);
 				startActivity(intent);
 				finish();
-//			}
-//			else
-//				new AlertDialog.Builder(this) 
-//			        	.setMessage(R.string.error_wrong_area)
-//			        	.setNeutralButton(R.string.ok, null)
-//			        	.show();
+			}
+			else
+				new AlertDialog.Builder(this) 
+			        	.setMessage(R.string.error_wrong_area)
+			        	.setNeutralButton(R.string.ok, null)
+			        	.show();
 		}
 	}
 	
