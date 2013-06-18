@@ -2,10 +2,12 @@ package moco.android.mtsdevice.unittest;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
-import moco.android.mtsdevice.communication.CommunicationException;
-import moco.android.mtsdevice.communication.ServerCommunication;
+import moco.android.mtsdevice.service.PatientService;
+import moco.android.mtsdevice.service.PatientServiceImpl;
+import moco.android.mtsdevice.service.ServiceException;
 
 import org.junit.After;
 import org.junit.Before;
@@ -13,19 +15,17 @@ import org.junit.Test;
 
 import at.mts.entity.Gender;
 import at.mts.entity.Patient;
-import at.mts.entity.PatientList;
+import at.mts.entity.PatientListItem;
 import at.mts.entity.PhaseOfLife;
 import at.mts.entity.TriageCategory;
 
-public class ServerCommunicationTest {
+public class PatientServiceTest {
 
-	private ServerCommunication com;
+	private PatientService service;
 	
 	@Before
 	public void setUp() throws Exception {
-		
-		com = ServerCommunication.getInstance();
-		com.changeMtsServerAddress("LOCAL HOST");
+		service = PatientServiceImpl.getInstance();
 	}
 
 	@After
@@ -48,16 +48,16 @@ public class ServerCommunicationTest {
 		p.setPhaseOfLife(PhaseOfLife.child);
 		
 		try {
-			com.savePatient(p);
-		} catch (CommunicationException e) {
+			service.saveNewPatient(p);
+		} catch (ServiceException e) {
 			System.out.print(e.getMessage());
 			fail("Es darf beim Speichern keine CommunicationException geworfen werden!");
 		}
 		
 		
 		try {
-			pResult = com.loadPatientById(p.getId().toString());
-		} catch (CommunicationException e) {
+			pResult = service.loadPatientById(p.getId());
+		} catch (ServiceException e) {
 			System.out.print(e.getMessage());
 			fail("Es darf beim Laden keine CommunicationException geworfen werden!");
 		}
@@ -68,7 +68,7 @@ public class ServerCommunicationTest {
 	@Test
 	public void testPut3PatientsToServerandGetAll() {
 		
-		PatientList listResult = null;
+		ArrayList<PatientListItem> listResult = null;
 		
 		Patient p1 = new Patient();
 		p1.setId(UUID.randomUUID());
@@ -95,17 +95,17 @@ public class ServerCommunicationTest {
 		p3.setPhaseOfLife(PhaseOfLife.adult);
 		
 		try {
-			com.savePatient(p1);
-			com.savePatient(p2);
-			com.savePatient(p3);
-		} catch (CommunicationException e) {
+			service.saveNewPatient(p1);
+			service.saveNewPatient(p2);
+			service.saveNewPatient(p3);
+		} catch (ServiceException e) {
 			System.out.print(e.getMessage());
 			fail("Es darf beim Speichern keine CommunicationException geworfen werden!");
 		}
 		
 		try {
-			listResult = com.loadAllPatients();
-		} catch (CommunicationException e) {
+			listResult = service.loadAllPatients();
+		} catch (ServiceException e) {
 			System.out.print(e.getMessage());
 			fail("Es darf beim Laden keine CommunicationException geworfen werden!");
 		}

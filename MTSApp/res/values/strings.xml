@@ -81,5 +81,6 @@
     <string name="back_body">Hinterkörper</string>
     <string name="change_patient">Wollen Sie den Patienten wechseln?</string>
     <string name="error_save_data">Beim Speichern der Daten ist ein Fehler aufgetreten!</string>
-
+    <string name="error_load_data">Beim Laden der Daten ist ein Fehler aufgetreten!</string>
+    <string name="error_not_on_salvagelist">Der gewählte Patient befindet sich nicht auf der Berge-Liste!</string>
 </resources>

@@ -1,17 +1,22 @@
 package moco.android.mtsdevice.therapy;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.UUID;
 
 import moco.android.mtsdevice.R;
 import moco.android.mtsdevice.ScanTagActivity;
 import moco.android.mtsdevice.TestActivity;
 import moco.android.mtsdevice.communication.CommunicationException;
-import moco.android.mtsdevice.communication.ServerCommunication;
+import moco.android.mtsdevice.communication.ServerCommunicationImpl;
 import moco.android.mtsdevice.handler.Area;
 import moco.android.mtsdevice.handler.DeviceButtons;
 import moco.android.mtsdevice.handler.MTSListAdapter;
+import moco.android.mtsdevice.service.PatientService;
+import moco.android.mtsdevice.service.PatientServiceImpl;
+import moco.android.mtsdevice.service.ServiceException;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +25,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import at.mts.entity.Patient;
 import at.mts.entity.PatientList;
+import at.mts.entity.PatientListItem;
+import at.mts.entity.Treatment;
 import at.mts.entity.TriageCategory;
 
 public class TherapyListActivity extends Activity {
@@ -28,50 +35,57 @@ public class TherapyListActivity extends Activity {
 	private ListView patientView;
 	private ListAdapter adapter;
 	
+	private PatientService service;
+	
 	//TODO
 	private ArrayList<Patient> patientListIm;
 	private ArrayList<Patient> patientListDel;
 	private ArrayList<Patient> patientListMin;
 	private ArrayList<Patient> patientListDec;
 	
-	private PatientList patientList;
+	private ArrayList<PatientListItem> patientList;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.therapy_list);
 		
-		ServerCommunication com = ServerCommunication.getInstance();
-		/*
-		PatientList s = new PatientList();
-		try {
-			s = com.loadAllPatients();
-		} catch (CommunicationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		service = PatientServiceImpl.getInstance();
+//		
+//		try {
+//			patientList = service.loadAllPatients();
+//		} catch (ServiceException e) {
+//			new AlertDialog.Builder(this) 
+//			    	.setMessage(R.string.error_load_data)
+//			    	.setNeutralButton(R.string.ok, null)
+//			    	.show();
+//		}
+//		
+//		PatientListItem patientItem;
+//		Iterator<PatientListItem> it = patientList.iterator();
+//		
+//		while(it.hasNext()) {
+//			patientItem = it.next();
+//			
+//			/**
+//			 * wenn gewaehlter Patient noch nicht geborgen (oder bereits abtransportiert) wurde
+//			 * ODER
+//			 * Patient an anderem Behandlungsplatz
+//			 * ==> aus Liste entfernen
+//			 */
+//			if(patientItem.getTreatment() != Treatment.salvaged || !Area.getActiveArea().matchesCategory(patientItem.getCategory()))
+//				patientList.remove(patientItem);
+//		}
+//		
+//		//TODO falls geschwindigkeit es zulaesst: alle daten laden
+//		adapter = new MTSListAdapter<PatientListItem>(getApplicationContext(), R.layout.mts_list, patientList);
+//
+//		initContent();
 		
-		TestActivity.setTestText(s.toString());
-		*/
 		
-		Patient p = null;
-		try {
-			p = com.loadPatientByUrl("http://88.116.105.228:30104/MtsServer/restApi/patients/204c4fea-9827-4614-9793-f7c8b3c98e18");
-		} catch (CommunicationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		TestActivity.setTestText(p.getNameGiven() + " " + p.getNameFamily() + "(" + p.getAge() + ")");
-		
-		//TEST
-		Intent intent = new Intent(this, TestActivity.class);
-		startActivity(intent);
-		finish();
+		//TODO REMOVE
+		createSomePatients();
 
-		
-		//createSomePatients();
-		/*
 		if(Area.getActiveArea() == Area.I) {
 			adapter = new MTSListAdapter<Patient>(getApplicationContext(), R.layout.mts_list, patientListIm);
 		}
@@ -86,7 +100,6 @@ public class TherapyListActivity extends Activity {
 			adapter = new MTSListAdapter<Patient>(getApplicationContext(), R.layout.mts_list, patientListDec);
 		
 		initContent();
-		*/
 	}
 	
 	private void initContent() {
@@ -98,7 +111,8 @@ public class TherapyListActivity extends Activity {
 		
 		patientView = (ListView)findViewById(R.id.patientTherapyView); 
 		patientView.setAdapter(adapter);
-		patientView.setClickable(false);
+		
+		//TODO Listener
 	}
 	
 	private void createSomePatients() {
