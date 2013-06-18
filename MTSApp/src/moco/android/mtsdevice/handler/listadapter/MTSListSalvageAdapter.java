@@ -1,9 +1,8 @@
-package moco.android.mtsdevice.handler;
+package moco.android.mtsdevice.handler.listadapter;
 
 import java.util.List;
 
 import moco.android.mtsdevice.R;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -13,13 +12,13 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import at.mts.entity.Patient;
 
-public class MTSListAdapter<T> extends ArrayAdapter<T> {
+public class MTSListSalvageAdapter<T extends Patient> extends ArrayAdapter<T> {			//TODO change EXTEND to PatientListItem
 	
 	private Context context;
     private int textViewResourceId;
     private List<T> items;
 
-	public MTSListAdapter(Context context, int textViewResourceId, List<T> items) {
+	public MTSListSalvageAdapter(Context context, int textViewResourceId, List<T> items) {
 		super(context, textViewResourceId, items);
 
 		this.context = context;
@@ -37,21 +36,22 @@ public class MTSListAdapter<T> extends ArrayAdapter<T> {
         }
 
         TextView text = (TextView)view.findViewById(R.id.MTSView);
+        
+        filterAndSortItems();
 
         if(items.get(position) != null) {
-            text.setTextColor(Color.BLACK);
-            text.setBackgroundColor(00000000);
             
-            if(Mode.getActiveMode() == Mode.therapy)
-            	text.setText(((Patient)items.get(position)).toTherapyOverviewString());
-            else if(Mode.getActiveMode() == Mode.salvage) {
-            	text.setText(((Patient)items.get(position)).toSalvageOverviewString());
-            	text.setTextColor(((Patient)items.get(position)).getCategory().getTriageColor());
-            }
-            else
-                text.setText(items.get(position).toString());
+        	text.setTextColor(Color.BLACK);
+            text.setBackgroundColor(00000000);
+        	text.setText(items.get(position).toSalvageOverviewString());
+        	text.setTextColor(items.get(position).getCategory().getTriageColor());
         }
 
         return view;
     }
+	
+	private void filterAndSortItems() {
+		
+		//TODO minor-Patienten filtern und nach dringlichkeit sortieren
+	}
 }

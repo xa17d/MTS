@@ -11,7 +11,8 @@ import moco.android.mtsdevice.communication.CommunicationException;
 import moco.android.mtsdevice.communication.ServerCommunicationImpl;
 import moco.android.mtsdevice.handler.Area;
 import moco.android.mtsdevice.handler.DeviceButtons;
-import moco.android.mtsdevice.handler.MTSListAdapter;
+import moco.android.mtsdevice.handler.listadapter.MTSListAdapter;
+import moco.android.mtsdevice.handler.listadapter.MTSListTherapyAdapter;
 import moco.android.mtsdevice.service.PatientService;
 import moco.android.mtsdevice.service.PatientServiceImpl;
 import moco.android.mtsdevice.service.ServiceException;
@@ -87,17 +88,17 @@ public class TherapyListActivity extends Activity {
 		createSomePatients();
 
 		if(Area.getActiveArea() == Area.I) {
-			adapter = new MTSListAdapter<Patient>(getApplicationContext(), R.layout.mts_list, patientListIm);
+			adapter = new MTSListTherapyAdapter<Patient>(getApplicationContext(), R.layout.mts_list, patientListIm);
 		}
 		
 		if(Area.getActiveArea() == Area.II)
-			adapter = new MTSListAdapter<Patient>(getApplicationContext(), R.layout.mts_list, patientListDel);
+			adapter = new MTSListTherapyAdapter<Patient>(getApplicationContext(), R.layout.mts_list, patientListDel);
 		
 		if(Area.getActiveArea() == Area.III)
-			adapter = new MTSListAdapter<Patient>(getApplicationContext(), R.layout.mts_list, patientListMin);
+			adapter = new MTSListTherapyAdapter<Patient>(getApplicationContext(), R.layout.mts_list, patientListMin);
 		
 		if(Area.getActiveArea() == Area.IV)
-			adapter = new MTSListAdapter<Patient>(getApplicationContext(), R.layout.mts_list, patientListDec);
+			adapter = new MTSListTherapyAdapter<Patient>(getApplicationContext(), R.layout.mts_list, patientListDec);
 		
 		initContent();
 	}

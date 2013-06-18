@@ -12,4 +12,11 @@ public class TherapyMinorActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.therapy_minor);
 	}
+	
+	
+	@Override
+	public void onBackPressed() {
+		
+		//do nothing
+	}
 }

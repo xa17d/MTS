@@ -4,10 +4,15 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import moco.android.mtsdevice.R;
+import moco.android.mtsdevice.ScanTagActivity;
 import moco.android.mtsdevice.handler.DeviceButtons;
-import moco.android.mtsdevice.handler.MTSListAdapter;
 import moco.android.mtsdevice.handler.SelectedPatient;
+import moco.android.mtsdevice.handler.listadapter.MTSListSalvageAdapter;
+import moco.android.mtsdevice.service.PatientService;
+import moco.android.mtsdevice.service.PatientServiceImpl;
+import moco.android.mtsdevice.service.ServiceException;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,14 +21,18 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import at.mts.entity.Patient;
+import at.mts.entity.PatientListItem;
 import at.mts.entity.TriageCategory;
 
 public class SalvageListActivity extends Activity implements OnItemClickListener {
 
+	private PatientService service;
+	
 	private ListView patientView;
 	private ListAdapter adapter;
 	
-	private ArrayList<Patient> patientList;
+	private ArrayList<PatientListItem> patientList;
+	private ArrayList<Patient> patientListTemp;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -31,11 +40,42 @@ public class SalvageListActivity extends Activity implements OnItemClickListener
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.salvage_list);
 		
+//		service = PatientServiceImpl.getInstance();
+//		
+//		try {
+//			patientList = service.loadAllPatients();
+//		} catch (ServiceException e) {
+//			new AlertDialog.Builder(this) 
+//		        	.setMessage(R.string.error_load_data)
+//		        	.setNeutralButton(R.string.ok, null)
+//		        	.show();
+//		}
+//		
+//		adapter = new MTSListAdapter<PatientListItem>(getApplicationContext(), R.layout.mts_list, patientList);
+//		
+//		initContent();
+		
+		
+		//TODO delete
 		createSomePatients();
 		
-		adapter = new MTSListAdapter<Patient>(getApplicationContext(), R.layout.mts_list, patientList);
+		adapter = new MTSListSalvageAdapter<Patient>(getApplicationContext(), R.layout.mts_list, patientListTemp);
 		
 		initContent();
+	}
+	
+	public void scanTag(View view) {
+		
+		Intent intent = new Intent(this, ScanTagActivity.class);
+        startActivity(intent);
+        finish();
+	}
+	
+	private void initContent() {
+		
+		patientView = (ListView)findViewById(R.id.patientSalvageView); 
+		patientView.setAdapter(adapter);
+		patientView.setOnItemClickListener(this);
 	}
 	
 	@Override
@@ -46,13 +86,6 @@ public class SalvageListActivity extends Activity implements OnItemClickListener
 		Intent intent = new Intent(this, SalvageSingleViewActivity.class);
 		startActivity(intent);
 	}
-	
-	private void initContent() {
-		
-		patientView = (ListView)findViewById(R.id.patientSalvageView); 
-		patientView.setAdapter(adapter);
-		patientView.setOnItemClickListener(this);
-	}
 
 	
 	@Override
@@ -62,10 +95,10 @@ public class SalvageListActivity extends Activity implements OnItemClickListener
 	}
 	
 	
-	//TODO
+	//TODO DELETE
 	private void createSomePatients() {
 		Patient p;
-		patientList = new ArrayList<Patient>();
+		patientListTemp = new ArrayList<Patient>();
 		
 		/**
 		 * 7 IMMEDIATE
@@ -88,7 +121,7 @@ public class SalvageListActivity extends Activity implements OnItemClickListener
 				p.setUrgency(2);
 			}
 			
-			patientList.add(p);
+			patientListTemp.add(p);
 		}
 		
 		/**
@@ -99,7 +132,7 @@ public class SalvageListActivity extends Activity implements OnItemClickListener
 		p.setId(new UUID(4,7));
 		p.setNameGiven("Max");
 		p.setNameFamily("Mustermann");
-		patientList.add(p);
+		patientListTemp.add(p);
 		
 		/**
 		 * 2 MINOR
@@ -109,14 +142,14 @@ public class SalvageListActivity extends Activity implements OnItemClickListener
 		p.setId(new UUID(4,7));
 		p.setNameGiven("Max");
 		p.setNameFamily("Mustermann");
-		patientList.add(p);
+		patientListTemp.add(p);
 		
 		p = new Patient();
 		p.setCategory(TriageCategory.minor);
 		p.setId(new UUID(4,8));
 		p.setNameGiven("Lucas");
 		p.setNameFamily("Dobler");
-		patientList.add(p);
+		patientListTemp.add(p);
 		
 		/**
 		 * 1 DECEASED
@@ -125,6 +158,6 @@ public class SalvageListActivity extends Activity implements OnItemClickListener
 		p.setCategory(TriageCategory.deceased);
 		p.setId(new UUID(4,15));
 		p.setPlacePosition("1");
-		patientList.add(p);
+		patientListTemp.add(p);
 	}
 }

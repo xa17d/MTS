@@ -108,4 +108,11 @@ public class TherapyVitalParameterActivity extends Activity {
 		
 		//TODO Oxygen
 	}
+	
+	
+	@Override
+	public void onBackPressed() {
+		
+		//do nothing
+	}
 }

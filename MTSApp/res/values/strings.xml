@@ -47,7 +47,7 @@
     <string name="respiration2_criteria">Hat der Patient eine kleinere Atemfrequenz als 30?</string>
     <string name="perfusion_criteria">Hat der Patient eine Puls und eine Rekap-Zeit von weniger als 2 Sekunden?</string>
     <string name="mental_criteria">Kann der Patient einfachen Befehlen folgen?</string>
-    <string name="urgent">Dringlichkeit</string>
+    <string name="urgency">Dringlichkeit</string>
     <string name="bloodpressure">Blutdruck</string>
     <string name="s_o2">O2-Sättigung</string>
     <string name="pulse">Puls</string>
@@ -86,4 +86,11 @@
     <string name="_diagnosis_added"> wurde zur Diagnose hinzugefügt</string>
     <string name="scan_qr">QR-Code scannen</string>
     <string name="error_scan_tag">Beim Scannen des Tags ist ein Fehler aufgetreten!</string>
+    <string name="distance">Entfernung</string>
+    <string name="medication">Medikament</string>
+    <string name="wound">Wunde</string>
+    <string name="cpr">CPR</string>
+    <string name="no_support">keine Maßnahmen</string>
+    <string name="ready_transport">Transportbereit</string>
+    <string name="sure_ready_transport">Sind Sie sicher, dass der Patient fertig zum Abtransport ist?</string>
 </resources>

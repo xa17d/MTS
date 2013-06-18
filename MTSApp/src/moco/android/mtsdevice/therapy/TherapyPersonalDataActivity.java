@@ -115,4 +115,10 @@ public class TherapyPersonalDataActivity extends FragmentActivity {
 			txtBirthdate.setText(day + "." + (month + 1) + "." + year);
 		}
 	}
+	
+	@Override
+	public void onBackPressed() {
+		
+		//do nothing
+	}
 }

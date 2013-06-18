@@ -2,8 +2,8 @@ package moco.android.mtsdevice.therapy;
 
 import moco.android.mtsdevice.R;
 import moco.android.mtsdevice.handler.Bodypart;
-import moco.android.mtsdevice.handler.MTSBodyInjuryAdapter;
 import moco.android.mtsdevice.handler.SelectedPatient;
+import moco.android.mtsdevice.handler.listadapter.MTSBodyInjuryAdapter;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
