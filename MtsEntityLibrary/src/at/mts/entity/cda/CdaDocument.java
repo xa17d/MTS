@@ -2,7 +2,13 @@ package at.mts.entity.cda;
 import at.mts.entity.Bodyparts;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -12,20 +18,15 @@ import java.util.List;
 import java.util.UUID;
 import java.util.Date;
 
-import org.jdom2.Comment;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.Namespace;
-import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
-
 import at.mts.entity.Condition;
 import at.mts.entity.Gender;
 import at.mts.entity.Patient;
 import at.mts.entity.PhaseOfLife;
 import at.mts.entity.Treatment;
 import at.mts.entity.TriageCategory;
+import at.mts.entity.xml.Comment;
+import at.mts.entity.xml.Document;
+import at.mts.entity.xml.Element;
 /**
  * CDA-Dokument.
  * Ermoeglicht das einlesen oder erzeugen eines CDA-Dokuments.
@@ -125,8 +126,8 @@ public class CdaDocument {
 		try{
             
 			body = new CdaBody(); // Body loeschen
-			Document doc = new SAXBuilder().build(new ByteArrayInputStream(document.getBytes("UTF-8")));
-	        Namespace NS = Namespace.getNamespace("urn:hl7-org:v3"); 
+			Document doc = new Document(document);
+			Object NS = null;
 	        Element root = doc.getRootElement();
 
 	        setAuthorNameGiven(root.getChild("author", NS).getChild("assignedAuthor",NS).getChild("assignedPerson", NS).getChild("name", NS).getChild("given", NS).getText());
@@ -187,7 +188,7 @@ public class CdaDocument {
 	 */
 	private void splitInfo(Element element){
 
-		String bodyValue = element.getValue();
+		String bodyValue = element.getText();
 		String[] lines = bodyValue.split("\\r?\\n"); //"  <br ?/?>
 		String prekey="";
 		for (String line : lines) {
@@ -207,7 +208,32 @@ public class CdaDocument {
 		}
 	}
 	
-
+	public static String StreamToString(final InputStream is)
+	{
+	  final char[] buffer = new char[4*1024];
+	  final StringBuilder out = new StringBuilder();
+	  try {
+	    final Reader in = new InputStreamReader(is, "UTF-8");
+	    try {
+	      for (;;) {
+	        int rsz = in.read(buffer, 0, buffer.length);
+	        if (rsz < 0)
+	          break;
+	        out.append(buffer, 0, rsz);
+	      }
+	    }
+	    finally {
+	      in.close();
+	    }
+	  }
+	  catch (UnsupportedEncodingException ex) {
+	    /* ... */
+	  }
+	  catch (IOException ex) {
+	      /* ... */
+	  }
+	  return out.toString();
+	}
 	
 	/**
 	 * Gibt das CDA-Dokument als XML-String zurueck
@@ -217,8 +243,9 @@ public class CdaDocument {
 		String xml="";
 		try{
 			InputStream stream = getClass().getResourceAsStream("/at/mts/entity/resources/blank.xml");
-			Document doc = new SAXBuilder().build(stream);
-	        Namespace NS = Namespace.getNamespace("urn:hl7-org:v3");     
+			Document doc = new Document(StreamToString(stream));
+			Object NS = null;
+	        //Namespace NS = Namespace.getNamespace("urn:hl7-org:v3");     
 	        
 	        
 	        Element root = doc.getRootElement();
@@ -335,11 +362,7 @@ public class CdaDocument {
 				}
 			}
    
-	        Format format = Format.getPrettyFormat();
-	        format.setEncoding("UTF-8");
-	        
-			XMLOutputter outputter = new XMLOutputter(format);
-	        xml = outputter.outputString(doc).replaceAll("&lt;br /&gt;", "<br />");
+	        xml = doc.asXml().replaceAll("&lt;br /&gt;", "<br />");
 		}
     	catch (Exception e) {
 			e.printStackTrace();

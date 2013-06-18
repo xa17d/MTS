@@ -1,16 +1,11 @@
 package at.mts.entity;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
+import at.mts.entity.xml.Document;
+import at.mts.entity.xml.Element;
+import at.mts.entity.xml.XmlException;
 
 /**
  * Liste von Patienten, mit nur wenigen Eigenschaften
@@ -22,7 +17,7 @@ public class PatientList extends ArrayList<PatientListItem> {
 		
 		Document doc;
 		try {
-			doc = new SAXBuilder().build(new ByteArrayInputStream(xml.getBytes("UTF-8")));
+			doc = new Document(xml);
 
 	        Element root = doc.getRootElement();
 	        
@@ -38,38 +33,40 @@ public class PatientList extends ArrayList<PatientListItem> {
 	        	
 				add(item);
 			}
-		} catch (JDOMException e) {
-			throw new IllegalArgumentException("xml is invalid", e);
-		} catch (IOException e) {
-			throw new IllegalArgumentException("xml is invalid", e);
+		} catch (XmlException e) {
+			throw new IllegalArgumentException("xml invalid", e);
 		}
+
 	}
 	
 	public String asXml() {
-		Document doc = new Document();
-		
-		Element rootElement = new Element("patientlist");
-		doc.setRootElement(rootElement);
-
-		for (PatientListItem item : this) {
+		Document doc;
+		try {
+			doc = Document.emptyDocument("patientlist");
+	
+			Element rootElement = doc.getRootElement();
+	
+			for (PatientListItem item : this) {
+				
+				Element p = doc.newElement("patient");
+				rootElement.addContent(p);
+				
+				Element name = doc.newElement("name");
+				p.addContent(name);
+				
+				name.addContent(doc.newElement("given").addContent(item.getNameGiven()));
+				name.addContent(doc.newElement("family").addContent(item.getNameFamily()));
+				
+				p.addContent(doc.newElement("triagekategorie").addContent(triageCategoryToString(item.getCategory())));
+				p.addContent(doc.newElement("behandlung").addContent(treatmentToString(item.getTreatment())));
+				p.addContent(doc.newElement("url").addContent(item.getUrl()));
+			}
 			
-			Element p = new Element("patient");
-			rootElement.addContent(p);
-			
-			Element name = new Element("name");
-			p.addContent(name);
-			
-			name.addContent(new Element("given").addContent(item.getNameGiven()));
-			name.addContent(new Element("family").addContent(item.getNameFamily()));
-			
-			p.addContent(new Element("triagekategorie").addContent(triageCategoryToString(item.getCategory())));
-			p.addContent(new Element("behandlung").addContent(treatmentToString(item.getTreatment())));
-			p.addContent(new Element("url").addContent(item.getUrl()));
+	        String xml = doc.asXml();
+	        return xml;
+		} catch (XmlException e) {
+			throw new IllegalStateException(e);
 		}
-		
-		XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-        String xml = outputter.outputString(doc);
-        return xml;
 	}
 	
 	private String triageCategoryToString(TriageCategory category) {
