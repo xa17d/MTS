@@ -1,26 +1,28 @@
 package moco.android.mtsdevice.therapy;
 
-import java.util.ArrayList;
-
 import moco.android.mtsdevice.R;
-import moco.android.mtsdevice.handler.Area;
 import moco.android.mtsdevice.handler.Bodypart;
-import moco.android.mtsdevice.handler.MTSListAdapter;
+import moco.android.mtsdevice.handler.MTSBodyInjuryAdapter;
+import moco.android.mtsdevice.handler.SelectedPatient;
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.ExpandableListView;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
 import at.mts.entity.Patient;
 
-public class BodySelectionList extends Activity {
+public class BodySelectionList extends Activity implements OnItemClickListener{
 
 	private TextView txtBodyPart;
 	
-	Bodypart selectedBodypart;
+	private Bodypart selectedBodypart;
+	private Patient selectedPatient;
 	
-	private ExpandableListView injuryView;
+	private ListView injuryView;
 	private ListAdapter adapter;
 	
 	@Override
@@ -29,8 +31,9 @@ public class BodySelectionList extends Activity {
 		setContentView(R.layout.body_list);
 		
 		selectedBodypart = Bodypart.getBodypart();
+		selectedPatient = SelectedPatient.getPatient();
 		
-		//adapter = new
+		adapter = new MTSBodyInjuryAdapter<String>(getApplicationContext(), R.layout.mts_list, selectedBodypart.getInjury());
 		
 		initContent();
 	}
@@ -41,7 +44,18 @@ public class BodySelectionList extends Activity {
 		
 		txtBodyPart.setText(selectedBodypart.toString());
 		
-		injuryView = (ExpandableListView)findViewById(R.id.expandableBodyInjuryList); 
-		//injuryView.setAdapter(adapter);
+		injuryView = (ListView)findViewById(R.id.bodyInjuryList); 
+		injuryView.setAdapter(adapter);
+		
+		injuryView.setOnItemClickListener(this);
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		
+		String diagnosis = injuryView.getAdapter().getItem(arg2).toString();
+		selectedPatient.setDiagnosis(diagnosis);
+		Toast.makeText(this, diagnosis + R.string._diagnosis_added, Toast.LENGTH_SHORT).show();
+		finish();
 	}
 }

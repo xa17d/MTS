@@ -19,7 +19,9 @@ public class TherapyVitalParameterActivity extends Activity {
 	private EditText textOxygen;
 	private EditText textPulse;
 	
-	private Patient patient;
+	private TextView txtDiagnosis;
+	
+	private Patient selectedPatient;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -27,13 +29,20 @@ public class TherapyVitalParameterActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.therapy_vital_parameter);
 		
-		patient = SelectedPatient.getPatient();
+		selectedPatient = SelectedPatient.getPatient();
 		
 		TextView txtName = (TextView)findViewById(R.id.vitalPatientName);
-		txtName.setText(patient.getNameFamily() + " " + patient.getNameGiven());
+		txtName.setText(selectedPatient.getNameFamily() + " " + selectedPatient.getNameGiven());
 		
 		initControls();
 		loadData();
+	}
+	
+	public void onResume() {
+		super.onResume();
+		
+		if(selectedPatient.getDiagnosis() != null);
+			txtDiagnosis.setText(selectedPatient.getDiagnosis());
 	}
 	
 	public void openFrontBody(View v) {
@@ -53,13 +62,13 @@ public class TherapyVitalParameterActivity extends Activity {
 		try {
 			
 			if(textSystolic.getText() != null)
-				patient.setBloodPressureSystolic(Integer.valueOf(textSystolic.getText().toString()));
+				selectedPatient.setBloodPressureSystolic(Integer.valueOf(textSystolic.getText().toString()));
 			
 			if(textDiastolic.getText() != null)
-				patient.setBloodPressureDiastolic(Integer.valueOf(textDiastolic.getText().toString()));
+				selectedPatient.setBloodPressureDiastolic(Integer.valueOf(textDiastolic.getText().toString()));
 			
 			if(textPulse.getText() != null)
-				patient.setPulse(Integer.valueOf(textPulse.getText().toString()));
+				selectedPatient.setPulse(Integer.valueOf(textPulse.getText().toString()));
 			
 			//TODO Oxygen
 			
@@ -71,6 +80,7 @@ public class TherapyVitalParameterActivity extends Activity {
 		    		.show();
 		}
 		
+		//TODO SAVE
 		Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
 		finish();		
 	}
@@ -81,18 +91,20 @@ public class TherapyVitalParameterActivity extends Activity {
 		textDiastolic = (EditText)findViewById(R.id.bloodPressureDiastolic);
 		textOxygen = (EditText)findViewById(R.id.bloodOxygen);
 		textPulse = (EditText)findViewById(R.id.bloodPulse);
+		
+		txtDiagnosis = (TextView)findViewById(R.id.textViewVitalDiagnosis);
 	}
 	
 	private void loadData() {
 		
-		if(patient.getBloodPressureSystolic() != null)
-			textSystolic.setText(String.valueOf(patient.getBloodPressureSystolic()));
+		if(selectedPatient.getBloodPressureSystolic() != null)
+			textSystolic.setText(String.valueOf(selectedPatient.getBloodPressureSystolic()));
 		
-		if(patient.getBloodPressureDiastolic() != null)
-			textDiastolic.setText(String.valueOf(patient.getBloodPressureDiastolic()));
+		if(selectedPatient.getBloodPressureDiastolic() != null)
+			textDiastolic.setText(String.valueOf(selectedPatient.getBloodPressureDiastolic()));
 		
-		if(patient.getPulse() != null)
-			textPulse.setText(String.valueOf(patient.getPulse()));
+		if(selectedPatient.getPulse() != null)
+			textPulse.setText(String.valueOf(selectedPatient.getPulse()));
 		
 		//TODO Oxygen
 	}

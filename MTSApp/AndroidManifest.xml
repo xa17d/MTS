@@ -23,6 +23,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.NFC" />
 
     <application
@@ -104,6 +105,11 @@
         
         <activity android:name="moco.android.mtsdevice.TestActivity"
             	  android:screenOrientation="portrait"></activity>
+        
+        <activity
+            android:name="com.google.zxing.client.android.CaptureActivity"
+            android:label="ZXing"
+            android:screenOrientation="portrait" />
         
     </application>
     
