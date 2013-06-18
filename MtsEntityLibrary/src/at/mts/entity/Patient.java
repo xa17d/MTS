@@ -15,6 +15,8 @@ public class Patient {
 	private UUID id;
 	private TriageCategory category;
 	private ArrayList<SalvageInfo> salvageinfo = new ArrayList<SalvageInfo>();
+	private ArrayList<String> diagnosis = new ArrayList<String>();
+	private ArrayList<String> courseOfTreatment = new ArrayList<String>();
 	
 	public Patient(CdaDocument document) {
 		
@@ -104,18 +106,78 @@ public class Patient {
 		}
 	}
 	
+	
+	public void addDiagnosis(String diagnose) { this.diagnosis.add(diagnose); }
+	
+	public void setDiagnosis(String diagnosisString) {
+		getDiagnosis().clear();
+		
+		if (diagnosisString != null) {
+			String[] sList = diagnosisString.split(";");
+			for (String s : sList) {
+				String st = s.trim();
+				if (!st.isEmpty()) {
+					addDiagnosis(st);
+				}
+			}
+		}
+	}
+	
+	public void addCourseOfTreatment(String course) { this.courseOfTreatment.add(course); }
+	
+	public void setCourseOfTreatment(String courseString) {
+		getCourseOfTreatment().clear();
+		
+		if (courseString != null) {
+			String[] sList = courseString.split(";");
+			for (String s : sList) {
+				String st = s.trim();
+				if (!st.isEmpty()) {
+					addCourseOfTreatment(st);
+				}
+			}
+		}
+	}
+	
+	
 	/**
 	 * Getter
 	 */
 	public UUID getId() { return id; }
 	public ArrayList<SalvageInfo> getSalvageInfo() { return salvageinfo; }
 	public TriageCategory getCategory() { return category; }
+	public ArrayList<String> getDiagnosis() { return diagnosis; }
+	public ArrayList<String> getCourseOfTreatment() { return courseOfTreatment; }
 	
 	public String getSalvageInfoString() {
 		
 		String s = "";
 		
 		Iterator<SalvageInfo> it = salvageinfo.iterator();
+		
+		while(it.hasNext())
+			s = s + it.next() + ";\n";
+		
+		return s;
+	}
+	
+	public String getDiagnosisString() {
+		
+		String s = "";
+		
+		Iterator<String> it = diagnosis.iterator();
+		
+		while(it.hasNext())
+			s = s + it.next() + ";\n";
+		
+		return s;
+	}
+	
+	public String getCourseOfTreatmentString() {
+		
+		String s = "";
+		
+		Iterator<String> it = courseOfTreatment.iterator();
 		
 		while(it.hasNext())
 			s = s + it.next() + ";\n";
@@ -204,10 +266,6 @@ public class Patient {
 	public Integer getUrgency() { return urgency; }
 	public void setUrgency(Integer value) { this.urgency = value; }
 
-	private String diagnosis;
-	public String getDiagnosis() { return diagnosis; }
-	public void setDiagnosis(String value) { this.diagnosis = value; }
-
 	private Integer bloodPressureSystolic;
 	public Integer getBloodPressureSystolic() { return bloodPressureSystolic; }
 	public void setBloodPressureSystolic(Integer value) { this.bloodPressureSystolic = value; }
@@ -219,10 +277,6 @@ public class Patient {
 	private Integer pulse;
 	public Integer getPulse() { return pulse; }
 	public void setPulse(Integer value) { this.pulse = value; }
-	
-	private String courseOfTreatment;
-	public String getCourseOfTreatment() { return courseOfTreatment; }
-	public void setCourseOfTreatment(String value) { this.courseOfTreatment = value; }
 
 	private Boolean readyForTransport;
 	public Boolean getReadyForTransport() { return readyForTransport; }

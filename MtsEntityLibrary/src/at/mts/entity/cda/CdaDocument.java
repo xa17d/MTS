@@ -85,13 +85,13 @@ public class CdaDocument {
         setBody(body, "bergeinformation", patient.getSalvageInfoString());
         setBody(body, "hilfplatzposition", patient.getPlacePosition());
         setBody(body, "dringlichkeit", patient.getUrgency(), patient.getUrgency());
-        setBody(body, "diagnose", patient.getDiagnosis());
+        setBody(body, "diagnose", patient.getDiagnosisString());
         
         if (patient.getBloodPressureSystolic() != null && patient.getBloodPressureDiastolic() != null) {
         	setBody(body, "blutdruck", patient.getBloodPressureSystolic()+":"+patient.getBloodPressureDiastolic());
         }
         setBody(body, "puls", patient.getPulse(), patient.getPulse());
-        setBody(body, "behandlungsverlauf", patient.getCourseOfTreatment());
+        setBody(body, "behandlungsverlauf", patient.getCourseOfTreatmentString());
         setBody(body, "transportbereitschaft", patient.getReadyForTransport(), CdaBoolean.asCdaValue(patient.getReadyForTransport()));
         setBody(body, "zielkrankenhaus", patient.getHospital());
         setBody(body, "krankenkasse", patient.getHealthInsurance());
