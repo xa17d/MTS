@@ -147,7 +147,7 @@ public class PatientServiceImpl implements PatientService {
 	
 	private PatientServiceImpl() {
 		
-		com = new ServerCommunicationImpl(this);
+		com = new ServerCommunicationImpl();
 		this.setDefaultMtsServerAddress();
 	}
 	
