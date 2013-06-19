@@ -78,7 +78,7 @@ public class SalvageSingleViewActivity extends Activity implements LocationListe
 	
 	public String getDistanceTo(String gps) {
 		
-		String[] coordinates = gps.split("; ");
+		String[] coordinates = gps.split(",");
 		
 		double pLat = Double.valueOf(coordinates[0]);
 		double pLon = Double.valueOf(coordinates[1]);

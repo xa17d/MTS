@@ -66,7 +66,7 @@ public class MTSListSalvageAdapter<T extends PatientListItem> extends ArrayAdapt
 		while(it.hasNext()) {
 			item = it.next();
 			if(item.getTreatment() != Treatment.sighted)
-				items.remove(item);
+				it.remove();
 			
 			if(item.getCategory() == TriageCategory.immediate)
 				immediateItems.add(item);

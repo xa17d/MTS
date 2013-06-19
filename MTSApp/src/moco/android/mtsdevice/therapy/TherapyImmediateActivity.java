@@ -29,7 +29,6 @@ public class TherapyImmediateActivity extends Activity {
 	private Button btnTherapy;
 	private Button btnWound;
 	private Button btnCpr;
-	private Button btnReadyTransport;
 	
 	private TextView txtTherapy;
 	
@@ -80,7 +79,20 @@ public class TherapyImmediateActivity extends Activity {
 					public void onClick(DialogInterface dialog, int which) {
 		
 						selectedPatient.setTreatment(Treatment.transported);
-						finish();
+						Intent intent = new Intent(TherapyImmediateActivity.this, TherapyListActivity.class);
+						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						
+						try {
+							service.updateExistingPatient(selectedPatient);
+							Toast.makeText(TherapyImmediateActivity.this, R.string.info_saved, Toast.LENGTH_LONG).show();
+						} catch (ServiceException e) {
+							new AlertDialog.Builder(TherapyImmediateActivity.this) 
+					        	.setMessage(R.string.error_save_data)
+					        	.setNeutralButton(R.string.ok, null)
+					        	.show();
+						}
+						
+						startActivity(intent);
 					}
 				})
 		    	.show();
@@ -107,7 +119,6 @@ public class TherapyImmediateActivity extends Activity {
 		btnTherapy = (Button)findViewById(R.id.buttonTherapy);
 		btnWound = (Button)findViewById(R.id.buttonWound);
 		btnCpr = (Button)findViewById(R.id.buttonCpr);
-		btnReadyTransport = (Button)findViewById(R.id.buttonReadyTransport);
 		
 		txtTherapy = (TextView)findViewById(R.id.textViewTherapyListIm);
 	}

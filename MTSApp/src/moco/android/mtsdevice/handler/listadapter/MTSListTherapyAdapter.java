@@ -1,6 +1,5 @@
 package moco.android.mtsdevice.handler.listadapter;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import at.mts.entity.Patient;
 import at.mts.entity.PatientListItem;
 import at.mts.entity.Treatment;
 
@@ -69,7 +67,7 @@ public class MTSListTherapyAdapter<T extends PatientListItem> extends ArrayAdapt
 			 * ==> aus Liste entfernen
 			 */
 			if(item.getTreatment() != Treatment.salvaged || !Area.getActiveArea().matchesCategory(item.getCategory()))
-				items.remove(item);
+				it.remove();
 		}
 		
 		//TODO nach dringlichkeit sortieren

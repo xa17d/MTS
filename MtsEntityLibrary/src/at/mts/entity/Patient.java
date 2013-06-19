@@ -364,7 +364,7 @@ public class Patient {
 	
 	public int getDiagnosisStatusColor() {
 		
-		if(diagnosis == null)
+		if(diagnosis.size() == 0)
 			return RED;
 		
 		return GREEN;
@@ -372,10 +372,10 @@ public class Patient {
 	
 	public int getTherapyStatusColor() {
 		
-		if(courseOfTreatment == null)
+		if(courseOfTreatment.size() == 0)
 			return -65536;			//RED;
 		
-		if(readyForTransport == null)
+		if(readyForTransport == false)
 			 return -256;			//YELLOW;
 		
 		return -16711936;			//GREEN;

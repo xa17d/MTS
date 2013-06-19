@@ -62,7 +62,7 @@ public class PatientServiceImpl implements PatientService {
 	}
 
 	@Override
-	public void saveNewPatient(Patient patient) throws ServiceException {
+	public int saveNewPatient(Patient patient) throws ServiceException {
 		
 		checkAuthentification();
 		
@@ -72,7 +72,7 @@ public class PatientServiceImpl implements PatientService {
 		String xmlData = doc.asXml();
 		
 		try {
-			com.putData(urlString, xmlData);
+			return com.putData(urlString, xmlData);
 		} catch (CommunicationException e) {
 			throw new ServiceException(e.getMessage());
 		}
@@ -91,7 +91,7 @@ public class PatientServiceImpl implements PatientService {
 		String xmlData = doc.asXml();
 		
 		try {
-			com.putData(urlString, xmlData);
+			com.postData(urlString, xmlData);
 		} catch (CommunicationException e) {
 			throw new ServiceException(e.getMessage());
 		}
