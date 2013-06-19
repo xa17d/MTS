@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import at.mts.entity.Bodyparts;
 import at.mts.entity.Patient;
 import at.mts.entity.Treatment;
 import at.mts.entity.TriageCategory;
@@ -71,7 +72,7 @@ public class PatientServiceImpl implements PatientService {
 		
 		r.setId(base.getId());
 		//r.setVersion(-1);
-		r.setTimestamp(merge(base.getTimestamp(), update1.getTimestamp(), update2.getTimestamp()));
+		r.setTimestamp(new Date());
 		r.setCategory(merge(base.getCategory(), update1.getCategory(), update2.getCategory()));
 		r.setSalvageInfo(merge(base.getSalvageInfoString(), update1.getSalvageInfoString(), update2.getSalvageInfoString()));
 		r.setNameGiven(merge(base.getNameGiven(), update1.getNameGiven(), update2.getNameGiven()));
@@ -93,6 +94,21 @@ public class PatientServiceImpl implements PatientService {
 		r.setHealthInsurance(merge(base.getHealthInsurance(), update1.getHealthInsurance(), update2.getHealthInsurance()));
 		r.setTreatment(merge(base.getTreatment(), update1.getTreatment(), update2.getTreatment()));
 		
+		r.setDiagnosis(stringMerge(base.getDiagnosis(), update1.getDiagnosis(), update2.getDiagnosis()));
+		r.setCourseOfTreatment(stringMerge(base.getCourseOfTreatment(), update1.getCourseOfTreatment(), update2.getCourseOfTreatment()));
+		
+		for (String bodyPartKey : Bodyparts.Keys) {
+			String m1 = base.getBodyparts().get(bodyPartKey);
+			String m2 = update1.getBodyparts().get(bodyPartKey);
+			String m3 = update2.getBodyparts().get(bodyPartKey);
+			
+			String m = stringMerge(m1, m2, m3);
+			
+			if (m != null) {
+				r.getBodyparts().set(bodyPartKey, m);
+			}
+		}
+		
 		return r;
 	}
 	
@@ -102,6 +118,28 @@ public class PatientServiceImpl implements PatientService {
 		}
 		else {
 			return update1;
+		}
+	}
+	
+	private String stringMerge(String base, String update1, String update2) {
+		
+		if (base == null && update1 == null && update2 == null) {
+			return null;
+		}
+		else {
+			if (base == null) { base = ""; }
+			if (update1 == null) { update1 = ""; }
+			if (update2 == null) { update2 = ""; }
+			
+			String message = update2;
+			
+			if (update1.contains(message)) { message = update1; }
+			else if (!message.contains(update1)) { message = update1 + "; " + message; }
+			
+			if (base.contains(message)) { message = base; }
+			else if (!message.contains(base)) { message = base + "; " + message; }
+			
+			return message;
 		}
 	}
 	
@@ -141,7 +179,7 @@ public class PatientServiceImpl implements PatientService {
 				Patient update1;
 				Patient update2;
 				
-				if (patientUpdate.getTimestamp().compareTo(patientDb.getTimestamp()) > 0) {
+				if (patientUpdate.getTimestamp().before(patientDb.getTimestamp())) {
 					update1 = patientUpdate;
 					update2 = patientDb;
 				}

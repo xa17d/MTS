@@ -5,6 +5,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Logger {
 
@@ -45,19 +49,36 @@ public class Logger {
 		}
 	}
 	
+	private static String path;
 	private static PrintWriter writer;
 	private static PrintWriter getWriter() {
 		if (writer == null) {
 			try {
-			    writer = new PrintWriter(new BufferedWriter(new FileWriter("/usr/local/Tomcat7/logs/MtsServer.log", true)));
+				path = "/usr/local/Tomcat7/logs/MtsServer.log";
+			    writer = new PrintWriter(new BufferedWriter(new FileWriter(path, true)));
 			} catch (IOException e) {
 				try {
-				    writer = new PrintWriter(new BufferedWriter(new FileWriter("C:\\temp\\MtsServer.log", true)));
+					path = "C:\\temp\\MtsServer.log";
+				    writer = new PrintWriter(new BufferedWriter(new FileWriter(path, true)));
 				} catch (IOException f) {
 				}
 			}
 		}
 		
 		return writer;
+	}
+
+	private static String readFile(String path) throws IOException
+	{
+		Charset encoding = Charset.defaultCharset();
+		byte[] encoded = Files.readAllBytes(Paths.get(path));
+		return encoding.decode(ByteBuffer.wrap(encoded)).toString();
+	}
+	public String readAll() {
+		try {
+			return readFile(path);
+		} catch (IOException e) {
+			return "Error loading Log: "+e.getMessage();
+		}
 	}
 }
