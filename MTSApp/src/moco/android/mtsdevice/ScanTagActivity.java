@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import moco.android.mtsdevice.handler.DeviceButtons;
 import moco.android.mtsdevice.handler.Mode;
+import moco.android.mtsdevice.handler.Area;
 import moco.android.mtsdevice.handler.SelectedPatient;
 import moco.android.mtsdevice.salvage.SalvageActivity;
 import moco.android.mtsdevice.service.PatientService;
@@ -120,6 +121,7 @@ public class ScanTagActivity extends Activity implements LocationListener {
 			
 			Patient errorLoad = null;
 			
+			/*
 			try {
 				errorLoad = service.loadPatientById(scannedId);
 			} catch (ServiceException e) {
@@ -128,24 +130,23 @@ public class ScanTagActivity extends Activity implements LocationListener {
 			        	.setNeutralButton(R.string.ok, null)
 			        	.show();
 			}
+			*/
 			
 			if(errorLoad == null) {
 			
 				selectedPatient = SelectedPatient.getPatient();
 				selectedPatient.setId(scannedId);
 				selectedPatient.setGps(locationString);
-				selectedPatient.setTreatment(Treatment.sighted);
 				
 				try {
 					service.saveNewPatient(selectedPatient);
+					Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
 				} catch (ServiceException e) {
 					new AlertDialog.Builder(this) 
 			        	.setMessage(R.string.error_save_data)
 			        	.setNeutralButton(R.string.ok, null)
 			        	.show();
 				}
-				
-				Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
 				
 				intent = new Intent(this, TriageSelectionActivity.class);
 				startActivity(intent);
@@ -178,6 +179,7 @@ public class ScanTagActivity extends Activity implements LocationListener {
 				
 				intent = new Intent(this, SalvageActivity.class);
 				startActivity(intent);
+				finish();
 			}
 			else
 				new AlertDialog.Builder(this) 
@@ -203,16 +205,16 @@ public class ScanTagActivity extends Activity implements LocationListener {
 			
 			SelectedPatient.setPatient(selectedPatient);
 			
-			//if(Area.getActiveArea().matchesCategory(selectedPatient.getCategory()) && selectedPatient.getTreatment() == Treatment.salvaged) {
+			if(Area.getActiveArea().matchesCategory(selectedPatient.getCategory()) && selectedPatient.getTreatment() == Treatment.salvaged) {
 				intent = new Intent(this, TherapySelectionActivity.class);
 				startActivity(intent);
 				finish();
-			//}
-			//else
-			//	new AlertDialog.Builder(this) 
-			//        	.setMessage(R.string.error_wrong_area)
-			//        	.setNeutralButton(R.string.ok, null)
-			//        	.show();
+			}
+			else
+				new AlertDialog.Builder(this) 
+			        	.setMessage(R.string.error_wrong_area)
+			        	.setNeutralButton(R.string.ok, null)
+			        	.show();
 		}
 	}
 	

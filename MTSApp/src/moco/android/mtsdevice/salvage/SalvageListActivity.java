@@ -6,7 +6,7 @@ import moco.android.mtsdevice.R;
 import moco.android.mtsdevice.ScanTagActivity;
 import moco.android.mtsdevice.handler.DeviceButtons;
 import moco.android.mtsdevice.handler.SelectedPatient;
-import moco.android.mtsdevice.handler.listadapter.MTSListAdapter;
+import moco.android.mtsdevice.handler.listadapter.MTSListSalvageAdapter;
 import moco.android.mtsdevice.service.PatientService;
 import moco.android.mtsdevice.service.PatientServiceImpl;
 import moco.android.mtsdevice.service.ServiceException;
@@ -19,7 +19,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import at.mts.entity.Patient;
 import at.mts.entity.PatientListItem;
 
 public class SalvageListActivity extends Activity implements OnItemClickListener {
@@ -48,18 +47,15 @@ public class SalvageListActivity extends Activity implements OnItemClickListener
 		        	.show();
 		}
 		
-		adapter = new MTSListAdapter<PatientListItem>(getApplicationContext(), R.layout.mts_list, patientList);
+		adapter = new MTSListSalvageAdapter<PatientListItem>(getApplicationContext(), R.layout.mts_list, patientList);
 		
 		initContent();
-		
-		
 	}
 	
 	public void scanTag(View view) {
 		
 		Intent intent = new Intent(this, ScanTagActivity.class);
         startActivity(intent);
-        finish();
 	}
 	
 	private void initContent() {
@@ -72,7 +68,7 @@ public class SalvageListActivity extends Activity implements OnItemClickListener
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		
-		SelectedPatient.setPatient((Patient)patientView.getAdapter().getItem(arg2));
+		SelectedPatient.setPatientItem((PatientListItem)patientView.getAdapter().getItem(arg2));
 		
 		Intent intent = new Intent(this, SalvageSingleViewActivity.class);
 		startActivity(intent);

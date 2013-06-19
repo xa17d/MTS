@@ -9,58 +9,140 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import moco.android.mtsdevice.service.PatientService;
+
 import org.apache.commons.io.IOUtils;
 
-import android.os.StrictMode;
-import android.os.StrictMode.ThreadPolicy;
+import android.os.AsyncTask;
 
 public class ServerCommunicationImpl implements ServerCommunication {
 	
-	public String getData(String urlString) throws CommunicationException {
+	PatientService service;
+	
+	String getBody;
+	int putCode;
+	int postCode;
+	
+	public ServerCommunicationImpl(PatientService service) {
 		
-		String body = "";
-		
-		resetPolicy();
-		
-		try {
-			
-			URL url = new URL(urlString);
-			URLConnection con = url.openConnection();
-
-			InputStream in = con.getInputStream();
-			body = IOUtils.toString(in, "UTF-8");
-			
-		} catch (MalformedURLException e1) {
-			throw new CommunicationException(e1.getMessage());
-		} catch (IOException e2) {
-			throw new CommunicationException(e2.getMessage());
-		}
-
-		return body;
+		this.service = service;
 	}
 	
-	public void putData(String urlString, String xmlData) throws CommunicationException {
+	public String getData(String urlString) throws CommunicationException {
 		
-		resetPolicy();
+		service.networkConnectionStarted();
 		
-		try {
-			
-			URL url = new URL(urlString);
-			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+		if(getBody.equals("**EXCEPTION**"))
+			throw new CommunicationException("Fehler beim Laden der Daten");
+				
+		new GetDataTask().execute(urlString);
+		
+		return this.getBody;
+	}
+	
+	public int putData(String urlString, String xmlData) throws CommunicationException {
+		
+		service.networkConnectionStarted();
+		
+		new PutDataTask().execute(urlString, xmlData);
+		
+		if(putCode == -1)
+			throw new CommunicationException("Fehler beim Senden der Daten");
+		
+		return this.putCode;
+	}
+	
+	public int postData(String urlString, String xmlData) throws CommunicationException {
+		
+		//TODO
+		return -1;
+	}
+	
+	private class PutDataTask extends AsyncTask<String,Void,Integer> {
 
-			con.setDoOutput(true);
-			con.setRequestMethod("PUT");
+		/**
+		 * Sendet Daten an den Server
+		 * params[0] URL-String
+		 * params[1] XML-Daten (nur bei PUT und POST)
+		 */
+		@Override
+		protected Integer doInBackground(String... params) {
 
-			OutputStreamWriter writer = new OutputStreamWriter(con.getOutputStream());
-			writer.write(xmlData);
-			writer.close();
+			int code = -1;
 			
-		} catch (MalformedURLException e1) {
-			throw new CommunicationException(e1.getMessage());
-		} catch (ProtocolException e2) {
-			throw new CommunicationException(e2.getMessage());
-		} catch (IOException e3) {
-			throw new CommunicationException(e3.getMessage());
+			try {
+				
+				URL url = new URL(params[0]);
+				HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
+				con.setDoOutput(true);
+				con.setDoInput(true);
+				con.setRequestMethod("PUT");
+				con.setRequestProperty("Content-Type","text/xml");
+				
+				con.connect();
+
+				OutputStreamWriter writer = new OutputStreamWriter(con.getOutputStream());
+				writer.append(params[1]);
+				writer.flush();
+				
+				code = con.getResponseCode();
+				
+				writer.close();
+				
+			} catch (MalformedURLException e1) {
+				return -1;
+			} catch (ProtocolException e2) {
+				return -1;
+			} catch (IOException e3) {
+				return -1;
+			}
+			
+			return code;
+		}
+		
+		@Override
+		protected void onPostExecute(Integer result) {
+			
+			service.networkConnectionEnded();
+			putCode = result;
+		}
+	}
+	
+	private class GetDataTask extends AsyncTask<String,Void,String> {
+
+		/**
+		 * Sendet Daten an den Server
+		 * params[0] URL-String
+		 * params[1] XML-Daten (nur bei PUT und POST)
+		 */
+		@Override
+		protected String doInBackground(String... params) {
+
+			String body = null;
+			
+			try {
+				
+				URL url = new URL(params[0]);
+				URLConnection con = url.openConnection();
+
+				InputStream in = con.getInputStream();
+				body = IOUtils.toString(in, "UTF-8");
+				
+			} catch (MalformedURLException e1) {
+				return "**EXCEPTION**";
+			} catch (IOException e2) {
+				return "**EXCEPTION**";
+			}
+			
+			return body;
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			
+			service.networkConnectionEnded();
+			getBody = result;
 		}
 	}
 	
@@ -69,9 +151,11 @@ public class ServerCommunicationImpl implements ServerCommunication {
 	 * TODO
 	 * aendert Thread-Policy, sodass im Main-Thread auf den Server zugegriffen werden kann
 	 */
+	/*
 	private void resetPolicy() {
 		
 		ThreadPolicy tp = ThreadPolicy.LAX;
 		StrictMode.setThreadPolicy(tp);
 	}
+	*/
 }

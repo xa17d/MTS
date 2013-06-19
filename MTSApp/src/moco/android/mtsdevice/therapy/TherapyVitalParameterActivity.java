@@ -2,6 +2,9 @@ package moco.android.mtsdevice.therapy;
 
 import moco.android.mtsdevice.R;
 import moco.android.mtsdevice.handler.SelectedPatient;
+import moco.android.mtsdevice.service.PatientService;
+import moco.android.mtsdevice.service.PatientServiceImpl;
+import moco.android.mtsdevice.service.ServiceException;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -22,6 +25,7 @@ public class TherapyVitalParameterActivity extends Activity {
 	private TextView txtDiagnosis;
 	
 	private Patient selectedPatient;
+	private PatientService service;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,7 @@ public class TherapyVitalParameterActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.therapy_vital_parameter);
 		
+		service = PatientServiceImpl.getInstance();
 		selectedPatient = SelectedPatient.getPatient();
 		
 		TextView txtName = (TextView)findViewById(R.id.vitalPatientName);
@@ -41,7 +46,7 @@ public class TherapyVitalParameterActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 		
-		if(selectedPatient.getDiagnosis() != null);
+		if(!selectedPatient.getDiagnosisString().equals(""));
 			txtDiagnosis.setText(selectedPatient.getDiagnosisString());
 	}
 	
@@ -80,8 +85,16 @@ public class TherapyVitalParameterActivity extends Activity {
 		    		.show();
 		}
 		
-		//TODO SAVE
-		Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
+		try {
+			service.updateExistingPatient(selectedPatient);
+			Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
+		} catch (ServiceException e) {
+			new AlertDialog.Builder(this) 
+	        	.setMessage(R.string.error_save_data)
+	        	.setNeutralButton(R.string.ok, null)
+	        	.show();
+		}
+		
 		finish();		
 	}
 	

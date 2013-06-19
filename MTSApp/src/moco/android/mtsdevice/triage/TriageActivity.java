@@ -189,6 +189,7 @@ public class TriageActivity extends Activity {
 			
 			category = TriageCategory.minor;
 			patient.setCategory(category);
+			patient.setTreatment(Treatment.salvaged);
 			
 			patient.setWalkable(true);
 			patient.setRespiration(Condition.stable);

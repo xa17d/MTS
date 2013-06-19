@@ -85,8 +85,8 @@ public class PatientServiceImpl implements PatientService {
 		
 		String urlString = mtsUrl + patient.getId();
 		
+		patient.setVersion(patient.getVersion() + 1);
 		CdaDocument doc = new CdaDocument(patient);
-		//TODO doc.setParentIdV(patient.getVersion());
 		
 		String xmlData = doc.asXml();
 		
@@ -95,6 +95,18 @@ public class PatientServiceImpl implements PatientService {
 		} catch (CommunicationException e) {
 			throw new ServiceException(e.getMessage());
 		}
+	}
+	
+	@Override
+	public void networkConnectionStarted() {
+		
+		//TODO
+	}
+	
+	@Override
+	public void networkConnectionEnded() {
+		
+		//TODO
 	}
 	
 	@Override
@@ -135,7 +147,7 @@ public class PatientServiceImpl implements PatientService {
 	
 	private PatientServiceImpl() {
 		
-		com = new ServerCommunicationImpl();
+		com = new ServerCommunicationImpl(this);
 		this.setDefaultMtsServerAddress();
 	}
 	

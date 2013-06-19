@@ -6,6 +6,10 @@ import java.util.GregorianCalendar;
 
 import moco.android.mtsdevice.R;
 import moco.android.mtsdevice.handler.SelectedPatient;
+import moco.android.mtsdevice.service.PatientService;
+import moco.android.mtsdevice.service.PatientServiceImpl;
+import moco.android.mtsdevice.service.ServiceException;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -20,6 +24,7 @@ import at.mts.entity.Patient;
 public class TherapyPersonalDataActivity extends FragmentActivity {
 	
 	private Patient selectedPatient;
+	private PatientService service;
 	
 	private EditText txtFirstname;
 	private EditText txtLastname;
@@ -33,6 +38,7 @@ public class TherapyPersonalDataActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.therapy_personal_data);
 		
+		service = PatientServiceImpl.getInstance();
 		selectedPatient = SelectedPatient.getPatient();
 		
 		initControls();
@@ -56,7 +62,16 @@ public class TherapyPersonalDataActivity extends FragmentActivity {
 		//TODO Adresse
 		
 		
-		Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
+		try {
+			service.updateExistingPatient(selectedPatient);
+			Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
+		} catch (ServiceException e) {
+			new AlertDialog.Builder(this) 
+	        	.setMessage(R.string.error_save_data)
+	        	.setNeutralButton(R.string.ok, null)
+	        	.show();
+		}
+		
 		finish();
 	}
 	

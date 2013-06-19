@@ -1,8 +1,11 @@
 package moco.android.mtsdevice.handler.listadapter;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import moco.android.mtsdevice.R;
+import moco.android.mtsdevice.handler.Area;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -11,8 +14,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import at.mts.entity.Patient;
+import at.mts.entity.PatientListItem;
+import at.mts.entity.Treatment;
 
-public class MTSListTherapyAdapter<T extends Patient> extends ArrayAdapter<T> {			//TODO change EXTEND to PatientListItem
+public class MTSListTherapyAdapter<T extends PatientListItem> extends ArrayAdapter<T> {
 	
 	private Context context;
     private int textViewResourceId;
@@ -24,6 +29,8 @@ public class MTSListTherapyAdapter<T extends Patient> extends ArrayAdapter<T> {	
 		this.context = context;
 		this.textViewResourceId = textViewResourceId;
 		this.items = items;
+		
+		filterAndSortItems();
 	}
 	
 	@Override
@@ -41,9 +48,30 @@ public class MTSListTherapyAdapter<T extends Patient> extends ArrayAdapter<T> {	
            
         	text.setTextColor(Color.BLACK);
             text.setBackgroundColor(00000000);
-            text.setText(items.get(position).toTherapyOverviewString());
+            text.setText(items.get(position).toTherapyString());
         }
 
         return view;
     }
+	
+	private void filterAndSortItems() {
+		
+		Iterator<T> it = items.iterator();
+		T item;
+		
+		while(it.hasNext()) {
+			item = it.next();
+			
+			/**
+			 * wenn gewaehlter Patient noch nicht geborgen (oder bereits abtransportiert) wurde
+			 * ODER
+			 * Patient an anderem Behandlungsplatz
+			 * ==> aus Liste entfernen
+			 */
+			if(item.getTreatment() != Treatment.salvaged || !Area.getActiveArea().matchesCategory(item.getCategory()))
+				items.remove(item);
+		}
+		
+		//TODO nach dringlichkeit sortieren
+	}
 }

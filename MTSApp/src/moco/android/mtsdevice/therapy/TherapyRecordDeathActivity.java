@@ -23,7 +23,7 @@ public class TherapyRecordDeathActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.therapy_record_death);
 		
-		txtReason = (TextView)findViewById(R.id.textTherapyReason);
+		txtReason = (TextView)findViewById(R.id.textDeathReason);
 	}
 	
 	public void recordDeath(View v) {

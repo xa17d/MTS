@@ -1,5 +1,8 @@
 package moco.android.mtsdevice.therapy;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import moco.android.mtsdevice.R;
 import moco.android.mtsdevice.handler.Bodypart;
 import moco.android.mtsdevice.handler.SelectedPatient;
@@ -24,6 +27,8 @@ public class BodySelectionList extends Activity implements OnItemClickListener{
 	
 	private ListView injuryView;
 	private ListAdapter adapter;
+	
+	private SimpleDateFormat df = new SimpleDateFormat("HH:mm");
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -54,8 +59,8 @@ public class BodySelectionList extends Activity implements OnItemClickListener{
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		
 		String diagnosis = injuryView.getAdapter().getItem(arg2).toString();
-		selectedPatient.setDiagnosis(diagnosis);
-		Toast.makeText(this, diagnosis + " " + R.string.diagnosis_added, Toast.LENGTH_SHORT).show();
+		selectedPatient.addDiagnosis(diagnosis + " - " + df.format(new Date()));
+		Toast.makeText(this, diagnosis + " gespeichert", Toast.LENGTH_SHORT).show();
 		finish();
 	}
 }
