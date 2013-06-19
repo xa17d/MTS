@@ -1,8 +1,8 @@
 package moco.android.mtsdevice.triage;
 
 import moco.android.mtsdevice.R;
-import moco.android.mtsdevice.handler.MTSListAdapter;
 import moco.android.mtsdevice.handler.SelectedPatient;
+import moco.android.mtsdevice.handler.listadapter.MTSListAdapter;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;

@@ -27,8 +27,8 @@ public class PatientList extends ArrayList<PatientListItem> {
 	        	
 	        	item.setNameGiven(child.getChild("name").getChildText("given"));
 	        	item.setNameFamily(child.getChild("name").getChildText("family"));
-	        	item.setCategory(TriageCategory.valueOf(child.getChildText("triagekategorie")));
-	        	item.setTreatment(Treatment.valueOf(child.getChildText("behandlung")));
+	        	item.setCategory(TriageCategory.getValueOf(child.getChildText("triagekategorie")));
+	        	item.setTreatment(Treatment.getValueOf(child.getChildText("behandlung")));
 	        	item.setUrl(child.getChildText("url"));
 	        	
 				add(item);

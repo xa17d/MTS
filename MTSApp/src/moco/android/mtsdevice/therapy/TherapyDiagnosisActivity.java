@@ -28,4 +28,10 @@ public class TherapyDiagnosisActivity extends Activity {
 		Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
 		finish();
 	}
+	
+	@Override
+	public void onBackPressed() {
+		
+		//do nothing
+	}
 }

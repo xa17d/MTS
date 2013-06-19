@@ -44,7 +44,8 @@
             </intent-filter>
         </activity>
         
-        <activity android:name="moco.android.mtsdevice.ScanTagActivity">
+        <activity android:name="moco.android.mtsdevice.ScanTagActivity"
+				  android:screenOrientation="portrait">
             
             <intent-filter>
 			    <action android:name="android.nfc.action.TECH_DISCOVERED"/>
@@ -91,6 +92,8 @@
             	  android:screenOrientation="portrait"></activity>
         <activity android:name="moco.android.mtsdevice.therapy.TherapyImmediateActivity"
             	  android:screenOrientation="portrait"></activity>
+        <activity android:name="moco.android.mtsdevice.therapy.TherapyListAdd"
+            	  android:screenOrientation="portrait"></activity>
         
         <activity android:name="moco.android.mtsdevice.therapy.BodyViewFrontActivity"
             	  android:screenOrientation="portrait"></activity>
@@ -109,8 +112,7 @@
         
         <activity
             android:name="com.google.zxing.client.android.CaptureActivity"
-            android:label="ZXing"
-            android:screenOrientation="portrait" />
+            android:label="ZXing" />
         
     </application>
     

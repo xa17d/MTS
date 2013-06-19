@@ -3,6 +3,7 @@ package moco.android.mtsdevice.therapy;
 import moco.android.mtsdevice.R;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -35,5 +36,11 @@ public class TherapyRecordDeathActivity extends Activity {
 		}
 		else
 			finish();
+	}
+	
+	@Override
+	public void onBackPressed() {
+		
+		//do nothing
 	}
 }

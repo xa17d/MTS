@@ -1,4 +1,4 @@
-package moco.android.mtsdevice.handler;
+package moco.android.mtsdevice.handler.listadapter;
 
 import moco.android.mtsdevice.R;
 

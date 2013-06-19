@@ -503,8 +503,8 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 		statementSetEnum(s, 22, p.getCategory());
 		statementSetDate(s, 23, p.getTimestamp());
 		statementSetVarchar(s, 24, p.getGps());
-		statementSetLongVarchar(s, 25, p.getDiagnosis());
-		statementSetLongVarchar(s, 26, p.getCourseOfTreatment());
+		statementSetLongVarchar(s, 25, p.getDiagnosisString());
+		statementSetLongVarchar(s, 26, p.getCourseOfTreatmentString());
 	}
 	
 	private void insertBodyParts(Bodyparts bodyparts, int patientVersionId) throws SQLException {

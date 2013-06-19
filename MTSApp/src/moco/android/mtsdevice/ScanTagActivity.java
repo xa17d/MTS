@@ -1,9 +1,7 @@
 package moco.android.mtsdevice;
 
-import java.util.GregorianCalendar;
 import java.util.UUID;
 
-import moco.android.mtsdevice.handler.Area;
 import moco.android.mtsdevice.handler.DeviceButtons;
 import moco.android.mtsdevice.handler.Mode;
 import moco.android.mtsdevice.handler.SelectedPatient;
@@ -29,8 +27,6 @@ import android.view.View;
 import android.widget.Toast;
 import at.mts.entity.Patient;
 import at.mts.entity.Treatment;
-import at.mts.entity.TriageCategory;
-import at.mts.entity.cda.CdaDocument;
 
 public class ScanTagActivity extends Activity implements LocationListener {
 	
@@ -45,7 +41,6 @@ public class ScanTagActivity extends Activity implements LocationListener {
 	private LocationManager locationManager;
 	private String provider;
 	private String locationString;
-	private String locationAccuracyString;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -59,11 +54,11 @@ public class ScanTagActivity extends Activity implements LocationListener {
 		//startNfcScan();
 	}
 	
+	/*
 	private void startNfcScan() {
 		
-		//TODO Testen
 		NdefMessage[] msgs = null;
-		Intent intent = null;
+		Intent intent = getIntent();
 		
 		if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
 	        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
@@ -86,6 +81,7 @@ public class ScanTagActivity extends Activity implements LocationListener {
 		
 		tagScanned();
 	}
+	*/
 	
 	
 	/**
@@ -102,13 +98,10 @@ public class ScanTagActivity extends Activity implements LocationListener {
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 	    if (requestCode == 0) {
 	        if (resultCode == RESULT_OK) {
-	        	scannedId = UUID.fromString(intent.getStringExtra("SCAN_RESULT"));
-	            //String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
-	            
+	        	
+	        	scannedId = UUID.fromString(intent.getStringExtra("SCAN_RESULT"));	            
 	            tagScanned();
 	            
-	        } else if (resultCode == RESULT_CANCELED) {
-	            // do nothing
 	        }
 	    }
 	}
@@ -125,26 +118,44 @@ public class ScanTagActivity extends Activity implements LocationListener {
 		 */
 		if(Mode.getActiveMode() == Mode.triage) {
 			
-			selectedPatient = SelectedPatient.getPatient();
-			selectedPatient.setId(scannedId);
-			selectedPatient.setGps(locationString + ";" + locationAccuracyString);
-			selectedPatient.setTreatment(Treatment.sighted);
+			Patient errorLoad = null;
 			
 			try {
-				service.saveNewPatient(selectedPatient);
+				errorLoad = service.loadPatientById(scannedId);
 			} catch (ServiceException e) {
 				new AlertDialog.Builder(this) 
-		        	.setMessage(R.string.error_save_data)
-		        	.setNeutralButton(R.string.ok, null)
-		        	.show();
+			        	.setMessage(R.string.error_save_data)
+			        	.setNeutralButton(R.string.ok, null)
+			        	.show();
 			}
 			
-			Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
-			Toast.makeText(this, "GPS-Koordinaten: " + locationString + "\nGenauigkeit: " + locationAccuracyString, Toast.LENGTH_LONG).show();
+			if(errorLoad == null) {
 			
-			intent = new Intent(ScanTagActivity.this, TriageSelectionActivity.class);
-			startActivity(intent);
-			finish();
+				selectedPatient = SelectedPatient.getPatient();
+				selectedPatient.setId(scannedId);
+				selectedPatient.setGps(locationString);
+				selectedPatient.setTreatment(Treatment.sighted);
+				
+				try {
+					service.saveNewPatient(selectedPatient);
+				} catch (ServiceException e) {
+					new AlertDialog.Builder(this) 
+			        	.setMessage(R.string.error_save_data)
+			        	.setNeutralButton(R.string.ok, null)
+			        	.show();
+				}
+				
+				Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
+				
+				intent = new Intent(this, TriageSelectionActivity.class);
+				startActivity(intent);
+				finish();
+			}
+			else
+				new AlertDialog.Builder(this) 
+			        	.setMessage(R.string.patient_already_registered)
+			        	.setNeutralButton(R.string.ok, null)
+			        	.show();
 		}
 		
 		/**
@@ -153,26 +164,26 @@ public class ScanTagActivity extends Activity implements LocationListener {
 		 */
 		if(Mode.getActiveMode() == Mode.salvage) {
 			
-//			try {
-//				selectedPatient = service.loadPatientById(scannedId);
-//			} catch (ServiceException e) {
-//				new AlertDialog.Builder(this) 
-//			        	.setMessage(R.string.error_load_data)
-//			        	.setNeutralButton(R.string.ok, null)
-//			        	.show();
-//			}
-//			
-//			if(selectedPatient.getTreatment() == Treatment.sighted) {
-//				SelectedPatient.setPatient(selectedPatient);
+			try {
+				selectedPatient = service.loadPatientById(scannedId);
+			} catch (ServiceException e) {
+				new AlertDialog.Builder(this) 
+			        	.setMessage(R.string.error_load_data)
+			        	.setNeutralButton(R.string.ok, null)
+			        	.show();
+			}
+			
+			if(selectedPatient.getTreatment() == Treatment.sighted) {
+				SelectedPatient.setPatient(selectedPatient);
 				
 				intent = new Intent(this, SalvageActivity.class);
 				startActivity(intent);
-//			}
-//			else
-//				new AlertDialog.Builder(this) 
-//		        	.setMessage(R.string.error_not_on_salvagelist)
-//		        	.setNeutralButton(R.string.ok, null)
-//		        	.show();
+			}
+			else
+				new AlertDialog.Builder(this) 
+		        	.setMessage(R.string.error_not_on_salvagelist)
+		        	.setNeutralButton(R.string.ok, null)
+		        	.show();
 		}
 		
 		/**
@@ -180,20 +191,7 @@ public class ScanTagActivity extends Activity implements LocationListener {
 		 * Patientendaten laden
 		 */
 		if(Mode.getActiveMode() == Mode.therapy) {
-			
-			if(SelectedPatient.getPatient() == null) {
-				Patient p = new Patient();			//TODO TESTPATIENT
-				p.setNameFamily("Dobler");
-				p.setNameGiven("Lucas");
-				p.setCategory(TriageCategory.immediate);
-				GregorianCalendar date = new GregorianCalendar(1991, 1, 15);
-				p.setBirthTime(date.getTime());
-				p.setPulse(95);
-				
-				selectedPatient = p;
-				SelectedPatient.setPatient(selectedPatient);
-			}
-			
+						
 			try {
 				selectedPatient = service.loadPatientById(scannedId);
 			} catch (ServiceException e) {
@@ -205,31 +203,29 @@ public class ScanTagActivity extends Activity implements LocationListener {
 			
 			SelectedPatient.setPatient(selectedPatient);
 			
-			if(Area.getActiveArea().matchesCategory(selectedPatient.getCategory()) && selectedPatient.getTreatment() == Treatment.salvaged) {
+			//if(Area.getActiveArea().matchesCategory(selectedPatient.getCategory()) && selectedPatient.getTreatment() == Treatment.salvaged) {
 				intent = new Intent(this, TherapySelectionActivity.class);
 				startActivity(intent);
 				finish();
-			}
-			else
-				new AlertDialog.Builder(this) 
-			        	.setMessage(R.string.error_wrong_area)
-			        	.setNeutralButton(R.string.ok, null)
-			        	.show();
+			//}
+			//else
+			//	new AlertDialog.Builder(this) 
+			//        	.setMessage(R.string.error_wrong_area)
+			//        	.setNeutralButton(R.string.ok, null)
+			//        	.show();
 		}
 	}
 	
 	private void initGps() {
-
-		// Get the location manager
+		
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		// Define the criteria how to select the locatioin provider -> use
-		// default
+		
 		Criteria criteria = new Criteria();
 		criteria.setAccuracy(Criteria.ACCURACY_FINE);
+		
 		provider = locationManager.getBestProvider(criteria, false);
 		Location location = locationManager.getLastKnownLocation(provider);
 
-		// Initialize the location fields
 		if (location != null) {
 			onLocationChanged(location);
 		} else if(Mode.getActiveMode() == Mode.triage) {
@@ -254,8 +250,7 @@ public class ScanTagActivity extends Activity implements LocationListener {
 	@Override
 	public void onLocationChanged(Location location) {
 
-		locationString = String.valueOf(location.getLatitude()) + "; " + String.valueOf(location.getLongitude());
-		locationAccuracyString = String.valueOf(location.getAccuracy());
+		locationString = String.valueOf(location.getLatitude()) + "; " + String.valueOf(location.getLongitude()) + "; " + String.valueOf(location.getAccuracy());
 	}
 	
 	@Override

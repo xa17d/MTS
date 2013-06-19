@@ -2,8 +2,8 @@ package moco.android.mtsdevice.therapy;
 
 import moco.android.mtsdevice.R;
 import moco.android.mtsdevice.handler.Bodypart;
-import moco.android.mtsdevice.handler.MTSBodyInjuryAdapter;
 import moco.android.mtsdevice.handler.SelectedPatient;
+import moco.android.mtsdevice.handler.listadapter.MTSBodyInjuryAdapter;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -55,7 +55,7 @@ public class BodySelectionList extends Activity implements OnItemClickListener{
 		
 		String diagnosis = injuryView.getAdapter().getItem(arg2).toString();
 		selectedPatient.setDiagnosis(diagnosis);
-		Toast.makeText(this, diagnosis + R.string._diagnosis_added, Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, diagnosis + " " + R.string.diagnosis_added, Toast.LENGTH_SHORT).show();
 		finish();
 	}
 }

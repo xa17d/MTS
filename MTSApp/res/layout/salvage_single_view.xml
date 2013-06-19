@@ -21,6 +21,34 @@
             android:id="@+id/textViewSalvageMain2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/distance"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/textViewSalvageDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/error"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewSalvageMain3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/urgency"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/textViewSalvageUrgency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/error"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewSalvageMain4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/salvageinfo"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -31,14 +59,7 @@
             android:layout_weight="1"
             android:text="@string/no_info"
             android:textAppearance="?android:attr/textAppearanceSmall" />
+        
     </LinearLayout>
-    
-    <Button
-        android:id="@+id/btnScanPatient"
-        android:layout_column="0"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_row="0"
-        android:onClick="scanTag"
-        android:text="@string/scan_tag" />
 
 </GridLayout>

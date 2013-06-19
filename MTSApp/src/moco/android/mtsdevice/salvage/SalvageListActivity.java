@@ -1,13 +1,17 @@
 package moco.android.mtsdevice.salvage;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 import moco.android.mtsdevice.R;
+import moco.android.mtsdevice.ScanTagActivity;
 import moco.android.mtsdevice.handler.DeviceButtons;
-import moco.android.mtsdevice.handler.MTSListAdapter;
 import moco.android.mtsdevice.handler.SelectedPatient;
+import moco.android.mtsdevice.handler.listadapter.MTSListAdapter;
+import moco.android.mtsdevice.service.PatientService;
+import moco.android.mtsdevice.service.PatientServiceImpl;
+import moco.android.mtsdevice.service.ServiceException;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,14 +20,16 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import at.mts.entity.Patient;
-import at.mts.entity.TriageCategory;
+import at.mts.entity.PatientListItem;
 
 public class SalvageListActivity extends Activity implements OnItemClickListener {
 
+	private PatientService service;
+	
 	private ListView patientView;
 	private ListAdapter adapter;
 	
-	private ArrayList<Patient> patientList;
+	private ArrayList<PatientListItem> patientList;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -31,11 +37,36 @@ public class SalvageListActivity extends Activity implements OnItemClickListener
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.salvage_list);
 		
-		createSomePatients();
+		service = PatientServiceImpl.getInstance();
 		
-		adapter = new MTSListAdapter<Patient>(getApplicationContext(), R.layout.mts_list, patientList);
+		try {
+			patientList = service.loadAllPatients();
+		} catch (ServiceException e) {
+			new AlertDialog.Builder(this) 
+		        	.setMessage(R.string.error_load_data)
+		        	.setNeutralButton(R.string.ok, null)
+		        	.show();
+		}
+		
+		adapter = new MTSListAdapter<PatientListItem>(getApplicationContext(), R.layout.mts_list, patientList);
 		
 		initContent();
+		
+		
+	}
+	
+	public void scanTag(View view) {
+		
+		Intent intent = new Intent(this, ScanTagActivity.class);
+        startActivity(intent);
+        finish();
+	}
+	
+	private void initContent() {
+		
+		patientView = (ListView)findViewById(R.id.patientSalvageView); 
+		patientView.setAdapter(adapter);
+		patientView.setOnItemClickListener(this);
 	}
 	
 	@Override
@@ -46,85 +77,11 @@ public class SalvageListActivity extends Activity implements OnItemClickListener
 		Intent intent = new Intent(this, SalvageSingleViewActivity.class);
 		startActivity(intent);
 	}
-	
-	private void initContent() {
-		
-		patientView = (ListView)findViewById(R.id.patientSalvageView); 
-		patientView.setAdapter(adapter);
-		patientView.setOnItemClickListener(this);
-	}
 
 	
 	@Override
 	public void onBackPressed() {
 		
 		DeviceButtons.getToModeSelection(this);
-	}
-	
-	
-	//TODO
-	private void createSomePatients() {
-		Patient p;
-		patientList = new ArrayList<Patient>();
-		
-		/**
-		 * 7 IMMEDIATE
-		 */
-		for(int i = 0; i < 7; i++) {
-			p = new Patient();
-			p.setCategory(TriageCategory.immediate);
-			p.setId(new UUID(4,i));
-			p.setPlacePosition(String.valueOf((i * (2 * i * i - 2 * (i + 3)) + 7)));
-			
-			if(i == 5) {
-				p.setNameGiven("Fritz");
-				p.setNameFamily("Fantom");
-				p.setUrgency(4);
-				p.setSalvageInfo("Feuerwehr;\nSchaufeltrage;\nVakuummatratze;");
-			}
-			if(i == 6) {
-				p.setNameGiven("Hans");
-				p.setNameFamily("Wurst");
-				p.setUrgency(2);
-			}
-			
-			patientList.add(p);
-		}
-		
-		/**
-		 * 0 DELAYED
-		 */
-		p = new Patient();
-		p.setCategory(TriageCategory.delayed);
-		p.setId(new UUID(4,7));
-		p.setNameGiven("Max");
-		p.setNameFamily("Mustermann");
-		patientList.add(p);
-		
-		/**
-		 * 2 MINOR
-		 */		
-		p = new Patient();
-		p.setCategory(TriageCategory.minor);
-		p.setId(new UUID(4,7));
-		p.setNameGiven("Max");
-		p.setNameFamily("Mustermann");
-		patientList.add(p);
-		
-		p = new Patient();
-		p.setCategory(TriageCategory.minor);
-		p.setId(new UUID(4,8));
-		p.setNameGiven("Lucas");
-		p.setNameFamily("Dobler");
-		patientList.add(p);
-		
-		/**
-		 * 1 DECEASED
-		 */
-		p = new Patient();
-		p.setCategory(TriageCategory.deceased);
-		p.setId(new UUID(4,15));
-		p.setPlacePosition("1");
-		patientList.add(p);
 	}
 }

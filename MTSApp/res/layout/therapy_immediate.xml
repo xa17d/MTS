@@ -1,28 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-    
+    android:layout_height="match_parent"
+    android:columnCount="1" >
+
     <LinearLayout
         android:layout_gravity="fill_horizontal"
         android:orientation="vertical" >
-    
-	    <TextView
-	            android:id="@+id/textViewTherapy"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/therapy_mode"
-	            android:textAppearance="?android:attr/textAppearanceLarge" />
-	    
-	    <TextView
+
+        <TextView
+            android:id="@+id/textViewTherapy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/therapy_mode"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
             android:id="@+id/textViewTherapyIm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/therapy"
             android:textAppearance="?android:attr/textAppearanceLarge" />
-	    
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/buttonMedication"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="addTherapy"
+                    android:text="@string/medication" />
+
+                <Button
+                    android:id="@+id/buttonTherapy"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="addTherapy"
+                    android:text="@string/therapy" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/buttonWound"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="addTherapy"
+                    android:text="@string/wound" />
+
+                <Button
+                    android:id="@+id/buttonCpr"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="addTherapy"
+                    android:text="@string/cpr" />
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textViewTherapyListIm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_support"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
-    
+
     <Button
         android:id="@+id/saveTherapyIm"
         android:layout_column="0"
@@ -30,6 +93,13 @@
         android:layout_row="0"
         android:onClick="save"
         android:text="@string/save" />
-    
+
+    <Button
+        android:id="@+id/buttonReadyTransport"
+        android:layout_column="0"
+        android:layout_gravity="left|bottom"
+        android:layout_row="0"
+        android:onClick="readyForTransport"
+        android:text="@string/ready_transport" />
 
 </GridLayout>
