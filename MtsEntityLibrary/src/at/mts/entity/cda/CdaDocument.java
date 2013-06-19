@@ -73,7 +73,7 @@ public class CdaDocument {
         setBody(body, "triagekategorie", TriageCategory.asCdaValue(patient.getCategory()));
         setBody(body, "behandlung", Treatment.asCdaValue(patient.getTreatment()));
                 
-                //-----DETAILS
+        //-----DETAILS
         setBody(body, "gps", patient.getGps());
         setBody(body, "lebensphase",  patient.getPhaseOfLife(), PhaseOfLife.asCdaValue(patient.getPhaseOfLife()));
         setBody(body, "bergeinformation", patient.getSalvageInfoString());
@@ -89,6 +89,7 @@ public class CdaDocument {
         setBody(body, "transportbereitschaft", patient.getReadyForTransport(), CdaBoolean.asCdaValue(patient.getReadyForTransport()));
         setBody(body, "zielkrankenhaus", patient.getHospital());
         setBody(body, "krankenkasse", patient.getHealthInsurance());
+        
         //-----VERLETZUNGEN
         //set(String part, String information)
         Bodyparts bodyparts = patient.getBodyparts();
@@ -183,7 +184,7 @@ public class CdaDocument {
 	private void splitInfo(Element element){
 
 		String bodyValue = element.getText();
-		String[] lines = bodyValue.split("\\r?\\n"); //"  <br ?/?>
+		String[] lines = bodyValue.split("\\r?\\n");
 		String prekey="";
 		for (String line : lines) {
 			String[] keypair = line.trim().split(":", 2);
@@ -266,7 +267,8 @@ public class CdaDocument {
 	        
 	        Element relatedDocument = root.getChild("relatedDocument", NS);
 	        if (getParentIdV() == null) {
-	        	relatedDocument.removeChild("parentDocument", NS);
+	        	root.getChild("relatedDocument", NS).getChild("parentDocument", NS).getChild("id", NS).setAttribute("extension", getIdV().getId().toString());
+		        root.getChild("relatedDocument", NS).getChild("parentDocument", NS).getChild("versionNumber", NS).setAttribute("value", Integer.toString(getIdV().getVersion()));	
 	        }
 	        else {
 		        root.getChild("relatedDocument", NS).getChild("parentDocument", NS).getChild("id", NS).setAttribute("extension", getParentIdV().getId().toString());
@@ -300,7 +302,7 @@ public class CdaDocument {
 	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent("\ntriagekategorie: "+body.get("triagekategorie"));
 	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent("<br />\n"); // (new Element("br",NS));
 	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent(new Comment(" Werte: undefiniert, gesichtet, geborgen, abtransportiert "));
-	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent("\nbehandlung: "+body.get("behandlung"));
+	        root.getChild("component", NS).getChild("structuredBody",NS).getChild("component", NS).getChild("section", NS).getChild("text", NS).addContent("\nbehandlung: "+body.get("behandlung") + "\n	");
 	           
 	        //-----DETAILS
 	       
