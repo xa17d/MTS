@@ -31,11 +31,18 @@ public class ServerCommunicationImpl implements ServerCommunication {
 	public String getData(String urlString) throws CommunicationException {
 		
 		service.networkConnectionStarted();
+				
+		AsyncTask<String,Void,String> asyncTask = new GetDataTask().execute(urlString);
+		
+		try {
+			asyncTask.wait();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if(getBody.equals("**EXCEPTION**"))
 			throw new CommunicationException("Fehler beim Laden der Daten");
-				
-		new GetDataTask().execute(urlString);
 		
 		return this.getBody;
 	}
@@ -44,7 +51,14 @@ public class ServerCommunicationImpl implements ServerCommunication {
 		
 		service.networkConnectionStarted();
 		
-		new PutDataTask().execute(urlString, xmlData);
+		AsyncTask<String,Void,Integer> asyncTask = new PutDataTask().execute(urlString, xmlData);
+		
+		try {
+			asyncTask.wait();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if(putCode == -1)
 			throw new CommunicationException("Fehler beim Senden der Daten");
@@ -63,7 +77,7 @@ public class ServerCommunicationImpl implements ServerCommunication {
 		/**
 		 * Sendet Daten an den Server
 		 * params[0] URL-String
-		 * params[1] XML-Daten (nur bei PUT und POST)
+		 * params[1] XML-Daten
 		 */
 		@Override
 		protected Integer doInBackground(String... params) {
@@ -104,17 +118,19 @@ public class ServerCommunicationImpl implements ServerCommunication {
 		@Override
 		protected void onPostExecute(Integer result) {
 			
+			notifyAll();
+			
 			service.networkConnectionEnded();
 			putCode = result;
 		}
 	}
 	
+	
 	private class GetDataTask extends AsyncTask<String,Void,String> {
 
 		/**
-		 * Sendet Daten an den Server
+		 * Holt Daten vom Server
 		 * params[0] URL-String
-		 * params[1] XML-Daten (nur bei PUT und POST)
 		 */
 		@Override
 		protected String doInBackground(String... params) {
@@ -141,21 +157,10 @@ public class ServerCommunicationImpl implements ServerCommunication {
 		@Override
 		protected void onPostExecute(String result) {
 			
+			notifyAll();
+			
 			service.networkConnectionEnded();
 			getBody = result;
 		}
 	}
-	
-	
-	/**
-	 * TODO
-	 * aendert Thread-Policy, sodass im Main-Thread auf den Server zugegriffen werden kann
-	 */
-	/*
-	private void resetPolicy() {
-		
-		ThreadPolicy tp = ThreadPolicy.LAX;
-		StrictMode.setThreadPolicy(tp);
-	}
-	*/
 }
