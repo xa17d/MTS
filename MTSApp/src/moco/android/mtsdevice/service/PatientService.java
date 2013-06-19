@@ -38,14 +38,23 @@ public interface PatientService {
 	 */
 	public void saveNewPatient(Patient patient) throws ServiceException;
 	
-	
-	
 	/**
 	 * veraendert die Daten eines bestehenden Patienten am Server
 	 * @param patient bestehender Patient
 	 * @throws ServiceException
 	 */
 	public void updateExistingPatient(Patient patient) throws ServiceException;
+	
+	/**
+	 * neue Netzwerkverbindung wurde gestartet
+	 */
+	public void networkConnectionStarted();
+	
+	/**
+	 * Netzwerkverbindung wurde beendet
+	 */
+	public void networkConnectionEnded();
+	
 	
 	/**
 	 * setzt den aktuellen Benutzer der Anwendung

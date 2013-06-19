@@ -3,6 +3,9 @@ package moco.android.mtsdevice.therapy;
 import moco.android.mtsdevice.R;
 import moco.android.mtsdevice.handler.SelectedPatient;
 import moco.android.mtsdevice.handler.Therapy;
+import moco.android.mtsdevice.service.PatientService;
+import moco.android.mtsdevice.service.PatientServiceImpl;
+import moco.android.mtsdevice.service.ServiceException;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -12,12 +15,15 @@ import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import at.mts.entity.Patient;
 import at.mts.entity.Treatment;
 
 public class TherapyImmediateActivity extends Activity {
 
 	private Patient selectedPatient;
+	
+	private PatientService service;
 	
 	private Button btnMedication;
 	private Button btnTherapy;
@@ -33,15 +39,17 @@ public class TherapyImmediateActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.therapy_immediate);
 		
-		initContent();
+		service = PatientServiceImpl.getInstance();
+		selectedPatient = SelectedPatient.getPatient();
+		
+		initControls();
 	}
 	
 	@Override
 	public void onResume() {
 		super.onResume();
 		
-		selectedPatient = SelectedPatient.getPatient();	
-		if(selectedPatient.getCourseOfTreatment() != null)
+		if(!selectedPatient.getCourseOfTreatmentString().equals(""))
 			txtTherapy.setText(selectedPatient.getCourseOfTreatmentString());
 	}
 	
@@ -80,11 +88,20 @@ public class TherapyImmediateActivity extends Activity {
 	
 	public void save(View v) {
 		
-		//TODO
+		try {
+			service.updateExistingPatient(selectedPatient);
+			Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
+		} catch (ServiceException e) {
+			new AlertDialog.Builder(this) 
+	        	.setMessage(R.string.error_save_data)
+	        	.setNeutralButton(R.string.ok, null)
+	        	.show();
+		}
+		
 		finish();
 	}
 	
-	private void initContent() {
+	private void initControls() {
 		
 		btnMedication = (Button)findViewById(R.id.buttonMedication);
 		btnTherapy = (Button)findViewById(R.id.buttonTherapy);

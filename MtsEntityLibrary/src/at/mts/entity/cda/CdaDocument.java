@@ -245,10 +245,10 @@ public class CdaDocument {
 	        
 	        Element root = doc.getRootElement();
 	        
-	        root.getChild("author", NS).getChild("assignedAuthor",NS).getChild("assignedPerson", NS).getChild("name", NS).getChild("given", NS).setText("Max");
-	        root.getChild("author", NS).getChild("assignedAuthor",NS).getChild("assignedPerson", NS).getChild("name", NS).getChild("family", NS).setText("Mustermann");
-	        root.getChild("author", NS).getChild("assignedAuthor",NS).getChild("id", NS).setAttribute("extension", "f51e7681-fc6b-4032-8f28-008f471fe32f");
-	        root.getChild("author", NS).getChild("time", NS).setAttribute("value", "20130506"); 
+	        root.getChild("author", NS).getChild("assignedAuthor",NS).getChild("assignedPerson", NS).getChild("name", NS).getChild("given", NS).setText(getAuthorNameGiven());
+	        root.getChild("author", NS).getChild("assignedAuthor",NS).getChild("assignedPerson", NS).getChild("name", NS).getChild("family", NS).setText(getAuthorNameFamily());
+	        root.getChild("author", NS).getChild("assignedAuthor",NS).getChild("id", NS).setAttribute("extension", getAuthorId().toString());
+	        root.getChild("author", NS).getChild("time", NS).setAttribute("value", "20130621"); 
 	        
 	        
 	        root.getChild("recordTarget", NS).getChild("patientRole",NS).getChild("patient", NS).getChild("name", NS).getChild("given", NS).setText(getPatientNameGiven());

@@ -43,4 +43,15 @@ public class PatientListItem {
 	private String url;
 	public String getUrl() { return url; }
 	public void setUrl(String value) { this.url = value; }
+	
+	
+	public String toSalvageString() {
+		
+		return String.valueOf(category) + " (G/A)\nEntfernung: --.- Meter"; 
+	}
+	
+	public String toTherapyString() {
+		
+		return nameFamily + ", " + nameGiven + " (G / ??)\nDringlichkeit: undef";
+	}
 }

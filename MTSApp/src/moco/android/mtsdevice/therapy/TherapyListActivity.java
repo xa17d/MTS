@@ -1,17 +1,10 @@
 package moco.android.mtsdevice.therapy;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.UUID;
-
 import moco.android.mtsdevice.R;
 import moco.android.mtsdevice.ScanTagActivity;
-import moco.android.mtsdevice.TestActivity;
-import moco.android.mtsdevice.communication.CommunicationException;
-import moco.android.mtsdevice.communication.ServerCommunicationImpl;
 import moco.android.mtsdevice.handler.Area;
 import moco.android.mtsdevice.handler.DeviceButtons;
-import moco.android.mtsdevice.handler.listadapter.MTSListAdapter;
 import moco.android.mtsdevice.handler.listadapter.MTSListTherapyAdapter;
 import moco.android.mtsdevice.service.PatientService;
 import moco.android.mtsdevice.service.PatientServiceImpl;
@@ -24,11 +17,7 @@ import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import at.mts.entity.Patient;
-import at.mts.entity.PatientList;
 import at.mts.entity.PatientListItem;
-import at.mts.entity.Treatment;
-import at.mts.entity.TriageCategory;
 
 public class TherapyListActivity extends Activity {
 
@@ -37,12 +26,6 @@ public class TherapyListActivity extends Activity {
 	private ListAdapter adapter;
 	
 	private PatientService service;
-	
-	//TODO
-	private ArrayList<Patient> patientListIm;
-	private ArrayList<Patient> patientListDel;
-	private ArrayList<Patient> patientListMin;
-	private ArrayList<Patient> patientListDec;
 	
 	private ArrayList<PatientListItem> patientList;
 	
@@ -62,24 +45,9 @@ public class TherapyListActivity extends Activity {
 			    	.show();
 		}
 		
-		PatientListItem patientItem;
-		Iterator<PatientListItem> it = patientList.iterator();
-		
-		while(it.hasNext()) {
-			patientItem = it.next();
-			
-			/**
-			 * wenn gewaehlter Patient noch nicht geborgen (oder bereits abtransportiert) wurde
-			 * ODER
-			 * Patient an anderem Behandlungsplatz
-			 * ==> aus Liste entfernen
-			 */
-			if(patientItem.getTreatment() != Treatment.salvaged || !Area.getActiveArea().matchesCategory(patientItem.getCategory()))
-				patientList.remove(patientItem);
-		}
-		
 		//TODO falls geschwindigkeit es zulaesst: alle daten laden
-		adapter = new MTSListAdapter<PatientListItem>(getApplicationContext(), R.layout.mts_list, patientList);
+		
+		adapter = new MTSListTherapyAdapter<PatientListItem>(getApplicationContext(), R.layout.mts_list, patientList);
 
 		initContent();
 	}

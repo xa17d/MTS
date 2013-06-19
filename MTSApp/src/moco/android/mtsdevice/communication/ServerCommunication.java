@@ -14,7 +14,8 @@ public interface ServerCommunication {
 	 * sendet die Daten an den Server, der die Daten dann speichert
 	 * @param urlString URL
 	 * @param xmlData Daten
+	 * @return Response Code des Servers
 	 * @throws CommunicationException
 	 */
-	public void putData(String urlString, String xmlData) throws CommunicationException;
+	public int putData(String urlString, String xmlData) throws CommunicationException;
 }

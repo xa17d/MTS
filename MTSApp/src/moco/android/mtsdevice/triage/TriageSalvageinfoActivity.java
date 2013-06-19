@@ -18,7 +18,7 @@ public class TriageSalvageinfoActivity extends Activity {
 	private Button save;
 	private TextView salvageText;
 	
-	private Patient patient;
+	private Patient selectedPatient;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class TriageSalvageinfoActivity extends Activity {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.triage_salvageinfo);
         
-        patient = SelectedPatient.getPatient();
+        selectedPatient = SelectedPatient.getPatient();
         
         save = (Button)findViewById(R.id.save);
         salvageText = (TextView)findViewById(R.id.salvageText);
@@ -39,6 +39,8 @@ public class TriageSalvageinfoActivity extends Activity {
 	}
 	
 	public void saveSalvageInfo(View v) {
+		
+		selectedPatient.setTreatment(Treatment.sighted);
 		
 		Intent intent = new Intent(this, ScanTagActivity.class);
         startActivity(intent);
@@ -53,7 +55,7 @@ public class TriageSalvageinfoActivity extends Activity {
 		/**
 		 * Textfeld aktualisieren
 		 */
-		salvageText.setText(patient.getSalvageInfoString());
+		salvageText.setText(selectedPatient.getSalvageInfoString());
 		
 		/**
 		 * Button aendern

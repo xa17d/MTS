@@ -94,4 +94,5 @@
     <string name="ready_transport">Transportbereit</string>
     <string name="sure_ready_transport">Sind Sie sicher, dass der Patient fertig zum Abtransport ist?</string>
     <string name="patient_already_registered">Der gewählte Patient wurde bereits registriert!</string>
+    <string name="patient_put">Patient ablegen</string>
 </resources>

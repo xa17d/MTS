@@ -53,13 +53,15 @@ public class SalvageSingleViewActivity extends Activity implements LocationListe
 		selectedPatientItem = SelectedPatient.getPatientItem();
 		
 		try {
-			service.loadPatientByUrl(selectedPatientItem.getUrl());
+			selectedPatient = service.loadPatientByUrl(selectedPatientItem.getUrl());
 		} catch (ServiceException e) {
 			new AlertDialog.Builder(this) 
 		        	.setMessage(R.string.error_load_data)
 		        	.setNeutralButton(R.string.ok, null)
 		        	.show();
 		}
+		
+		initContent();
 	}
 	
 	private void initContent() {
@@ -68,10 +70,8 @@ public class SalvageSingleViewActivity extends Activity implements LocationListe
 		distanceText = (TextView)findViewById(R.id.textViewSalvageDistance);
 		urgencyText = (TextView)findViewById(R.id.textViewSalvageUrgency);
 		
-		if(selectedPatient.getSalvageInfoString() != null || !selectedPatient.getSalvageInfoString().equals(""))
+		if(!selectedPatient.getSalvageInfoString().equals(""))
 			salvageText.setText(selectedPatient.getSalvageInfoString());
-		
-		distanceText.setText(getDistanceTo(selectedPatient.getGps()));
 		
 		urgencyText.setText(String.valueOf(selectedPatient.getUrgency()));
 	}
@@ -117,7 +117,7 @@ public class SalvageSingleViewActivity extends Activity implements LocationListe
 		super.onResume();
 		locationManager.requestLocationUpdates(provider, 200, 1, this);
 		
-		initContent();
+		distanceText.setText(getDistanceTo(selectedPatient.getGps()));
 	}
 
 	@Override

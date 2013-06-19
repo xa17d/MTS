@@ -1,5 +1,7 @@
 package moco.android.mtsdevice.handler.listadapter;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import moco.android.mtsdevice.R;
@@ -10,9 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import at.mts.entity.Patient;
+import at.mts.entity.PatientListItem;
+import at.mts.entity.Treatment;
+import at.mts.entity.TriageCategory;
 
-public class MTSListSalvageAdapter<T extends Patient> extends ArrayAdapter<T> {			//TODO change EXTEND to PatientListItem
+public class MTSListSalvageAdapter<T extends PatientListItem> extends ArrayAdapter<T> {
 	
 	private Context context;
     private int textViewResourceId;
@@ -24,6 +28,8 @@ public class MTSListSalvageAdapter<T extends Patient> extends ArrayAdapter<T> {	
 		this.context = context;
 		this.textViewResourceId = textViewResourceId;
 		this.items = items;
+		
+		filterAndSortItems();
 	}
 	
 	@Override
@@ -36,14 +42,12 @@ public class MTSListSalvageAdapter<T extends Patient> extends ArrayAdapter<T> {	
         }
 
         TextView text = (TextView)view.findViewById(R.id.MTSView);
-        
-        filterAndSortItems();
 
         if(items.get(position) != null) {
             
         	text.setTextColor(Color.BLACK);
             text.setBackgroundColor(00000000);
-        	text.setText(items.get(position).toSalvageOverviewString());
+        	text.setText(items.get(position).toSalvageString());
         	text.setTextColor(items.get(position).getCategory().getTriageColor());
         }
 
@@ -52,6 +56,31 @@ public class MTSListSalvageAdapter<T extends Patient> extends ArrayAdapter<T> {	
 	
 	private void filterAndSortItems() {
 		
-		//TODO minor-Patienten filtern und nach dringlichkeit sortieren
+		Iterator<T> it = items.iterator();
+		T item;
+		
+		List<T> immediateItems = new ArrayList<T>();
+		List<T> delayedItems = new ArrayList<T>();
+		List<T> deceasedItems = new ArrayList<T>();
+		
+		while(it.hasNext()) {
+			item = it.next();
+			if(item.getTreatment() != Treatment.sighted)
+				items.remove(item);
+			
+			if(item.getCategory() == TriageCategory.immediate)
+				immediateItems.add(item);
+			
+			if(item.getCategory() == TriageCategory.delayed)
+				delayedItems.add(item);
+			
+			if(item.getCategory() == TriageCategory.deceased)
+				deceasedItems.add(item);
+		}
+		
+		items.clear();
+		items.addAll(immediateItems);
+		items.addAll(delayedItems);
+		items.addAll(deceasedItems);
 	}
 }
