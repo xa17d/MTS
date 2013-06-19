@@ -22,6 +22,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import at.mts.entity.Patient;
 import at.mts.entity.PatientList;
@@ -223,6 +224,11 @@ public class RestApi {
 		} catch (ServiceException e) {
 			r.append(e.getMessage());
 		}
+		
+		r.append("<hr><h2>Log</h2>\n");
+		r.append("\n<pre>\n");
+		r.append(LOG.readAll());
+		r.append("\n</pre>\n");
 		
 		return r.toString();
 
