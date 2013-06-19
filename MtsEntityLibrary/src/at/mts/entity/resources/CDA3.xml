@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:voc="urn:hl7-org:v3/voc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:hl7-org:v3 CDA.xsd">
+  <!--
+********************************************************
+CDA Header
+********************************************************
+-->
+  <typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040"/>
+  <id extension="d3c57b80-d8f8-11e2-a28f-0800200c9a66" root="2.16.840.1.113883.9.12"/>
+  <!-- Das Code System ist LOINC, wir verwenden 54094-8 (Emergency department Triage note)-->
+  <code code="54094-8" codeSystem="2.16.840.1.113883.6.1" displayName="Emergency department Triage note"/>
+  <effectiveTime value="20130506"/>
+  <confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25"/>
+  <versionNumber value="1"/>
+  <recordTarget>
+	<patientRole>
+        <id extension="df9d6760-d8f8-11e2-a28f-0800200c9a66" root="1.2.276.0.58"/>
+        <patient>
+            <name>
+                <given>Erika</given>
+                <family>Mustermann</family>
+            </name>
+            <administrativeGenderCode code="F" codeSystem="2.16.840.1.113883.5.1"/>
+            <birthTime value="19731010"/>
+        </patient>
+	</patientRole>
+  </recordTarget>
+  <author>
+	<time value="20130506"/>
+	<assignedAuthor>
+  	<id extension="519a3ac0-d8f7-11e2-a28f-0800200c9a66" root="2.16.840.1.113883.9.12"/>
+  	<assignedPerson>
+    	<name>
+      	<given>Otto</given>
+      	<family>Ernst</family>
+    	</name>
+  	</assignedPerson>
+	</assignedAuthor>
+  </author>
+  <custodian>
+	<assignedCustodian>
+  	<representedCustodianOrganization>
+    	<id extension="13372345" root="1.2.276.0.58"/>
+    	<name/>
+  	</representedCustodianOrganization>
+	</assignedCustodian>
+  </custodian>
+  <relatedDocument typeCode="RPLC">
+	<parentDocument>
+  	<id extension="d3c57b80-d8f8-11e2-a28f-0800200c9a66" root="2.16.840.1.113883.9.12"/>
+  	<versionNumber value="1"/>
+	</parentDocument>
+  </relatedDocument>
+  <!--
+********************************************************
+CDA Body
+********************************************************
+-->
+  <component>
+	<structuredBody>
+  	<component>
+    	<section>
+      	<title>Vitalzeichen</title>
+      	<text>
+        	<!-- gehfaehigkeit? Werte: ja/nein -->
+        	gehfaehigkeit: ja <br />
+        	<!-- respiration? Werte: stabil/kritisch -->
+        	respiration: stabil <br />
+        	<!-- perfusion? Werte: stabil/kritisch -->
+        	perfusion: stabil <br />
+        	<!-- mentalerstatus? Werte: stabil/kritisch -->
+        	mentalerstatus: stabil <br />
+        	<!-- Werte: immediate, delayed, minor, deceased -->
+        	triagekategorie: delayed <br />
+        	<!-- Werte: undefiniert, gesichtet, geborgen, abtransportiert -->
+        	behandlung: gesichtet <br />
+      	</text>
+    	</section>
+  	</component>
+  	<component>
+    	<section>
+      	<title>Details</title>
+      	<text>
+        	<!-- Format: 46.992365,10.022476,5.0 wobei die erste Zahl die geographische Breite, die zweite Zahl die geographische Länge in Grad und die dritte Zahl die Genauigkeit in Meter. Oder kA wenn keine Position vorhanden -->
+        	gps: kA <br />
+        	<!-- Werte: Kind, Erwachsen -->
+        	lebensphase: Erwachsen <br />
+        	<!-- Werte: Freitext String-->
+        	bergeinformation:  <br />
+        	<!-- Werte: Freitext String-->
+        	hilfplatzposition: 12 <br />
+        	<!-- Werte: 1-5 (5 am Dringlichsten) -->
+        	dringlichkeit: 2 <br />
+        	<!-- Werte: ICD10-Code - getrennt durch ; -->
+        	diagnose: <br />
+        	<!-- Werte: int systolisch : int diastolisch -->
+        	blutdruck: 118:78 <br />
+        	<!-- Werte: int bpm -->
+        	puls: 90 <br />
+        	<!-- Werte: Freitext String - getrennt durch ; -->
+        	behandlungsverlauf: <br />
+        	<!-- Werte: ja/nein -->
+        	transportbereitschaft: <br />
+        	<!-- Werte: Freitext String -->
+        	zielkrankenhaus: <br />
+        	<!-- Werte: Freitext String -->
+        	krankenkasse: <br />
+      	</text>
+      	<component>
+        	<section>
+          	<!-- Bodyparts? -->
+          	<title>Verletzungen</title>
+          	<text>
+            	<!--Werte: Freitext String ÜBERALL -->
+            	Vorne_Kopf: <br />
+            	Vorne_Hals: offene Wunde<br />
+            	Vorne_Brust: <br />
+            	Vorne_Bauch: <br />
+            	Vorne_ROberarm: <br />
+            	Vorne_LOberarm: <br />
+            	Vorne_RUnterarm: <br />
+            	Vorne_LUnterarm: <br />
+            	Vorne_RHand: <br />
+            	Vorne_LHand: <br />
+            	Vorne_LOberschenkel: <br />
+            	Vorne_ROberschenkel: <br />
+            	Vorne_LUnterschenkel: <br />
+            	Vorne_RUnterschenkel: <br />
+            	Vorne_LFuss: <br />
+            	Vorne_RFuss: <br />
+            	Hinten_Kopf: platzwunde<br />
+            	Hinten_Hals: <br />
+            	Hinten_Brust: <br />
+            	Hinten_Bauch: schlürfwunde
+                                schnittwunde<br />
+            	Hinten_ROberarm: schlürfwunde<br />
+            	Hinten_LOberarm: <br />
+            	Hinten_RUnterarm: <br />
+            	Hinten_LUnterarm: <br />
+            	Hinten_RHand: <br />
+            	Hinten_LHand: <br />
+            	Hinten_LOberschenkel: <br />
+            	Hinten_ROberschenkel: <br />
+            	Hinten_LUnterschenkel: <br />
+            	Hinten_RUnterschenkel: <br />
+            	Hinten_LFuss: <br />
+            	Hinten_RFuss: <br />
+          	</text>
+        	</section>
+      	</component>
+    	</section>
+  	</component>
+	</structuredBody>
+  </component>
+</ClinicalDocument>
