@@ -63,7 +63,6 @@ public class Element {
 
 	public Element addContent(String text) {
 		if (text == null) { text = ""; }
-		text = text + "\n";
 		org.w3c.dom.Node n = node.getOwnerDocument().createTextNode(text);
 		node.appendChild(n);
 		return this;

@@ -63,6 +63,7 @@ public class PatientTest {
 		p.setReadyForTransport(true);
 		p.setRespiration(Condition.stable);
 		p.addSalvageInfo(SalvageInfo.Absaugeinheit);
+		p.addSalvageInfo(SalvageInfo.Schaufeltrage);
 		p.setTimestamp(new Date());
 		p.setTreatment(Treatment.transported);
 		p.setUrgency(1);

@@ -147,7 +147,7 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 	
 	@Override
 	public Patient findById(final UUID id) throws PersistenceException {
-		
+		if (id == null) { return null; }
 		List<Patient> l = queryPatients(new StatementPreparation() {
 			
 			@Override

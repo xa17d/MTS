@@ -29,7 +29,7 @@ public class Patient {
 		setRespiration(Condition.getValueOf(document.getBody().get("respiration")));
 		setPerfusion(Condition.getValueOf(document.getBody().get("perfusion")));
 		setMentalStatus(Condition.getValueOf(document.getBody().get("mentalerstatus")));
-		setCategory(TriageCategory.getValueOf(document.getBody().get("triagekategory")));
+		setCategory(TriageCategory.getValueOf(document.getBody().get("triagekategorie")));
 		setTreatment(Treatment.getValueOf(document.getBody().get("behandlung")));
 		
 		setGps(document.getBody().get("gps"));

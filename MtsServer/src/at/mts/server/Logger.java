@@ -28,6 +28,9 @@ public class Logger {
 	}
 	
 	private static synchronized void append(Class<?> clazz, String msg, Throwable e) {
+		
+		System.out.println(msg);
+		
 		PrintWriter w = getWriter();
 		if (w!=null) {
 			w.println("* "+new Date().toString()+"\t"+msg);

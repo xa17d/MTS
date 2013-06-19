@@ -18,6 +18,12 @@ public enum Condition {
 		if (value.toLowerCase().equals("stable")) {
 			return Condition.stable;
 		}
+		if (value.toLowerCase().equals("kritisch")) {
+			return Condition.critical;
+		}
+		if (value.toLowerCase().equals("stabil")) {
+			return Condition.stable;
+		}
 
 		return Condition.notSpecified;
 	}

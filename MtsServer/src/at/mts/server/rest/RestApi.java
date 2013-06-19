@@ -89,9 +89,9 @@ public class RestApi {
 	@PUT
 	@Path("patients/{id}")
 	@Produces(MediaType.TEXT_XML)
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Consumes(MediaType.TEXT_XML)
 	public void putPatient(@PathParam("id") String id,
-			@FormParam("document") String document) throws IOException {
+			String document) throws IOException {
 		authentificate();
 	    
 		LOG.info("PUT patients/{id}");

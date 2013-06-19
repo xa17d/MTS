@@ -17,6 +17,12 @@ public enum Gender {
 		if (value.toLowerCase().equals("m")) {
 			return Gender.male;
 		}
+		if (value.toLowerCase().equals("female")) {
+			return Gender.female;
+		}
+		if (value.toLowerCase().equals("male")) {
+			return Gender.male;
+		}
 		return Gender.notSpecified;
 	}
 	
