@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -109,17 +110,21 @@ public class RestApi {
 	@POST
 	@Path("patients/{id}")
 	@Produces(MediaType.TEXT_XML)
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Consumes(MediaType.TEXT_XML)
 	public void postPatient(@PathParam("id") String id,
-			@FormParam("document") String document,
-			@FormParam("timestamp") String timestamp) throws IOException {
+			@HeaderParam("timestamp") String timestamp,
+			String document) throws IOException {
 		
 		authentificate();
 		
 		LOG.info("POST patients/{id}");
-	    
+		
 		try {			
-			patientService.update(new CdaDocument(document), parseTimestamp(timestamp));
+			Date timestampDate;
+			if (timestamp == null) { timestampDate = new Date(); }
+			else { timestampDate = parseTimestamp(timestamp); }
+			
+			patientService.update(new CdaDocument(document), timestampDate);
 		} catch (ServiceException e) {
 			LOG.error("error", e);
 			response.sendError(404, "Service Error: "+e.getMessage());
