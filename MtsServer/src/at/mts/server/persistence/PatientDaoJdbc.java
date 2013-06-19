@@ -268,8 +268,7 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 			int patientVersionId = -1;
 			ResultSet keySet = p.getGeneratedKeys();
 			if (keySet != null && keySet.next()) {
-				patientId = keySet.getInt(1);
-				patientVersionId = 1;
+				patientVersionId = keySet.getInt(1);
 			}
 			else {
 				//log.debug("No keys returned in create");
@@ -392,7 +391,7 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 			}
 		}
 	}
-	
+
 	private Patient patientByResultSet(ResultSet r) throws SQLException {
 		Patient p = new Patient();
 
@@ -503,8 +502,8 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 		statementSetEnum(s, 22, p.getCategory());
 		statementSetDate(s, 23, p.getTimestamp());
 		statementSetVarchar(s, 24, p.getGps());
-		statementSetLongVarchar(s, 25, p.getDiagnosisString());
-		statementSetLongVarchar(s, 26, p.getCourseOfTreatmentString());
+		statementSetLongVarchar(s, 25, p.getDiagnosis());
+		statementSetLongVarchar(s, 26, p.getCourseOfTreatment());
 	}
 	
 	private void insertBodyParts(Bodyparts bodyparts, int patientVersionId) throws SQLException {
