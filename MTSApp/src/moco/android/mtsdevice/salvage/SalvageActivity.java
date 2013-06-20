@@ -42,10 +42,8 @@ public class SalvageActivity extends Activity {
 		selectedPatient.setTreatment(Treatment.salvaged);
 		selectedPatient.setPlacePosition(String.valueOf(txtPlace.getText()));
 		
-		int code = 0;
-		
 		try {
-			code = service.updateExistingPatient(selectedPatient);
+			service.updateExistingPatient(selectedPatient);
 			Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
 		} catch (ServiceException e) {
 			new AlertDialog.Builder(this) 

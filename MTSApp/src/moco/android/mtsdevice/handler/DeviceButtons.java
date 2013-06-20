@@ -51,7 +51,6 @@ public class DeviceButtons {
 			
 			Intent intent = new Intent(parent, TherapyAreaActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 			parent.startActivity(intent);
 		}
 	}

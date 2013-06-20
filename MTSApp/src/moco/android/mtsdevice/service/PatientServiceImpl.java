@@ -1,6 +1,9 @@
 package moco.android.mtsdevice.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.UUID;
 
 import moco.android.mtsdevice.communication.CommunicationException;
@@ -21,6 +24,10 @@ public class PatientServiceImpl implements PatientService {
 	private String mtsUrl;
 	private String authorId;
 	
+	private int code;
+	private Set<String[]> putBuffer = new HashSet<String[]>();
+	private Set<String[]> postBuffer = new HashSet<String[]>();
+	
 	@Override
 	public ArrayList<PatientListItem> loadAllPatients() throws ServiceException {
 		
@@ -33,6 +40,8 @@ public class PatientServiceImpl implements PatientService {
 		} catch (CommunicationException e) {
 			throw new ServiceException(e.getMessage());
 		}
+		
+		checkBuffer();
 		
 		return new PatientList(xmlResult);
 	}
@@ -59,11 +68,13 @@ public class PatientServiceImpl implements PatientService {
 		}		
 		
 		CdaDocument doc = new CdaDocument(xmlResult);
+		checkBuffer();
+		
 		return new Patient(doc);
 	}
 
 	@Override
-	public int saveNewPatient(Patient patient) throws ServiceException {
+	public void saveNewPatient(Patient patient) throws ServiceException {
 		
 		checkAuthentification();
 		
@@ -73,14 +84,19 @@ public class PatientServiceImpl implements PatientService {
 		String xmlData = doc.asXml();
 		
 		try {
-			return com.putData(urlString, xmlData);
+			code = com.putData(urlString, xmlData);
 		} catch (CommunicationException e) {
 			throw new ServiceException(e.getMessage());
 		}
+		
+		if(code >= 400)
+			putBuffer.add(new String[] {urlString,xmlData});
+		else
+			checkBuffer();
 	}
 
 	@Override
-	public int updateExistingPatient(Patient patient) throws ServiceException {
+	public void updateExistingPatient(Patient patient) throws ServiceException {
 		
 		checkAuthentification();
 		
@@ -94,9 +110,51 @@ public class PatientServiceImpl implements PatientService {
 		String xmlData = doc.asXml();
 		
 		try {
-			return com.postData(urlString, xmlData);
+			code = com.postData(urlString, xmlData);
 		} catch (CommunicationException e) {
 			throw new ServiceException(e.getMessage());
+		}
+		
+		if(code >= 400)
+			postBuffer.add(new String[] {urlString,xmlData});
+		else
+			checkBuffer();
+	}
+	
+	private void checkBuffer() throws ServiceException {
+		
+		if(putBuffer.size() != 0) {
+			
+			Iterator<String[]> it = putBuffer.iterator();
+			
+			int code;
+			String[] temp;
+			
+			while(it.hasNext()) {
+				temp = it.next();
+				try {
+					code = com.putData(temp[0], temp[1]);
+				} catch (CommunicationException e) {
+					throw new ServiceException(e.getMessage());
+				}
+				
+				if(code < 400)
+					it.remove();
+			}
+			
+			it = postBuffer.iterator();
+			
+			while(it.hasNext()) {
+				temp = it.next();
+				try {
+					code = com.postData(temp[0], temp[1]);
+				} catch (CommunicationException e) {
+					throw new ServiceException(e.getMessage());
+				}
+				
+				if(code < 400)
+					it.remove();
+			}
 		}
 	}
 	
@@ -105,6 +163,7 @@ public class PatientServiceImpl implements PatientService {
 	public void setAuthorId(String id) {
 		
 		this.authorId = id;
+		com.setAuthorId(authorId);
 	}
 	
 	@Override

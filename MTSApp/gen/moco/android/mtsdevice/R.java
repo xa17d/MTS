@@ -493,6 +493,7 @@ containing a value of this type.
         public static final int location_client_ulr_inactive_age_unknown=0x7f070013;
         public static final int location_client_ulr_inactive_unknown_restriction=0x7f070014;
         public static final int login=0x7f070077;
+        public static final int logout=0x7f070078;
         public static final int m=0x7f070053;
         public static final int medication=0x7f07006b;
         public static final int mental=0x7f07001c;

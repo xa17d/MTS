@@ -2,6 +2,7 @@ package moco.android.mtsdevice;
 
 import moco.android.mtsdevice.handler.DeviceButtons;
 import moco.android.mtsdevice.handler.Mode;
+import moco.android.mtsdevice.handler.Role;
 import moco.android.mtsdevice.salvage.SalvageListActivity;
 import moco.android.mtsdevice.therapy.TherapyAreaActivity;
 import moco.android.mtsdevice.triage.TriageSelectionActivity;
@@ -28,8 +29,10 @@ public class ModeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mode_selection);
 		
-		if(Mode.getActiveMode() == null || Mode.getActiveMode() == Mode.undef)
+		if(Mode.getActiveMode() == null || Mode.getActiveMode() == Mode.undef) {
 			Mode.setActiveMode(Mode.loggedout);
+			Role.setActiveRole(Role.loggedout);
+		}
 		
 		initComponent();
 		
@@ -60,9 +63,13 @@ public class ModeActivity extends Activity {
 			btnTherapy.setEnabled(false);
 		}
 		else {
-			btnTriage.setEnabled(true);
+			if(Role.getActiveRole() == Role.MD || Role.getActiveRole() == Role.PARAMEDIC) {
+				
+				btnTriage.setEnabled(true);
+				btnTherapy.setEnabled(true);
+			}
+			
 			btnSalvage.setEnabled(true);
-			btnTherapy.setEnabled(true);
 		}
 	}
 	
@@ -89,8 +96,13 @@ public class ModeActivity extends Activity {
 	
 	public void login(View v) {
 		
-		Intent intent = new Intent(this, ScanTagActivity.class);
-		startActivity(intent);
+		if(Mode.getActiveMode() == Mode.loggedout) {
+			Intent intent = new Intent(this, ScanTagActivity.class);
+			startActivity(intent);
+		}
+		else {
+			btnLogin.setText(R.string.logout);
+		}
 	}
 	
 	private void initComponent() {
