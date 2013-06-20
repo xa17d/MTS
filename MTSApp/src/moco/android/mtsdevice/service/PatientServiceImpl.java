@@ -11,6 +11,7 @@ import at.mts.entity.Patient;
 import at.mts.entity.PatientList;
 import at.mts.entity.PatientListItem;
 import at.mts.entity.cda.CdaDocument;
+import at.mts.entity.cda.CdaIdV;
 
 public class PatientServiceImpl implements PatientService {
 	
@@ -18,7 +19,7 @@ public class PatientServiceImpl implements PatientService {
 	
 	private static final String DEFAULT_ADDRESS = "http://88.116.105.228:30104/MtsServer/restApi/patients/";
 	private String mtsUrl;
-	private UUID authorId;
+	private String authorId;
 	
 	@Override
 	public ArrayList<PatientListItem> loadAllPatients() throws ServiceException {
@@ -79,38 +80,29 @@ public class PatientServiceImpl implements PatientService {
 	}
 
 	@Override
-	public void updateExistingPatient(Patient patient) throws ServiceException {
+	public int updateExistingPatient(Patient patient) throws ServiceException {
 		
 		checkAuthentification();
 		
 		String urlString = mtsUrl + patient.getId();
 		
-		patient.setVersion(patient.getVersion() + 1);
+		int oldVersion = patient.getVersion() + 1;
+		patient.setVersion(oldVersion);
 		CdaDocument doc = new CdaDocument(patient);
+		doc.setParentIdV(new CdaIdV(patient.getId(),oldVersion));
 		
 		String xmlData = doc.asXml();
 		
 		try {
-			com.postData(urlString, xmlData);
+			return com.postData(urlString, xmlData);
 		} catch (CommunicationException e) {
 			throw new ServiceException(e.getMessage());
 		}
 	}
 	
-	@Override
-	public void networkConnectionStarted() {
-		
-		//TODO
-	}
 	
 	@Override
-	public void networkConnectionEnded() {
-		
-		//TODO
-	}
-	
-	@Override
-	public void setAuthorId(UUID id) {
+	public void setAuthorId(String id) {
 		
 		this.authorId = id;
 	}
@@ -133,10 +125,8 @@ public class PatientServiceImpl implements PatientService {
 
 	private void checkAuthentification() throws ServiceException {
 
-		/*
 		if(authorId == null)
 			throw new ServiceException("Es muss zuerst der Helfer authentifiziert werden!");
-		*/
 	}
 	
 	

@@ -34,6 +34,7 @@ public class ScanTagActivity extends Activity implements LocationListener {
 	private PatientService service;
 	
 	private Patient selectedPatient;
+	private String scannedString;
 	private UUID scannedId;
 	
 	/**
@@ -100,8 +101,12 @@ public class ScanTagActivity extends Activity implements LocationListener {
 	    if (requestCode == 0) {
 	        if (resultCode == RESULT_OK) {
 	        	
-	        	scannedId = UUID.fromString(intent.getStringExtra("SCAN_RESULT"));	            
-	            tagScanned();
+	        	scannedString = intent.getStringExtra("SCAN_RESULT");
+	        	
+	        	if(Mode.getActiveMode() != Mode.loggedout)
+	        		scannedId = UUID.fromString(scannedString);	            
+	            
+	        	tagScanned();
 	            
 	        }
 	    }
@@ -123,10 +128,8 @@ public class ScanTagActivity extends Activity implements LocationListener {
 			selectedPatient.setId(scannedId);
 			selectedPatient.setGps(locationString);
 			
-			int code = 0;
-			
 			try {
-				code = service.saveNewPatient(selectedPatient);
+				service.saveNewPatient(selectedPatient);
 				Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
 			} catch (ServiceException e) {
 				new AlertDialog.Builder(this) 
@@ -135,17 +138,9 @@ public class ScanTagActivity extends Activity implements LocationListener {
 		        	.show();
 			}
 			
-			if(code != 0)
-				new AlertDialog.Builder(this) 
-		        	.setMessage("" + code)
-		        	.setNeutralButton(R.string.ok, null)
-		        	.show();
-			
-			/*
 			intent = new Intent(this, TriageSelectionActivity.class);
 			startActivity(intent);
 			finish();
-			*/
 		}
 		
 		/**
@@ -194,7 +189,7 @@ public class ScanTagActivity extends Activity implements LocationListener {
 			
 			SelectedPatient.setPatient(selectedPatient);
 			
-			if(/*Area.getActiveArea().matchesCategory(selectedPatient.getCategory()) && */selectedPatient.getTreatment() == Treatment.salvaged) {
+			if(Area.getActiveArea().matchesCategory(selectedPatient.getCategory()) && selectedPatient.getTreatment() == Treatment.salvaged) {
 				intent = new Intent(this, TherapySelectionActivity.class);
 				startActivity(intent);
 				finish();
@@ -204,6 +199,17 @@ public class ScanTagActivity extends Activity implements LocationListener {
 			        	.setMessage(R.string.error_wrong_area)
 			        	.setNeutralButton(R.string.ok, null)
 			        	.show();
+		}
+		
+		/**
+		 * Anmeldung
+		 */
+		if(Mode.getActiveMode() == Mode.loggedout) {
+			
+			service.setAuthorId(scannedString);
+			Mode.setActiveMode(Mode.loggedin);
+			
+			finish();
 		}
 	}
 	

@@ -42,26 +42,17 @@ public interface PatientService {
 	/**
 	 * veraendert die Daten eines bestehenden Patienten am Server
 	 * @param patient bestehender Patient
+	 * @return Response-Code
 	 * @throws ServiceException
 	 */
-	public void updateExistingPatient(Patient patient) throws ServiceException;
-	
-	/**
-	 * neue Netzwerkverbindung wurde gestartet
-	 */
-	public void networkConnectionStarted();
-	
-	/**
-	 * Netzwerkverbindung wurde beendet
-	 */
-	public void networkConnectionEnded();
+	public int updateExistingPatient(Patient patient) throws ServiceException;
 	
 	
 	/**
 	 * setzt den aktuellen Benutzer der Anwendung
 	 * @param id Benutzer-ID
 	 */
-	public void setAuthorId(UUID id);
+	public void setAuthorId(String id);
 	
 	
 	

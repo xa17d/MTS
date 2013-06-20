@@ -38,6 +38,13 @@ public class SalvageListActivity extends Activity implements OnItemClickListener
 		
 		service = PatientServiceImpl.getInstance();
 		
+	}
+	
+	@Override
+	public void onResume() {
+		
+		super.onResume();
+		
 		try {
 			patientList = service.loadAllPatients();
 		} catch (ServiceException e) {

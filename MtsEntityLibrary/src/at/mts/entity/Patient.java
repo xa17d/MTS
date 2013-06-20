@@ -1,5 +1,7 @@
 package at.mts.entity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -367,7 +369,15 @@ public class Patient {
 		if(nameGiven.equals("John") && nameFamily.equals("Doe"))
 			 return RED;
 		
-		if(birthTime != null)
+		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+		Date oldDate = null;
+		try {
+			oldDate = df.parse("01.01.1800");
+		} catch (ParseException e) {
+			//do nothing
+		}
+		
+		if(birthTime.compareTo(oldDate) == 0)
 			 return YELLOW;
 		
 		return GREEN;
@@ -390,7 +400,7 @@ public class Patient {
 	
 	public int getDiagnosisStatusColor() {
 		
-		if(diagnosis.size() == 0)
+		if(diagnosis.size() <= 2)
 			return RED;
 		
 		return GREEN;
@@ -398,7 +408,7 @@ public class Patient {
 	
 	public int getTherapyStatusColor() {
 		
-		if(courseOfTreatment.size() == 0)
+		if(courseOfTreatment.size() <= 1)
 			return -65536;			//RED;
 		
 		if(readyForTransport == false)

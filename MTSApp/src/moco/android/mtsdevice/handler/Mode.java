@@ -2,7 +2,7 @@ package moco.android.mtsdevice.handler;
 
 public enum Mode {
 
-	triage, salvage, therapy, undef;
+	triage, salvage, therapy, loggedout, loggedin, undef;
 	
 	
 	/**
