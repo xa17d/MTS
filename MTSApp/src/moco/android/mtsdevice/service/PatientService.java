@@ -34,18 +34,16 @@ public interface PatientService {
 	/**
 	 * erstellt neuen Patienten am Server
 	 * @param patient neuer Patient
-	 * @return Response-Code
 	 * @throws ServiceException
 	 */
-	public int saveNewPatient(Patient patient) throws ServiceException;
+	public void saveNewPatient(Patient patient) throws ServiceException;
 	
 	/**
 	 * veraendert die Daten eines bestehenden Patienten am Server
 	 * @param patient bestehender Patient
-	 * @return Response-Code
 	 * @throws ServiceException
 	 */
-	public int updateExistingPatient(Patient patient) throws ServiceException;
+	public void updateExistingPatient(Patient patient) throws ServiceException;
 	
 	
 	/**

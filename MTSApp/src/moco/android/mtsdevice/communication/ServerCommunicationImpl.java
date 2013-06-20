@@ -13,8 +13,12 @@ import org.apache.commons.io.IOUtils;
 
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
+import android.util.Base64;
 
 public class ServerCommunicationImpl implements ServerCommunication {
+	
+	private String authorId;
+	private static final String PASSWORD = "moco";
 
 	public String getData(String urlString) throws CommunicationException {
 		
@@ -26,6 +30,9 @@ public class ServerCommunicationImpl implements ServerCommunication {
 			
 			URL url = new URL(urlString);
 			URLConnection con = url.openConnection();
+			
+			String authorisation = Base64.encodeToString((authorId + ":" + PASSWORD).getBytes(), Base64.DEFAULT);
+			con.setRequestProperty("Authorisation", authorisation);
 
 			InputStream in = con.getInputStream();
 			body = IOUtils.toString(in, "UTF-8");
@@ -54,6 +61,9 @@ public class ServerCommunicationImpl implements ServerCommunication {
 			con.setDoInput(true);
 			con.setRequestMethod("PUT");
 			con.setRequestProperty("Content-Type","text/xml");
+			
+			String authorisation = Base64.encodeToString((authorId + ":" + PASSWORD).getBytes(), Base64.DEFAULT);
+			con.setRequestProperty("Authorisation", authorisation);
 			
 			con.connect();
 
@@ -93,6 +103,9 @@ public class ServerCommunicationImpl implements ServerCommunication {
 			con.setRequestMethod("POST");
 			con.setRequestProperty("Content-Type","text/xml");
 			
+			String authorisation = Base64.encodeToString((authorId + ":" + PASSWORD).getBytes(), Base64.DEFAULT);
+			con.setRequestProperty("Authorisation", authorisation);
+			
 			con.connect();
 
 			OutputStreamWriter writer = new OutputStreamWriter(con.getOutputStream());
@@ -113,6 +126,11 @@ public class ServerCommunicationImpl implements ServerCommunication {
 		}
 		
 		return code;
+	}
+	
+	
+	public void setAuthorId(String id) {
+		this.authorId = id;
 	}
 	
 	

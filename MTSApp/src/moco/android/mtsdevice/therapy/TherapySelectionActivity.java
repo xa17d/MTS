@@ -3,6 +3,7 @@ package moco.android.mtsdevice.therapy;
 import moco.android.mtsdevice.R;
 import moco.android.mtsdevice.handler.Area;
 import moco.android.mtsdevice.handler.DeviceButtons;
+import moco.android.mtsdevice.handler.Role;
 import moco.android.mtsdevice.handler.SelectedPatient;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -32,13 +33,18 @@ public class TherapySelectionActivity extends Activity {
 		selectedPatient = SelectedPatient.getPatient();
 		
 		initButtons();
+		
+		if(Role.getActiveRole() != Role.MD) {
+			btnDiagnosis.setEnabled(true);
+			btnTherapy.setEnabled(true);
+		}
 	}
 	
 	@Override
 	public void onResume() {
 		
 		super.onResume();
-				
+			
 		btnPersonalData.setTextColor(selectedPatient.getPersonalDataStatusColor());
 		btnVitalParameter.setTextColor(selectedPatient.getVitalParameterStatusColor());
 		btnDiagnosis.setTextColor(selectedPatient.getDiagnosisStatusColor());

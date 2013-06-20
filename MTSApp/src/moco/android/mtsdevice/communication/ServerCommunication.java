@@ -1,5 +1,7 @@
 package moco.android.mtsdevice.communication;
 
+import java.util.UUID;
+
 public interface ServerCommunication {
 
 	/**
@@ -27,4 +29,10 @@ public interface ServerCommunication {
 	 * @throws CommunicationException
 	 */
 	public int postData(String urlString, String xmlData) throws CommunicationException;
+	
+	/**
+	 * setzt neue Authoren-ID
+	 * @param id ID
+	 */
+	public void setAuthorId(String id);
 }

@@ -79,6 +79,7 @@ public class TherapyImmediateActivity extends Activity {
 					public void onClick(DialogInterface dialog, int which) {
 		
 						selectedPatient.setTreatment(Treatment.transported);
+						selectedPatient.setReadyForTransport(true);
 						Intent intent = new Intent(TherapyImmediateActivity.this, TherapyListActivity.class);
 						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 						
