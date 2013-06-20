@@ -18,7 +18,7 @@ public class PatientServiceImpl implements PatientService {
 	
 	private static final String DEFAULT_ADDRESS = "http://88.116.105.228:30104/MtsServer/restApi/patients/";
 	private String mtsUrl;
-	private UUID authorId;
+	private String authorId;
 	
 	@Override
 	public ArrayList<PatientListItem> loadAllPatients() throws ServiceException {
@@ -97,20 +97,9 @@ public class PatientServiceImpl implements PatientService {
 		}
 	}
 	
-	@Override
-	public void networkConnectionStarted() {
-		
-		//TODO
-	}
 	
 	@Override
-	public void networkConnectionEnded() {
-		
-		//TODO
-	}
-	
-	@Override
-	public void setAuthorId(UUID id) {
+	public void setAuthorId(String id) {
 		
 		this.authorId = id;
 	}
@@ -133,10 +122,8 @@ public class PatientServiceImpl implements PatientService {
 
 	private void checkAuthentification() throws ServiceException {
 
-		/*
 		if(authorId == null)
 			throw new ServiceException("Es muss zuerst der Helfer authentifiziert werden!");
-		*/
 	}
 	
 	
@@ -149,6 +136,9 @@ public class PatientServiceImpl implements PatientService {
 		
 		com = new ServerCommunicationImpl();
 		this.setDefaultMtsServerAddress();
+		
+		//TODO
+		setAuthorId("Dobler;Lucas;1;10c72dc3-317e-4620-bc2f-7605980150ad");
 	}
 	
 	public static PatientService getInstance() {

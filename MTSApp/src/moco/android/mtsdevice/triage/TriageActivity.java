@@ -4,7 +4,6 @@ import moco.android.mtsdevice.R;
 import moco.android.mtsdevice.ScanTagActivity;
 import moco.android.mtsdevice.handler.DeviceButtons;
 import moco.android.mtsdevice.handler.SelectedPatient;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -13,8 +12,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
-import at.mts.entity.*;
+import at.mts.entity.Condition;
+import at.mts.entity.Gender;
+import at.mts.entity.Patient;
+import at.mts.entity.PhaseOfLife;
+import at.mts.entity.Treatment;
+import at.mts.entity.TriageCategory;
 
 
 public class TriageActivity extends Activity {
@@ -45,7 +48,6 @@ public class TriageActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	
-    	//TODO nur zum Testen
     	patient = new Patient();
     	SelectedPatient.setPatient(patient);
     	
