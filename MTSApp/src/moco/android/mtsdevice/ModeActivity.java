@@ -13,8 +13,14 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
+import android.widget.Button;
 
 public class ModeActivity extends Activity {
+	
+	Button btnTriage;
+	Button btnSalvage;
+	Button btnTherapy;
+	Button btnLogin;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -22,7 +28,10 @@ public class ModeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mode_selection);
 		
-		Mode.setActiveMode(Mode.undef);
+		if(Mode.getActiveMode() == null || Mode.getActiveMode() == Mode.undef)
+			Mode.setActiveMode(Mode.loggedout);
+		
+		initComponent();
 		
 		if(!checkGps()) {
 			
@@ -38,6 +47,22 @@ public class ModeActivity extends Activity {
 						}
 					})
 			    	.show();
+		}
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		
+		if(Mode.getActiveMode() == Mode.loggedout) {
+			btnTriage.setEnabled(false);
+			btnSalvage.setEnabled(false);
+			btnTherapy.setEnabled(false);
+		}
+		else {
+			btnTriage.setEnabled(true);
+			btnSalvage.setEnabled(true);
+			btnTherapy.setEnabled(true);
 		}
 	}
 	
@@ -60,6 +85,20 @@ public class ModeActivity extends Activity {
 		Mode.setActiveMode(Mode.therapy);
 		Intent intent = new Intent(this, TherapyAreaActivity.class);
 		startActivity(intent);
+	}
+	
+	public void login(View v) {
+		
+		Intent intent = new Intent(this, ScanTagActivity.class);
+		startActivity(intent);
+	}
+	
+	private void initComponent() {
+		
+		btnTriage = (Button)findViewById(R.id.buttonTriageMode);
+		btnSalvage = (Button)findViewById(R.id.buttonSalvageMode);
+		btnTherapy = (Button)findViewById(R.id.buttonTherapyMode);
+		btnLogin = (Button)findViewById(R.id.buttonLogin);
 	}
 	
 	private boolean checkGps() {

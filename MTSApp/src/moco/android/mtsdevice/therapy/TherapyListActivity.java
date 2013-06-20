@@ -35,6 +35,12 @@ public class TherapyListActivity extends Activity {
 		setContentView(R.layout.therapy_list);
 		
 		service = PatientServiceImpl.getInstance();
+	}
+	
+	@Override
+	public void onResume() {
+		
+		super.onResume();
 		
 		try {
 			patientList = service.loadAllPatients();

@@ -1,5 +1,8 @@
 package moco.android.mtsdevice.therapy;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import moco.android.mtsdevice.R;
 import moco.android.mtsdevice.handler.SelectedPatient;
 import moco.android.mtsdevice.service.PatientService;
@@ -12,6 +15,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import at.mts.entity.Patient;
 
@@ -20,14 +24,17 @@ public class TherapyDiagnosisActivity extends Activity {
 	private PatientService service;
 	private Patient selectedPatient;
 	
-	EditText txtDiagnosisAdd;
+	private EditText txtDiagnosisAdd;
+	private TextView textDiagnosis;
 	
-	RadioGroup radioUrgency;
-	RadioButton r1;
-	RadioButton r2;
-	RadioButton r3;
-	RadioButton r4;
-	RadioButton r5;
+	private RadioGroup radioUrgency;
+	private RadioButton r1;
+	private RadioButton r2;
+	private RadioButton r3;
+	private RadioButton r4;
+	private RadioButton r5;
+	
+	private SimpleDateFormat df = new SimpleDateFormat("HH:mm");
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -46,8 +53,14 @@ public class TherapyDiagnosisActivity extends Activity {
 		r3 = (RadioButton)findViewById(R.id.radio3);
 		r4 = (RadioButton)findViewById(R.id.radio4);
 		r5 = (RadioButton)findViewById(R.id.radio5);
+		
+		textDiagnosis = (TextView)findViewById(R.id.textViewDiagnosisList);
+		
+		refreshDiagnosis();
 
-		if(selectedPatient.getUrgency() == 1)
+		if(selectedPatient.getUrgency() == null)
+			r3.setSelected(true);
+		else if(selectedPatient.getUrgency() == 1)
 			r1.setSelected(true);
 		else if(selectedPatient.getUrgency() == 2)
 			r2.setSelected(true);
@@ -64,14 +77,15 @@ public class TherapyDiagnosisActivity extends Activity {
 	public void addDiagnosis(View v) {
 		
 		if(!txtDiagnosisAdd.getText().equals(""))
-			selectedPatient.addDiagnosis(String.valueOf(txtDiagnosisAdd.getText()));
+			selectedPatient.addDiagnosis(String.valueOf(txtDiagnosisAdd.getText()) + " - " + df.format(new Date()));
 		
-		RadioButton checkedRadioButton = (RadioButton)radioUrgency.findViewById(radioUrgency.getCheckedRadioButtonId());
-		
-		selectedPatient.setUrgency(Integer.getInteger(String.valueOf(checkedRadioButton.getText().charAt(0))));
+		refreshDiagnosis();
 	}
 	
 	public void save(View v) {
+		
+		RadioButton checkedRadioButton = (RadioButton)radioUrgency.findViewById(radioUrgency.getCheckedRadioButtonId());
+		selectedPatient.setUrgency(Integer.getInteger(String.valueOf(checkedRadioButton.getText().charAt(0))));
 		
 		try {
 			service.updateExistingPatient(selectedPatient);
@@ -84,6 +98,11 @@ public class TherapyDiagnosisActivity extends Activity {
 		}
 		
 		finish();
+	}
+	
+	private void refreshDiagnosis() {
+		
+		textDiagnosis.setText(selectedPatient.getDiagnosisString());
 	}
 	
 	@Override

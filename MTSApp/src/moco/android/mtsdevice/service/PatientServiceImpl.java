@@ -11,6 +11,7 @@ import at.mts.entity.Patient;
 import at.mts.entity.PatientList;
 import at.mts.entity.PatientListItem;
 import at.mts.entity.cda.CdaDocument;
+import at.mts.entity.cda.CdaIdV;
 
 public class PatientServiceImpl implements PatientService {
 	
@@ -79,19 +80,21 @@ public class PatientServiceImpl implements PatientService {
 	}
 
 	@Override
-	public void updateExistingPatient(Patient patient) throws ServiceException {
+	public int updateExistingPatient(Patient patient) throws ServiceException {
 		
 		checkAuthentification();
 		
 		String urlString = mtsUrl + patient.getId();
 		
-		patient.setVersion(patient.getVersion() + 1);
+		int oldVersion = patient.getVersion() + 1;
+		patient.setVersion(oldVersion);
 		CdaDocument doc = new CdaDocument(patient);
+		doc.setParentIdV(new CdaIdV(patient.getId(),oldVersion));
 		
 		String xmlData = doc.asXml();
 		
 		try {
-			com.postData(urlString, xmlData);
+			return com.postData(urlString, xmlData);
 		} catch (CommunicationException e) {
 			throw new ServiceException(e.getMessage());
 		}
@@ -136,9 +139,6 @@ public class PatientServiceImpl implements PatientService {
 		
 		com = new ServerCommunicationImpl();
 		this.setDefaultMtsServerAddress();
-		
-		//TODO
-		setAuthorId("Dobler;Lucas;1;10c72dc3-317e-4620-bc2f-7605980150ad");
 	}
 	
 	public static PatientService getInstance() {

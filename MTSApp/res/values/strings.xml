@@ -99,4 +99,5 @@
     <string name="go_for_doctor_tomorrow">muss morgen Arzt aufsuchen</string>
     <string name="let_go">Entlassen</string>
     <string name="psychologist">sollte in psychologische Betreuung</string>
+    <string name="login">Anmelden</string>
 </resources>

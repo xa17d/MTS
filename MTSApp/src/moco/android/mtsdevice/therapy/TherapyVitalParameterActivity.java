@@ -74,15 +74,10 @@ public class TherapyVitalParameterActivity extends Activity {
 			
 			if(textPulse.getText() != null)
 				selectedPatient.setPulse(Integer.valueOf(textPulse.getText().toString()));
-			
-			//TODO Oxygen
-			
+				
 		} catch(NumberFormatException ex) {
 			
-			new AlertDialog.Builder(this)
-		    		.setMessage(R.string.error)
-		    		.setNeutralButton(R.string.ok, null)
-		    		.show();
+			//impossible
 		}
 		
 		try {
@@ -118,8 +113,6 @@ public class TherapyVitalParameterActivity extends Activity {
 		
 		if(selectedPatient.getPulse() != null)
 			textPulse.setText(String.valueOf(selectedPatient.getPulse()));
-		
-		//TODO Oxygen
 	}
 	
 	
