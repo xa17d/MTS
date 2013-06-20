@@ -1,7 +1,9 @@
 package moco.android.mtsdevice.therapy;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import moco.android.mtsdevice.R;
@@ -29,8 +31,6 @@ public class TherapyPersonalDataActivity extends FragmentActivity {
 	private EditText txtFirstname;
 	private EditText txtLastname;
 	private EditText txtBirthdate;
-	private EditText txtStreet;
-	private EditText txtCity;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -59,9 +59,6 @@ public class TherapyPersonalDataActivity extends FragmentActivity {
 		if(!txtFirstname.getText().equals(""))
 			selectedPatient.setNameFamily(txtLastname.getText().toString());
 		
-		//TODO Adresse
-		
-		
 		try {
 			service.updateExistingPatient(selectedPatient);
 			Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
@@ -80,13 +77,17 @@ public class TherapyPersonalDataActivity extends FragmentActivity {
 		txtFirstname = (EditText)findViewById(R.id.personalDataFirstname);
 		txtLastname = (EditText)findViewById(R.id.personalDataLastname);
 		txtBirthdate = (EditText)findViewById(R.id.personalDataBirthdate);
-		txtStreet = (EditText)findViewById(R.id.personalDataStreet);
-		txtCity = (EditText)findViewById(R.id.personalDataCity);
 	}
 	
 	private void loadData() {
 		
 		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+		Date oldDate = null;
+		try {
+			oldDate = df.parse("01.01.1800");
+		} catch (ParseException e) {
+			//do nothing
+		}
 		
 		if(!selectedPatient.getNameGiven().equals("John"))
 			txtFirstname.setText(selectedPatient.getNameGiven());
@@ -94,10 +95,8 @@ public class TherapyPersonalDataActivity extends FragmentActivity {
 		if(!selectedPatient.getNameFamily().equals("Doe"))
 			txtLastname.setText(selectedPatient.getNameFamily());
 		
-		if(selectedPatient.getBirthTime() != null)
+		if(selectedPatient.getBirthTime().compareTo(oldDate) != 0)
 			txtBirthdate.setText(df.format(selectedPatient.getBirthTime()));
-		
-		//TODO Adresse
 	}
 	
 	

@@ -54,7 +54,7 @@
     <string name="activate_gps">Damit die Patienten-Ortung genau ist, muss GPS aktiviert sein\nGPS jetzt aktivieren?</string>
     <string name="i">i</string>
     <string name="error_gps">Es gabe einen Fehler beim Speichern der GPS-Koordinaten</string>
-    <string name="vital_parameter">Vitalwerte</string>
+    <string name="vital_parameter">Untersuchung</string>
     <string name="diagnosis">Diagnose</string>
     <string name="personal_data">Stammdaten</string>
     <string name="therapy">Behandlung</string>
@@ -95,4 +95,8 @@
     <string name="sure_ready_transport">Sind Sie sicher, dass der Patient fertig zum Abtransport ist?</string>
     <string name="patient_already_registered">Der gewählte Patient wurde bereits registriert!</string>
     <string name="patient_put">Patient ablegen</string>
+    <string name="send_to_hospital">ins Krankenhaus einweisen</string>
+    <string name="go_for_doctor_tomorrow">muss morgen Arzt aufsuchen</string>
+    <string name="let_go">Entlassen</string>
+    <string name="psychologist">sollte in psychologische Betreuung</string>
 </resources>

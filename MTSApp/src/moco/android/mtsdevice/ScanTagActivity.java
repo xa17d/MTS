@@ -119,44 +119,33 @@ public class ScanTagActivity extends Activity implements LocationListener {
 		 */
 		if(Mode.getActiveMode() == Mode.triage) {
 			
-			Patient errorLoad = null;
+			selectedPatient = SelectedPatient.getPatient();
+			selectedPatient.setId(scannedId);
+			selectedPatient.setGps(locationString);
 			
-			/*
+			int code = 0;
+			
 			try {
-				errorLoad = service.loadPatientById(scannedId);
+				code = service.saveNewPatient(selectedPatient);
+				Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
 			} catch (ServiceException e) {
 				new AlertDialog.Builder(this) 
-			        	.setMessage(R.string.error_save_data)
-			        	.setNeutralButton(R.string.ok, null)
-			        	.show();
+		        	.setMessage(R.string.error_save_data)
+		        	.setNeutralButton(R.string.ok, null)
+		        	.show();
 			}
-			*/
 			
-			if(errorLoad == null) {
-			
-				selectedPatient = SelectedPatient.getPatient();
-				selectedPatient.setId(scannedId);
-				selectedPatient.setGps(locationString);
-				
-				try {
-					service.saveNewPatient(selectedPatient);
-					Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
-				} catch (ServiceException e) {
-					new AlertDialog.Builder(this) 
-			        	.setMessage(R.string.error_save_data)
-			        	.setNeutralButton(R.string.ok, null)
-			        	.show();
-				}
-				
-				intent = new Intent(this, TriageSelectionActivity.class);
-				startActivity(intent);
-				finish();
-			}
-			else
+			if(code != 0)
 				new AlertDialog.Builder(this) 
-			        	.setMessage(R.string.patient_already_registered)
-			        	.setNeutralButton(R.string.ok, null)
-			        	.show();
+		        	.setMessage("" + code)
+		        	.setNeutralButton(R.string.ok, null)
+		        	.show();
+			
+			/*
+			intent = new Intent(this, TriageSelectionActivity.class);
+			startActivity(intent);
+			finish();
+			*/
 		}
 		
 		/**
@@ -205,7 +194,7 @@ public class ScanTagActivity extends Activity implements LocationListener {
 			
 			SelectedPatient.setPatient(selectedPatient);
 			
-			if(Area.getActiveArea().matchesCategory(selectedPatient.getCategory()) && selectedPatient.getTreatment() == Treatment.salvaged) {
+			if(/*Area.getActiveArea().matchesCategory(selectedPatient.getCategory()) && */selectedPatient.getTreatment() == Treatment.salvaged) {
 				intent = new Intent(this, TherapySelectionActivity.class);
 				startActivity(intent);
 				finish();
@@ -252,7 +241,7 @@ public class ScanTagActivity extends Activity implements LocationListener {
 	@Override
 	public void onLocationChanged(Location location) {
 
-		locationString = String.valueOf(location.getLatitude()) + "; " + String.valueOf(location.getLongitude()) + "; " + String.valueOf(location.getAccuracy());
+		locationString = String.valueOf(location.getLatitude()) + "," + String.valueOf(location.getLongitude()) + "," + String.valueOf(location.getAccuracy());
 	}
 	
 	@Override

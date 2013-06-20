@@ -21,16 +21,39 @@
             android:layout_height="wrap_content"
             android:text="@string/therapy"
             android:textAppearance="?android:attr/textAppearanceLarge" />
+
+	    <TextView
+	        android:id="@+id/textView1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text=""
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+	    <Button
+	        android:id="@+id/buttonHospital"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:text="@string/send_to_hospital" />
+
+	    <Button
+	        android:id="@+id/buttonDoctor"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:text="@string/go_for_doctor_tomorrow" />
+	    
+	    <Button
+	        android:id="@+id/buttonPsychologist"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:text="@string/psychologist" />
+
+	    <Button
+	        android:id="@+id/buttonLetGo"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:onClick="setTherapy"
+	        android:text="@string/let_go" />
 	    
     </LinearLayout>
-    
-    
-    <Button
-        android:id="@+id/saveTherapyIm"
-        android:layout_column="0"
-        android:layout_gravity="right|bottom"
-        android:layout_row="0"
-        android:onClick="save"
-        android:text="@string/save" />
     
 </GridLayout>

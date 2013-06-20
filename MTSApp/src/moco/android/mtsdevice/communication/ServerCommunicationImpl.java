@@ -9,11 +9,8 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import moco.android.mtsdevice.service.PatientService;
-
 import org.apache.commons.io.IOUtils;
 
-import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 
@@ -80,9 +77,46 @@ public class ServerCommunicationImpl implements ServerCommunication {
 		return code;
 	}
 	
+	public int postData(String urlString, String xmlData) throws CommunicationException {
+		
+		resetPolicy();
+		
+		int code = -1;
+		
+		try {
+			
+			URL url = new URL(urlString);
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
+			con.setDoOutput(true);
+			con.setDoInput(true);
+			con.setRequestMethod("POST");
+			con.setRequestProperty("Content-Type","text/xml");
+			
+			con.connect();
+
+			OutputStreamWriter writer = new OutputStreamWriter(con.getOutputStream());
+			
+			writer.append(xmlData);
+			writer.flush();
+			
+			code = con.getResponseCode();
+			
+			writer.close();
+			
+		} catch (MalformedURLException e1) {
+			throw new CommunicationException(e1.getMessage());
+		} catch (ProtocolException e2) {
+			throw new CommunicationException(e2.getMessage());
+		} catch (IOException e3) {
+			throw new CommunicationException(e3.getMessage());
+		}
+		
+		return code;
+	}
+	
 	
 	/**
-	 * TODO
 	 * aendert Thread-Policy, sodass im Main-Thread auf den Server zugegriffen werden kann
 	 */
 	private void resetPolicy() {

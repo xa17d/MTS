@@ -26,6 +26,18 @@ public enum Area {
 			 return -256;			//YELLOW
 		 return -16711936;			//GREEN
 	}
+	
+	public static Area getAreaToCategory(TriageCategory category) {
+		
+		if(category == TriageCategory.deceased)
+			return IV;
+		if(category == TriageCategory.immediate)
+			return I;
+		if(category == TriageCategory.delayed)
+			return II;
+		else
+			return III;
+	}
 
 	public boolean matchesCategory(TriageCategory category) {
 		

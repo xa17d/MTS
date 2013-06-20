@@ -192,6 +192,7 @@ public class TriageActivity extends Activity {
 			patient.setTreatment(Treatment.salvaged);
 			
 			patient.setWalkable(true);
+			patient.setUrgency(1);
 			patient.setRespiration(Condition.stable);
 			patient.setPerfusion(Condition.stable);
 			patient.setMentalStatus(Condition.stable);
@@ -204,7 +205,7 @@ public class TriageActivity extends Activity {
 			respirationYes.setEnabled(true);
 			respirationNo.setEnabled(true);
 			
-			patient.setWalkable(true);
+			patient.setWalkable(false);
 		}
 		
 		walkYes.setEnabled(false);
@@ -230,6 +231,7 @@ public class TriageActivity extends Activity {
 			
 			category = TriageCategory.deceased;
 			patient.setCategory(category);
+			patient.setUrgency(1);
 			
 			patient.setRespiration(Condition.critical);
 			patient.setPerfusion(Condition.critical);
@@ -268,6 +270,7 @@ public class TriageActivity extends Activity {
 			
 			category = TriageCategory.immediate;
 			patient.setCategory(category);
+			patient.setUrgency(5);
 			
 			patient.setRespiration(Condition.critical);
 			patient.setPerfusion(Condition.critical);
@@ -305,6 +308,7 @@ public class TriageActivity extends Activity {
 			
 			category = TriageCategory.immediate;
 			patient.setCategory(category);
+			patient.setUrgency(4);
 			
 			patient.setPerfusion(Condition.critical);
 			patient.setMentalStatus(Condition.critical);
@@ -340,6 +344,7 @@ public class TriageActivity extends Activity {
 			
 			category = TriageCategory.immediate;
 			patient.setCategory(category);
+			patient.setUrgency(3);
 			
 			patient.setMentalStatus(Condition.critical);
 		}
@@ -350,6 +355,7 @@ public class TriageActivity extends Activity {
 			mentalStable.setBackgroundColor(Color.GREEN);
 			category = TriageCategory.delayed;
 			patient.setCategory(category);
+			patient.setUrgency(2);
 			
 			patient.setMentalStatus(Condition.stable);
 		}
