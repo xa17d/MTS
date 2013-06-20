@@ -59,7 +59,8 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 			" v.Gps, " +
 			" v.Diagnosis, " +
 			" v.CourseOfTreatment, " +
-			" v.Id " +
+			" v.Id, " +
+			" v.Author " +
 			"FROM Patient p JOIN PatientVersion v on p.id = v.Patient ";
 	
 	/**
@@ -97,8 +98,9 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 			" Timestamp," +
 			" Gps," +
 			" Diagnosis," +
-			" CourseOfTreatment" +
-			") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			" CourseOfTreatment," +
+			" Author" +
+			") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	
 	private static final String sqlInsertPatient = "INSERT INTO Patient (guid, version) VALUES (?, ?)";
 	
@@ -421,8 +423,20 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 		p.setGps((String)r.getObject(24));
 		p.setDiagnosis((String)r.getObject(25));
 		p.setCourseOfTreatment((String)r.getObject(26));
-		
 		int patientVersionId = r.getInt(27);
+		String author = ((String)r.getObject(28));
+		if (author == null) {
+			p.setAuthorId(UUID.fromString("00000000-0000-0000-0000-000000000000"));
+			p.setAuthorNameFamily("");
+			p.setAuthorNameGiven("");
+		}
+		else {
+			String[] authorData = author.split(";");
+			p.setAuthorId(UUID.fromString(authorData[2]));
+			p.setAuthorNameFamily(authorData[0]);
+			p.setAuthorNameGiven(authorData[1]);
+		}
+		
 		p.setBodyparts(bodypartsById(patientVersionId));
 		
 		return p;
@@ -502,8 +516,13 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 		statementSetEnum(s, 22, p.getCategory());
 		statementSetDate(s, 23, p.getTimestamp());
 		statementSetVarchar(s, 24, p.getGps());
-		statementSetLongVarchar(s, 25, p.getDiagnosis());
-		statementSetLongVarchar(s, 26, p.getCourseOfTreatment());
+		statementSetLongVarchar(s, 25, p.getDiagnosisString());
+		statementSetLongVarchar(s, 26, p.getCourseOfTreatmentString());
+		String author;
+		if (p.getAuthorId() != null) {
+			author = p.getAuthorNameFamily() + ";" + p.getAuthorNameGiven() + ";" + p.getAuthorId().toString();
+		} else { author = ";;00000000-0000-0000-0000-000000000000"; }
+		statementSetLongVarchar(s, 27, author);
 	}
 	
 	private void insertBodyParts(Bodyparts bodyparts, int patientVersionId) throws SQLException {

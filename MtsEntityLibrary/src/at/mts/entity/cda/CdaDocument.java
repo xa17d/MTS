@@ -60,7 +60,11 @@ public class CdaDocument {
         setPatientGender(patient.getGender());
         setPatientBirthTime(patient.getBirthTime());
         
-        setParentIdV(null);  //??
+        setAuthorNameFamily(patient.getAuthorNameFamily());
+        setAuthorNameGiven(patient.getAuthorNameGiven());
+        setAuthorId(patient.getAuthorId());
+        
+        setParentIdV(new CdaIdV(patient.getId(), patient.getVersion()));  //??
         setDocumentDate(patient.getTimestamp());
         
         //#############--BODY--#############*/
@@ -173,7 +177,7 @@ public class CdaDocument {
 	        
 		} 
 		catch (Exception e) {
-			e.printStackTrace();
+			throw new IllegalArgumentException("xml is invalid", e);
 		}
 	}
 	
@@ -265,7 +269,6 @@ public class CdaDocument {
 	        root.getChild("id", NS).setAttribute("extension", getIdV().getId().toString());
 	        root.getChild("versionNumber", NS).setAttribute("value", Integer.toString(getIdV().getVersion()));
 	        
-	        Element relatedDocument = root.getChild("relatedDocument", NS);
 	        if (getParentIdV() == null) {
 	        	root.getChild("relatedDocument", NS).getChild("parentDocument", NS).getChild("id", NS).setAttribute("extension", getIdV().getId().toString());
 		        root.getChild("relatedDocument", NS).getChild("parentDocument", NS).getChild("versionNumber", NS).setAttribute("value", Integer.toString(getIdV().getVersion()));	
@@ -384,7 +387,7 @@ public class CdaDocument {
 	        xml = doc.asXml().replaceAll("&lt;br /&gt;", "<br />");
 		}
     	catch (Exception e) {
-			e.printStackTrace();
+			throw new IllegalStateException("invalid state to create xml", e);
 		}
 		
 		return xml;
@@ -510,7 +513,7 @@ public class CdaDocument {
 	 * Setzt den Nachnamen des Authors im Header
 	 * @param name neuer Name
 	 */
-	private void setAuthorNameFamily(String name){
+	public void setAuthorNameFamily(String name){
 		authorNameFamily=name;
 	}
 
@@ -526,7 +529,7 @@ public class CdaDocument {
 	 * Setzt den Vornamen des Authors im Header
 	 * @param name neuer Name
 	 */
-	private void setAuthorNameGiven(String name){
+	public void setAuthorNameGiven(String name){
 		authorNameGiven=name;
 	}
 	

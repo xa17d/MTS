@@ -94,8 +94,8 @@ public class PatientServiceImpl implements PatientService {
 		r.setHealthInsurance(merge(base.getHealthInsurance(), update1.getHealthInsurance(), update2.getHealthInsurance()));
 		r.setTreatment(merge(base.getTreatment(), update1.getTreatment(), update2.getTreatment()));
 		
-		r.setDiagnosis(stringMerge(base.getDiagnosis(), update1.getDiagnosis(), update2.getDiagnosis()));
-		r.setCourseOfTreatment(stringMerge(base.getCourseOfTreatment(), update1.getCourseOfTreatment(), update2.getCourseOfTreatment()));
+		r.setDiagnosis(stringMerge(base.getDiagnosisString(), update1.getDiagnosisString(), update2.getDiagnosisString()));
+		r.setCourseOfTreatment(stringMerge(base.getCourseOfTreatmentString(), update1.getCourseOfTreatmentString(), update2.getCourseOfTreatmentString()));
 		
 		for (String bodyPartKey : Bodyparts.Keys) {
 			String m1 = base.getBodyparts().get(bodyPartKey);
@@ -189,6 +189,11 @@ public class PatientServiceImpl implements PatientService {
 				}
 				
 				Patient mergedUpdate = mergePatient(base, update1, update2);
+				
+				mergedUpdate.setAuthorId(patientUpdate.getAuthorId());
+				mergedUpdate.setAuthorNameFamily(patientUpdate.getAuthorNameFamily());
+				mergedUpdate.setAuthorNameGiven(patientUpdate.getAuthorNameGiven());
+				
 				patientDao.update(mergedUpdate);
 			}
 

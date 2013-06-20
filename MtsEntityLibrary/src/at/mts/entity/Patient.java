@@ -24,7 +24,11 @@ public class Patient {
 		setNameGiven(document.getPatientNameGiven());
 		setNameFamily(document.getPatientNameFamily());
 		setBirthTime(document.getPatientBirthTime());
-		setGender(document.getPatientGender());        
+		setGender(document.getPatientGender());      
+		
+		setAuthorId(document.getAuthorId());
+		setAuthorNameFamily(document.getAuthorNameFamily());
+		setAuthorNameGiven(document.getAuthorNameGiven());
 		
 		setWalkable(CdaBoolean.getValueOf(document.getBody().get("gehfaehigkeit")));
 		
@@ -82,6 +86,10 @@ public class Patient {
 		
 		setNameGiven("John");
 		setNameFamily("Doe");
+		
+		setAuthorNameFamily("");
+		setAuthorNameGiven("");
+		setAuthorId(UUID.fromString("00000000-0000-0000-0000-000000000000"));
 	}
 	
 	/**
@@ -294,6 +302,24 @@ public class Patient {
 	public Treatment getTreatment() { return treatment; }
 	public void setTreatment(Treatment value) { this.treatment = value; }
 	
+	private String authorNameFamily;
+	public String getAuthorNameFamily(){  return authorNameFamily;  }
+	public void setAuthorNameFamily(String name){
+		authorNameFamily=name;
+	}
+
+	private String authorNameGiven;
+	public String getAuthorNameGiven(){  return authorNameGiven;  }
+	public void setAuthorNameGiven(String name){
+		authorNameGiven=name;
+	}
+	
+	private UUID authorId;
+	public UUID getAuthorId(){  return authorId;  }
+	public void setAuthorId(UUID value){
+		authorId = value;
+	}
+		
 	private Bodyparts bodyparts = new Bodyparts();
 	public Bodyparts getBodyparts() { return bodyparts; }
 	public void setBodyparts(Bodyparts value) { this.bodyparts = value; }
