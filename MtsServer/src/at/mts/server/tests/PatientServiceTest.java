@@ -2,10 +2,6 @@ package at.mts.server.tests;
 
 import static org.junit.Assert.*;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Date;
 import java.util.UUID;
 
@@ -28,7 +24,6 @@ import at.mts.server.persistence.PatientDao;
 import at.mts.server.persistence.PatientDaoJdbc;
 import at.mts.server.service.PatientService;
 import at.mts.server.service.PatientServiceImpl;
-import at.mts.server.service.ServiceException;
 
 public class PatientServiceTest {
 
@@ -76,34 +71,6 @@ public class PatientServiceTest {
 		
 		p.getBodyparts().set(Bodyparts.FRONT_HEAD, "nix im Kopf");
 		p.getBodyparts().set(Bodyparts.BACK_L_FOOT, "aua am Fuss");
-		
-		return p;
-	}
-	
-	private Patient createPatient2() {
-		Patient p = new Patient();
-		
-		p.setBirthTime(new Date());
-		p.setBloodPressureSystolic(130);
-		p.setBloodPressureDiastolic(90);
-		p.setCategory(TriageCategory.immediate);
-		p.setCourseOfTreatment("kuehlung");
-		p.setDiagnosis("prellung");
-		p.setGender(Gender.female);
-		p.setGps("kA");
-		p.setHealthInsurance("privatVS");
-		p.setHospital("BKH");
-		p.setMentalStatus(Condition.critical);
-		p.setNameFamily("Fam2");
-		p.setNameGiven("Giv2");
-		p.setPerfusion(Condition.stable);
-		p.setTreatment(Treatment.salvaged);
-		p.setUrgency(2);
-		p.setVersion(1);
-		p.setWalkable(true);
-		
-		p.getBodyparts().set(Bodyparts.FRONT_HEAD, "kleiner schnitt");
-		p.getBodyparts().set(Bodyparts.BACK_L_UPPERARM, "prellung");
 		
 		return p;
 	}

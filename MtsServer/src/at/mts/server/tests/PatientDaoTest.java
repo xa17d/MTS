@@ -77,12 +77,4 @@ public class PatientDaoTest {
 		assertTrue(Math.abs(fromDao.getBirthTime().getTime() - new Date(50,2,3).getTime()) < 24*60*60*1000);
 		assertTrue(fromDao.getCategory().equals(TriageCategory.deceased));
 	}
-
-	
-	@Test
-	public void get() throws PersistenceException {
-		Patient p = patientDao.findByIdV(UUID.fromString("ec73f7da-7941-4c45-bd78-ec1fc16df445"), 6);
-	}
-
-	
 }
