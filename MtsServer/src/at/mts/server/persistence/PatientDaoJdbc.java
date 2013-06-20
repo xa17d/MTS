@@ -219,14 +219,14 @@ public class PatientDaoJdbc extends GenericDaoJdbc implements PatientDao {
 	@Override
 	public void update(final Patient patient) throws PersistenceException {
 
-		if (patient == null) {
-			throw new PersistenceArgumentException("Patient darf nicht null sein", null);
-		}
+		if (patient == null) { throw new PersistenceArgumentException("Patient darf nicht null sein", null); }
+		if (patient.getId() == null) { throw new PersistenceArgumentException("Patient muss eine ID haben", null); }
 
 		PreparedStatement p = null;
 		try {
 			
 			p = connection.prepareStatement("SELECT id, version FROM Patient WHERE guid = ?");
+			
 			String guidString = patient.getId().toString();
 			p.setString(1, guidString);
 			

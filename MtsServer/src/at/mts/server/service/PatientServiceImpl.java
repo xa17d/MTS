@@ -171,9 +171,9 @@ public class PatientServiceImpl implements PatientService {
 				else {
 					base = patientDao.findById(cda.getPatientId());
 				}
-				
-				if (base == null) { // wenn es kein Parent gibt: leer Patient als Parent
-					base = new Patient();
+
+				if (base == null) { // wenn es kein Parent gibt: aktuelle DB Version als Basis
+					base = patientDb;
 				}
 				
 				Patient update1;

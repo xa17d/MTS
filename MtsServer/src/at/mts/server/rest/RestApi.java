@@ -21,6 +21,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import at.mts.entity.Patient;
 import at.mts.entity.PatientList;
@@ -46,25 +47,6 @@ public class RestApi {
 	
 	private Server server = Server.getInstance();
 	private PatientService patientService = Server.getInstance().getPatientService();
-	
-	private void authentificate() {
-		/*
-		String authHeader = request.getHeader("authorization");
-		if (authHeader != null) {
-			String encodedValue = authHeader.split(" ")[1];
-			String decodedValue = Base64.base64Decode(encodedValue);
-			System.out.println(decodedValue);
-		}
-		else {
-			try {
-				response.sendError(403, "nicht authorisiert!");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		*/
-	}
 
 	private UUID parseId(String id) throws IOException {
 		try {
@@ -88,19 +70,19 @@ public class RestApi {
 	
 	@PUT
 	@Path("patients/{id}")
-	@Produces(MediaType.TEXT_XML)
+	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.TEXT_XML)
-	public void putPatient(@PathParam("id") String id,
+	public Response putPatient(@PathParam("id") String id,
 			String document) throws IOException {
-		authentificate();
 	    
-		LOG.info("PUT patients/{id}");
+		LOG.info("PUT patients/"+id);
 		
 		try {
 			patientService.update(new CdaDocument(document), new Date());
-		} catch (ServiceException e) {
+			return Response.ok("Patient angelegt").build();
+		} catch (Exception e) {
 			LOG.error("error", e);
-			response.sendError(404, "Service Error: "+e.getMessage());
+			return Response.status(404).entity("Service Error: "+e.getMessage()).build();
 		}
 	}
 	
@@ -108,15 +90,13 @@ public class RestApi {
 	
 	@POST
 	@Path("patients/{id}")
-	@Produces(MediaType.TEXT_XML)
+	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.TEXT_XML)
-	public void postPatient(@PathParam("id") String id,
+	public Response postPatient(@PathParam("id") String id,
 			@HeaderParam("timestamp") String timestamp,
 			String document) throws IOException {
-		
-		authentificate();
-		
-		LOG.info("POST patients/{id}");
+
+		LOG.info("POST patients/"+id);
 		
 		try {			
 			Date timestampDate;
@@ -124,9 +104,10 @@ public class RestApi {
 			else { timestampDate = parseTimestamp(timestamp); }
 			
 			patientService.update(new CdaDocument(document), timestampDate);
-		} catch (ServiceException e) {
+			return Response.ok("Patient aktualisiert").build();
+		} catch (Exception e) {
 			LOG.error("error", e);
-			response.sendError(404, "Service Error: "+e.getMessage());
+			return Response.status(404).entity("Service Error: "+e.getMessage()).build();
 		}
 	}
 	
@@ -137,9 +118,7 @@ public class RestApi {
 			@QueryParam("version") Integer version,
 			@Context HttpServletRequest servletRequest) throws IOException {
 		
-		authentificate();
-		
-		LOG.info("GET patients/{id}");
+		LOG.info("GET patients/"+id);
 		
 		Patient p = null;
 		
@@ -150,7 +129,7 @@ public class RestApi {
 				p = patientService.findByIdV(parseId(id), version);
 			}
 
-		} catch (ServiceException e) {
+		} catch (Exception e) {
 			LOG.error("error", e);
 			response.sendError(404, "Service Error: "+e.getMessage());
 		}
@@ -175,8 +154,6 @@ public class RestApi {
 			@QueryParam("behandlung") String behandlung,
 			@Context HttpServletRequest servletRequest) throws IOException {
 		
-		authentificate();
-		
 		LOG.info("GET patients");
 		
 		try {
@@ -194,7 +171,7 @@ public class RestApi {
 			
 			return patientList.asXml();
 			
-		} catch (ServiceException e) {
+		} catch (Exception e) {
 			LOG.error("error", e);
 			response.sendError(404, e.getMessage());
 			return "";
@@ -237,11 +214,9 @@ public class RestApi {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String clear(@Context HttpServletRequest servletRequest) {
 		
-		authentificate();
-		
 		try {
 			patientService.clear();
-		} catch (ServiceException e) {
+		} catch (Exception e) {
 			return e.getMessage();
 		}
 		return "cleared "+new Date().toString(); 
