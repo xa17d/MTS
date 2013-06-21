@@ -31,8 +31,8 @@ public class ServerCommunicationImpl implements ServerCommunication {
 			URL url = new URL(urlString);
 			URLConnection con = url.openConnection();
 			
-			String authorisation = Base64.encodeToString((authorId + ":" + PASSWORD).getBytes(), Base64.DEFAULT);
-			con.setRequestProperty("Authorisation", authorisation);
+			String authorisation = "Basic " + Base64.encodeToString((authorId + ":" + PASSWORD).getBytes(), Base64.DEFAULT);
+			con.setRequestProperty("Authorization", authorisation);
 
 			InputStream in = con.getInputStream();
 			body = IOUtils.toString(in, "UTF-8");
@@ -62,8 +62,8 @@ public class ServerCommunicationImpl implements ServerCommunication {
 			con.setRequestMethod("PUT");
 			con.setRequestProperty("Content-Type","text/xml");
 			
-			String authorisation = Base64.encodeToString((authorId + ":" + PASSWORD).getBytes(), Base64.DEFAULT);
-			con.setRequestProperty("Authorisation", authorisation);
+			String authorisation = "Basic " + Base64.encodeToString((authorId + ":" + PASSWORD).getBytes(), Base64.DEFAULT);
+			con.setRequestProperty("Authorization", authorisation);
 			
 			con.connect();
 
@@ -103,8 +103,8 @@ public class ServerCommunicationImpl implements ServerCommunication {
 			con.setRequestMethod("POST");
 			con.setRequestProperty("Content-Type","text/xml");
 			
-			String authorisation = Base64.encodeToString((authorId + ":" + PASSWORD).getBytes(), Base64.DEFAULT);
-			con.setRequestProperty("Authorisation", authorisation);
+			String authorisation = "Basic " + Base64.encodeToString((authorId + ":" + PASSWORD).getBytes(), Base64.DEFAULT);
+			con.setRequestProperty("Authorization", authorisation);
 			
 			con.connect();
 

@@ -45,18 +45,22 @@ public class SalvageListActivity extends Activity implements OnItemClickListener
 		
 		super.onResume();
 		
+		boolean error = false;
+		
 		try {
 			patientList = service.loadAllPatients();
 		} catch (ServiceException e) {
+			error = true;
 			new AlertDialog.Builder(this) 
 		        	.setMessage(R.string.error_load_data)
 		        	.setNeutralButton(R.string.ok, null)
 		        	.show();
 		}
 		
-		adapter = new MTSListSalvageAdapter<PatientListItem>(getApplicationContext(), R.layout.mts_list, patientList);
-		
-		initContent();
+		if(!error) {
+			adapter = new MTSListSalvageAdapter<PatientListItem>(getApplicationContext(), R.layout.mts_list, patientList);
+			initContent();
+		}
 	}
 	
 	public void scanTag(View view) {

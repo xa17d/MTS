@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:columnCount="1" >
+
+    <EditText
+        android:id="@+id/editTextnewUrl"
+        android:layout_width="match_parent"
+        android:layout_column="0"
+        android:layout_gravity="left|top"
+        android:layout_row="0"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_column="0"
+        android:layout_gravity="right|bottom"
+        android:layout_row="0"
+        android:onClick="save"
+        android:text="@string/save" />
+
+</GridLayout>

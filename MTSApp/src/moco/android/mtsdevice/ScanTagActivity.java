@@ -5,6 +5,7 @@ import java.util.UUID;
 import moco.android.mtsdevice.handler.DeviceButtons;
 import moco.android.mtsdevice.handler.Mode;
 import moco.android.mtsdevice.handler.Area;
+import moco.android.mtsdevice.handler.Role;
 import moco.android.mtsdevice.handler.SelectedPatient;
 import moco.android.mtsdevice.salvage.SalvageActivity;
 import moco.android.mtsdevice.service.PatientService;
@@ -102,11 +103,21 @@ public class ScanTagActivity extends Activity implements LocationListener {
 	        if (resultCode == RESULT_OK) {
 	        	
 	        	scannedString = intent.getStringExtra("SCAN_RESULT");
+	        	boolean error = false;
 	        	
-	        	if(Mode.getActiveMode() != Mode.loggedout)
-	        		scannedId = UUID.fromString(scannedString);	            
+	        	try {
+		        	if(Mode.getActiveMode() != Mode.loggedout)
+		        		scannedId = UUID.fromString(scannedString);	  
+	        	} catch(Exception e) {
+	        		error = true;
+					new AlertDialog.Builder(this) 
+			        	.setMessage(R.string.error_scan_tag)
+			        	.setNeutralButton(R.string.ok, null)
+			        	.show();
+	        	}
 	            
-	        	tagScanned();
+	        	if(!error)
+	        		tagScanned();
 	            
 	        }
 	    }
@@ -128,19 +139,24 @@ public class ScanTagActivity extends Activity implements LocationListener {
 			selectedPatient.setId(scannedId);
 			selectedPatient.setGps(locationString);
 			
+			boolean error = false;
+			
 			try {
 				service.saveNewPatient(selectedPatient);
 				Toast.makeText(this, R.string.info_saved, Toast.LENGTH_LONG).show();
 			} catch (ServiceException e) {
+				error = true;
 				new AlertDialog.Builder(this) 
 		        	.setMessage(R.string.error_save_data)
 		        	.setNeutralButton(R.string.ok, null)
 		        	.show();
 			}
 			
-			intent = new Intent(this, TriageSelectionActivity.class);
-			startActivity(intent);
-			finish();
+			if(!error) {
+				intent = new Intent(this, TriageSelectionActivity.class);
+				startActivity(intent);
+				finish();
+			}
 		}
 		
 		/**
@@ -149,27 +165,33 @@ public class ScanTagActivity extends Activity implements LocationListener {
 		 */
 		if(Mode.getActiveMode() == Mode.salvage) {
 			
+			boolean error = false;
+			
 			try {
 				selectedPatient = service.loadPatientById(scannedId);
 			} catch (ServiceException e) {
+				error = true;
 				new AlertDialog.Builder(this) 
 			        	.setMessage(R.string.error_load_data)
 			        	.setNeutralButton(R.string.ok, null)
 			        	.show();
 			}
 			
-			if(selectedPatient.getTreatment() == Treatment.sighted) {
-				SelectedPatient.setPatient(selectedPatient);
-				
-				intent = new Intent(this, SalvageActivity.class);
-				startActivity(intent);
-				finish();
+			if(!error) {
+			
+				if(selectedPatient.getTreatment() == Treatment.sighted) {
+					SelectedPatient.setPatient(selectedPatient);
+					
+					intent = new Intent(this, SalvageActivity.class);
+					startActivity(intent);
+					finish();
+				}
+				else
+					new AlertDialog.Builder(this) 
+			        	.setMessage(R.string.error_not_on_salvagelist)
+			        	.setNeutralButton(R.string.ok, null)
+			        	.show();
 			}
-			else
-				new AlertDialog.Builder(this) 
-		        	.setMessage(R.string.error_not_on_salvagelist)
-		        	.setNeutralButton(R.string.ok, null)
-		        	.show();
 		}
 		
 		/**
@@ -177,28 +199,34 @@ public class ScanTagActivity extends Activity implements LocationListener {
 		 * Patientendaten laden
 		 */
 		if(Mode.getActiveMode() == Mode.therapy) {
-						
+			
+			boolean error = false;
+			
 			try {
 				selectedPatient = service.loadPatientById(scannedId);
 			} catch (ServiceException e) {
+				error = true;
 				new AlertDialog.Builder(this) 
 			        	.setMessage(R.string.error_load_data)
 			        	.setNeutralButton(R.string.ok, null)
 			        	.show();
 			}
 			
-			SelectedPatient.setPatient(selectedPatient);
+			if(!error) {
 			
-			if(Area.getActiveArea().matchesCategory(selectedPatient.getCategory()) && selectedPatient.getTreatment() == Treatment.salvaged) {
-				intent = new Intent(this, TherapySelectionActivity.class);
-				startActivity(intent);
-				finish();
+				SelectedPatient.setPatient(selectedPatient);
+				
+				if(Area.getActiveArea().matchesCategory(selectedPatient.getCategory()) && selectedPatient.getTreatment() == Treatment.salvaged) {
+					intent = new Intent(this, TherapySelectionActivity.class);
+					startActivity(intent);
+					finish();
+				}
+				else
+					new AlertDialog.Builder(this) 
+				        	.setMessage(R.string.error_wrong_area)
+				        	.setNeutralButton(R.string.ok, null)
+				        	.show();
 			}
-			else
-				new AlertDialog.Builder(this) 
-			        	.setMessage(R.string.error_wrong_area)
-			        	.setNeutralButton(R.string.ok, null)
-			        	.show();
 		}
 		
 		/**
@@ -206,7 +234,18 @@ public class ScanTagActivity extends Activity implements LocationListener {
 		 */
 		if(Mode.getActiveMode() == Mode.loggedout) {
 			
-			service.setAuthorId(scannedString);
+			String[] params = scannedString.split(";");
+			
+			if(params[2].equals("1"))
+				Role.setActiveRole(Role.MD);
+			else if(params[2].equals("2"))
+				Role.setActiveRole(Role.PARAMEDIC);
+			else if(params[2].equals("3"))
+				Role.setActiveRole(Role.FIREFIGHTER);
+			else
+				Role.setActiveRole(Role.NATIONALGUARD);
+			
+			service.setAuthorId(params[3]);
 			Mode.setActiveMode(Mode.loggedin);
 			
 			finish();

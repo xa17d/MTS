@@ -33,18 +33,21 @@
 	        android:id="@+id/buttonHospital"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
+	        android:onClick="setTherapy"
 	        android:text="@string/send_to_hospital" />
 
 	    <Button
 	        android:id="@+id/buttonDoctor"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
+	        android:onClick="setTherapy"
 	        android:text="@string/go_for_doctor_tomorrow" />
 	    
 	    <Button
 	        android:id="@+id/buttonPsychologist"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
+	        android:onClick="setTherapy"
 	        android:text="@string/psychologist" />
 
 	    <Button

@@ -103,7 +103,7 @@
             	  android:screenOrientation="portrait"></activity>
         
         
-        <activity android:name="moco.android.mtsdevice.maps.SalvageMap"
+        <activity android:name="moco.android.mtsdevice.ChangeUrlActivity"
             	  android:screenOrientation="portrait"></activity>
         
         

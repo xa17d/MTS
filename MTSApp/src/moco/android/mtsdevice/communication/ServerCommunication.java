@@ -1,7 +1,5 @@
 package moco.android.mtsdevice.communication;
 
-import java.util.UUID;
-
 public interface ServerCommunication {
 
 	/**

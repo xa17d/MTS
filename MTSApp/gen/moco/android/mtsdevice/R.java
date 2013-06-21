@@ -12,539 +12,306 @@ public final class R {
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int buttonBarButtonStyle=0x7f01000f;
+        public static final int buttonBarButtonStyle=0x7f010001;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int buttonBarStyle=0x7f01000e;
-        /** <p>Must be a floating point value, such as "<code>1.2</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int cameraBearing=0x7f010001;
-        /** <p>Must be a floating point value, such as "<code>1.2</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int cameraTargetLat=0x7f010002;
-        /** <p>Must be a floating point value, such as "<code>1.2</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int cameraTargetLng=0x7f010003;
-        /** <p>Must be a floating point value, such as "<code>1.2</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int cameraTilt=0x7f010004;
-        /** <p>Must be a floating point value, such as "<code>1.2</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int cameraZoom=0x7f010005;
-        /** <p>Must be one of the following constant values.</p>
-<table>
-<colgroup align="left" />
-<colgroup align="left" />
-<colgroup align="left" />
-<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
-<tr><td><code>none</code></td><td>0</td><td></td></tr>
-<tr><td><code>normal</code></td><td>1</td><td></td></tr>
-<tr><td><code>satellite</code></td><td>2</td><td></td></tr>
-<tr><td><code>terrain</code></td><td>3</td><td></td></tr>
-<tr><td><code>hybrid</code></td><td>4</td><td></td></tr>
-</table>
-         */
-        public static final int mapType=0x7f010000;
-        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int uiCompass=0x7f010006;
-        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int uiRotateGestures=0x7f010007;
-        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int uiScrollGestures=0x7f010008;
-        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int uiTiltGestures=0x7f010009;
-        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int uiZoomControls=0x7f01000a;
-        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int uiZoomGestures=0x7f01000b;
-        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int useViewLifecycle=0x7f01000c;
-        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int zOrderOnTop=0x7f01000d;
+        public static final int buttonBarStyle=0x7f010000;
     }
     public static final class color {
-        public static final int black_overlay=0x7f05000a;
-        public static final int common_action_bar_splitter=0x7f050009;
-        /**  Sign-in Button Colors 
-         */
-        public static final int common_signin_btn_dark_text_default=0x7f050000;
-        public static final int common_signin_btn_dark_text_disabled=0x7f050002;
-        public static final int common_signin_btn_dark_text_focused=0x7f050003;
-        public static final int common_signin_btn_dark_text_pressed=0x7f050001;
-        public static final int common_signin_btn_default_background=0x7f050008;
-        public static final int common_signin_btn_light_text_default=0x7f050004;
-        public static final int common_signin_btn_light_text_disabled=0x7f050006;
-        public static final int common_signin_btn_light_text_focused=0x7f050007;
-        public static final int common_signin_btn_light_text_pressed=0x7f050005;
-        public static final int common_signin_btn_text_dark=0x7f05000b;
-        public static final int common_signin_btn_text_light=0x7f05000c;
+        public static final int black_overlay=0x7f050000;
     }
     public static final class dimen {
-        public static final int textfield_size=0x7f080000;
+        public static final int textfield_size=0x7f060000;
     }
     public static final class drawable {
-        public static final int common_signin_btn_icon_dark=0x7f020000;
-        public static final int common_signin_btn_icon_disabled_dark=0x7f020001;
-        public static final int common_signin_btn_icon_disabled_focus_dark=0x7f020002;
-        public static final int common_signin_btn_icon_disabled_focus_light=0x7f020003;
-        public static final int common_signin_btn_icon_disabled_light=0x7f020004;
-        public static final int common_signin_btn_icon_focus_dark=0x7f020005;
-        public static final int common_signin_btn_icon_focus_light=0x7f020006;
-        public static final int common_signin_btn_icon_light=0x7f020007;
-        public static final int common_signin_btn_icon_normal_dark=0x7f020008;
-        public static final int common_signin_btn_icon_normal_light=0x7f020009;
-        public static final int common_signin_btn_icon_pressed_dark=0x7f02000a;
-        public static final int common_signin_btn_icon_pressed_light=0x7f02000b;
-        public static final int common_signin_btn_text_dark=0x7f02000c;
-        public static final int common_signin_btn_text_disabled_dark=0x7f02000d;
-        public static final int common_signin_btn_text_disabled_focus_dark=0x7f02000e;
-        public static final int common_signin_btn_text_disabled_focus_light=0x7f02000f;
-        public static final int common_signin_btn_text_disabled_light=0x7f020010;
-        public static final int common_signin_btn_text_focus_dark=0x7f020011;
-        public static final int common_signin_btn_text_focus_light=0x7f020012;
-        public static final int common_signin_btn_text_light=0x7f020013;
-        public static final int common_signin_btn_text_normal_dark=0x7f020014;
-        public static final int common_signin_btn_text_normal_light=0x7f020015;
-        public static final int common_signin_btn_text_pressed_dark=0x7f020016;
-        public static final int common_signin_btn_text_pressed_light=0x7f020017;
-        public static final int ic_launcher=0x7f020018;
-        public static final int info_icon=0x7f020019;
+        public static final int ic_launcher=0x7f020000;
+        public static final int info_icon=0x7f020001;
     }
     public static final class id {
-        public static final int GridLayoutIm=0x7f06004f;
-        public static final int ImageViewAbdomen=0x7f060013;
-        public static final int ImageViewBack=0x7f06000c;
-        public static final int ImageViewCest=0x7f060012;
-        public static final int ImageViewHead=0x7f06000d;
-        public static final int ImageViewLArm=0x7f06000f;
-        public static final int ImageViewLHand=0x7f06000a;
-        public static final int ImageViewLLeg=0x7f060011;
-        public static final int ImageViewNeck=0x7f060009;
-        public static final int ImageViewRArm=0x7f06000e;
-        public static final int ImageViewRHand=0x7f06000b;
-        public static final int ImageViewRLeg=0x7f060010;
-        public static final int ListViewTherapyAdd=0x7f06004e;
-        public static final int MTSView=0x7f060019;
-        public static final int TableRow11=0x7f060071;
-        public static final int TableRow12=0x7f060075;
-        public static final int addButton=0x7f060095;
-        public static final int adultButton=0x7f060077;
-        public static final int bloodOxygen=0x7f060068;
-        public static final int bloodPressureDiastolic=0x7f060066;
-        public static final int bloodPressureSystolic=0x7f060064;
-        public static final int bloodPulse=0x7f06006b;
-        public static final int bodyInjuryList=0x7f060007;
-        public static final int btnBlack=0x7f06008e;
-        public static final int btnGreen=0x7f060094;
-        public static final int btnRed=0x7f060090;
-        public static final int btnScanPatient=0x7f06001c;
-        public static final int btnYellow=0x7f060092;
-        public static final int button1=0x7f060037;
-        public static final int button2=0x7f060020;
-        public static final int buttonArea1=0x7f060030;
-        public static final int buttonArea2=0x7f060031;
-        public static final int buttonArea3=0x7f060032;
-        public static final int buttonArea4=0x7f060033;
-        public static final int buttonBackBody=0x7f06006e;
-        public static final int buttonCpr=0x7f060047;
-        public static final int buttonCreatePatient=0x7f060099;
-        public static final int buttonDiagnosis=0x7f060061;
-        public static final int buttonDoctor=0x7f060052;
-        public static final int buttonEditPatient=0x7f06009a;
-        public static final int buttonFrontBody=0x7f06006d;
-        public static final int buttonHospital=0x7f060051;
-        public static final int buttonLetGo=0x7f060054;
-        public static final int buttonLogin=0x7f060018;
-        public static final int buttonMedication=0x7f060044;
-        public static final int buttonPersonalData=0x7f06005f;
-        public static final int buttonPsychologist=0x7f060053;
-        public static final int buttonQrScan=0x7f06002d;
-        public static final int buttonReadyTransport=0x7f06004a;
-        public static final int buttonRecordDeath=0x7f06005d;
-        public static final int buttonSalvageMode=0x7f060016;
-        public static final int buttonTherapy=0x7f060045;
-        public static final int buttonTherapyMode=0x7f060017;
-        public static final int buttonTriageMode=0x7f060015;
-        public static final int buttonVitalParameter=0x7f060060;
-        public static final int buttonWound=0x7f060046;
-        public static final int childButton=0x7f060078;
-        public static final int editTextDiagnosisAdd=0x7f060036;
-        public static final int editTextPlacePositionNr=0x7f06001f;
-        public static final int femaleButton=0x7f060074;
-        public static final int genderTextView=0x7f060072;
-        public static final int hybrid=0x7f060004;
-        public static final int imageViewBodyFront=0x7f060008;
-        public static final int infoView=0x7f060097;
-        public static final int maleButton=0x7f060073;
-        public static final int mental=0x7f06008a;
-        public static final int mentalInfoButton=0x7f060089;
-        public static final int mental_critical=0x7f06008c;
-        public static final int mental_stable=0x7f06008b;
-        public static final int none=0x7f060000;
-        public static final int normal=0x7f060001;
-        public static final int patientSalvageView=0x7f06001b;
-        public static final int patientTherapyView=0x7f06004d;
-        public static final int perfusion=0x7f060086;
-        public static final int perfusionInfoButton=0x7f060085;
-        public static final int perfusion_critical=0x7f060088;
-        public static final int perfusion_stable=0x7f060087;
-        public static final int personalDataBirthdate=0x7f06005a;
-        public static final int personalDataFirstname=0x7f060056;
-        public static final int personalDataLastname=0x7f060057;
-        public static final int phaseTextView=0x7f060076;
-        public static final int progressBar1=0x7f06002b;
-        public static final int radio1=0x7f06003d;
-        public static final int radio2=0x7f06003e;
-        public static final int radio3=0x7f06003f;
-        public static final int radio4=0x7f060040;
-        public static final int radio5=0x7f060041;
-        public static final int radioGroup1=0x7f06003c;
-        public static final int respiration1=0x7f06007e;
-        public static final int respiration1InfoButton=0x7f06007d;
-        public static final int respiration2=0x7f060082;
-        public static final int respiration2InfoButton=0x7f060081;
-        public static final int respiration_critical=0x7f060084;
-        public static final int respiration_notpresent=0x7f060080;
-        public static final int respiration_present=0x7f06007f;
-        public static final int respiration_stable=0x7f060083;
-        public static final int restart=0x7f060023;
-        public static final int salvageText=0x7f060096;
-        public static final int salvage_map_map=0x7f060021;
-        public static final int satellite=0x7f060002;
-        public static final int save=0x7f060024;
-        public static final int saveTherapyIm=0x7f060042;
-        public static final int tableRow1=0x7f060039;
-        public static final int tableRow2=0x7f06003b;
-        public static final int tableRow3=0x7f060058;
-        public static final int tableRow4=0x7f060069;
-        public static final int tableRow5=0x7f06006c;
-        public static final int tag_color=0x7f06008d;
-        public static final int terrain=0x7f060003;
-        public static final int testText=0x7f06002e;
-        public static final int textDeathReason=0x7f06005c;
-        public static final int textListBodypart=0x7f060005;
-        public static final int textView1=0x7f060006;
-        public static final int textView2=0x7f060048;
-        public static final int textView6=0x7f060059;
-        public static final int textViewDiagnosisList=0x7f060038;
-        public static final int textViewMode1=0x7f060014;
-        public static final int textViewSalvageDistance=0x7f060026;
-        public static final int textViewSalvageList1=0x7f06001a;
-        public static final int textViewSalvageMain1=0x7f06001d;
-        public static final int textViewSalvageMain2=0x7f060025;
-        public static final int textViewSalvageMain3=0x7f060027;
-        public static final int textViewSalvageMain4=0x7f060029;
-        public static final int textViewSalvageMainSalvageText=0x7f06001e;
-        public static final int textViewSalvageMap1=0x7f060022;
-        public static final int textViewSalvageSingleSalvageText=0x7f06002a;
-        public static final int textViewSalvageUrgency=0x7f060028;
-        public static final int textViewScan1=0x7f06002c;
-        public static final int textViewTherapy=0x7f060034;
-        public static final int textViewTherapy2=0x7f06005e;
-        public static final int textViewTherapyArea1=0x7f06002f;
-        public static final int textViewTherapyDeath=0x7f06005b;
-        public static final int textViewTherapyDiag=0x7f060035;
-        public static final int textViewTherapyIm=0x7f060043;
-        public static final int textViewTherapyIm1=0x7f060063;
-        public static final int textViewTherapyIm100=0x7f06003a;
-        public static final int textViewTherapyIm2=0x7f060065;
-        public static final int textViewTherapyIm3=0x7f060067;
-        public static final int textViewTherapyIm4=0x7f06006a;
-        public static final int textViewTherapyList1=0x7f06004b;
-        public static final int textViewTherapyListArea=0x7f06004c;
-        public static final int textViewTherapyListIm=0x7f060049;
-        public static final int textViewTherapyMin=0x7f060050;
-        public static final int textViewTherapyPD=0x7f060055;
-        public static final int textViewTriageMain1=0x7f060070;
-        public static final int textViewTriageMainColor1=0x7f06008f;
-        public static final int textViewTriageMainColor2=0x7f060091;
-        public static final int textViewTriageMainColor3=0x7f060093;
-        public static final int textViewTriageSelection1=0x7f060098;
-        public static final int textViewVitalDiagnosis=0x7f06006f;
-        public static final int vitalPatientName=0x7f060062;
-        public static final int walk=0x7f06007a;
-        public static final int walkInfoButton=0x7f060079;
-        public static final int walk_no=0x7f06007c;
-        public static final int walk_yes=0x7f06007b;
+        public static final int GridLayoutIm=0x7f09004c;
+        public static final int ImageViewAbdomen=0x7f09000e;
+        public static final int ImageViewBack=0x7f090007;
+        public static final int ImageViewCest=0x7f09000d;
+        public static final int ImageViewHead=0x7f090008;
+        public static final int ImageViewLArm=0x7f09000a;
+        public static final int ImageViewLHand=0x7f090005;
+        public static final int ImageViewLLeg=0x7f09000c;
+        public static final int ImageViewNeck=0x7f090004;
+        public static final int ImageViewRArm=0x7f090009;
+        public static final int ImageViewRHand=0x7f090006;
+        public static final int ImageViewRLeg=0x7f09000b;
+        public static final int ListViewTherapyAdd=0x7f09004b;
+        public static final int MTSView=0x7f090017;
+        public static final int TableRow11=0x7f09006e;
+        public static final int TableRow12=0x7f090072;
+        public static final int addButton=0x7f090092;
+        public static final int adultButton=0x7f090074;
+        public static final int bloodOxygen=0x7f090065;
+        public static final int bloodPressureDiastolic=0x7f090063;
+        public static final int bloodPressureSystolic=0x7f090061;
+        public static final int bloodPulse=0x7f090068;
+        public static final int bodyInjuryList=0x7f090002;
+        public static final int btnBlack=0x7f09008b;
+        public static final int btnGreen=0x7f090091;
+        public static final int btnRed=0x7f09008d;
+        public static final int btnScanPatient=0x7f09001a;
+        public static final int btnYellow=0x7f09008f;
+        public static final int button1=0x7f090010;
+        public static final int button2=0x7f09001e;
+        public static final int buttonArea1=0x7f09002e;
+        public static final int buttonArea2=0x7f09002f;
+        public static final int buttonArea3=0x7f090030;
+        public static final int buttonArea4=0x7f090031;
+        public static final int buttonBackBody=0x7f09006b;
+        public static final int buttonCpr=0x7f090044;
+        public static final int buttonCreatePatient=0x7f090096;
+        public static final int buttonDiagnosis=0x7f09005e;
+        public static final int buttonDoctor=0x7f09004f;
+        public static final int buttonFrontBody=0x7f09006a;
+        public static final int buttonHospital=0x7f09004e;
+        public static final int buttonLetGo=0x7f090051;
+        public static final int buttonLogin=0x7f090015;
+        public static final int buttonMedication=0x7f090041;
+        public static final int buttonPersonalData=0x7f09005c;
+        public static final int buttonPsychologist=0x7f090050;
+        public static final int buttonQrScan=0x7f09002b;
+        public static final int buttonReadyTransport=0x7f090047;
+        public static final int buttonRecordDeath=0x7f09005a;
+        public static final int buttonSalvageMode=0x7f090013;
+        public static final int buttonTherapy=0x7f090042;
+        public static final int buttonTherapyMode=0x7f090014;
+        public static final int buttonTriageMode=0x7f090012;
+        public static final int buttonVitalParameter=0x7f09005d;
+        public static final int buttonWound=0x7f090043;
+        public static final int childButton=0x7f090075;
+        public static final int editTextDiagnosisAdd=0x7f090034;
+        public static final int editTextPlacePositionNr=0x7f09001d;
+        public static final int editTextnewUrl=0x7f09000f;
+        public static final int femaleButton=0x7f090071;
+        public static final int genderTextView=0x7f09006f;
+        public static final int imageView1=0x7f090016;
+        public static final int imageViewBodyFront=0x7f090003;
+        public static final int infoView=0x7f090094;
+        public static final int maleButton=0x7f090070;
+        public static final int mental=0x7f090087;
+        public static final int mentalInfoButton=0x7f090086;
+        public static final int mental_critical=0x7f090089;
+        public static final int mental_stable=0x7f090088;
+        public static final int patientSalvageView=0x7f090019;
+        public static final int patientTherapyView=0x7f09004a;
+        public static final int perfusion=0x7f090083;
+        public static final int perfusionInfoButton=0x7f090082;
+        public static final int perfusion_critical=0x7f090085;
+        public static final int perfusion_stable=0x7f090084;
+        public static final int personalDataBirthdate=0x7f090057;
+        public static final int personalDataFirstname=0x7f090053;
+        public static final int personalDataLastname=0x7f090054;
+        public static final int phaseTextView=0x7f090073;
+        public static final int progressBar1=0x7f090029;
+        public static final int radio1=0x7f09003a;
+        public static final int radio2=0x7f09003b;
+        public static final int radio3=0x7f09003c;
+        public static final int radio4=0x7f09003d;
+        public static final int radio5=0x7f09003e;
+        public static final int radioGroup1=0x7f090039;
+        public static final int respiration1=0x7f09007b;
+        public static final int respiration1InfoButton=0x7f09007a;
+        public static final int respiration2=0x7f09007f;
+        public static final int respiration2InfoButton=0x7f09007e;
+        public static final int respiration_critical=0x7f090081;
+        public static final int respiration_notpresent=0x7f09007d;
+        public static final int respiration_present=0x7f09007c;
+        public static final int respiration_stable=0x7f090080;
+        public static final int restart=0x7f090021;
+        public static final int salvageText=0x7f090093;
+        public static final int salvage_map_map=0x7f09001f;
+        public static final int save=0x7f090022;
+        public static final int saveTherapyIm=0x7f09003f;
+        public static final int tableRow1=0x7f090036;
+        public static final int tableRow2=0x7f090038;
+        public static final int tableRow3=0x7f090055;
+        public static final int tableRow4=0x7f090066;
+        public static final int tableRow5=0x7f090069;
+        public static final int tag_color=0x7f09008a;
+        public static final int testText=0x7f09002c;
+        public static final int textDeathReason=0x7f090059;
+        public static final int textListBodypart=0x7f090000;
+        public static final int textView1=0x7f090001;
+        public static final int textView2=0x7f090045;
+        public static final int textView6=0x7f090056;
+        public static final int textViewDiagnosisList=0x7f090035;
+        public static final int textViewMode1=0x7f090011;
+        public static final int textViewSalvageDistance=0x7f090024;
+        public static final int textViewSalvageList1=0x7f090018;
+        public static final int textViewSalvageMain1=0x7f09001b;
+        public static final int textViewSalvageMain2=0x7f090023;
+        public static final int textViewSalvageMain3=0x7f090025;
+        public static final int textViewSalvageMain4=0x7f090027;
+        public static final int textViewSalvageMainSalvageText=0x7f09001c;
+        public static final int textViewSalvageMap1=0x7f090020;
+        public static final int textViewSalvageSingleSalvageText=0x7f090028;
+        public static final int textViewSalvageUrgency=0x7f090026;
+        public static final int textViewScan1=0x7f09002a;
+        public static final int textViewTherapy=0x7f090032;
+        public static final int textViewTherapy2=0x7f09005b;
+        public static final int textViewTherapyArea1=0x7f09002d;
+        public static final int textViewTherapyDeath=0x7f090058;
+        public static final int textViewTherapyDiag=0x7f090033;
+        public static final int textViewTherapyIm=0x7f090040;
+        public static final int textViewTherapyIm1=0x7f090060;
+        public static final int textViewTherapyIm100=0x7f090037;
+        public static final int textViewTherapyIm2=0x7f090062;
+        public static final int textViewTherapyIm3=0x7f090064;
+        public static final int textViewTherapyIm4=0x7f090067;
+        public static final int textViewTherapyList1=0x7f090048;
+        public static final int textViewTherapyListArea=0x7f090049;
+        public static final int textViewTherapyListIm=0x7f090046;
+        public static final int textViewTherapyMin=0x7f09004d;
+        public static final int textViewTherapyPD=0x7f090052;
+        public static final int textViewTriageMain1=0x7f09006d;
+        public static final int textViewTriageMainColor1=0x7f09008c;
+        public static final int textViewTriageMainColor2=0x7f09008e;
+        public static final int textViewTriageMainColor3=0x7f090090;
+        public static final int textViewTriageSelection1=0x7f090095;
+        public static final int textViewVitalDiagnosis=0x7f09006c;
+        public static final int vitalPatientName=0x7f09005f;
+        public static final int walk=0x7f090077;
+        public static final int walkInfoButton=0x7f090076;
+        public static final int walk_no=0x7f090079;
+        public static final int walk_yes=0x7f090078;
     }
     public static final class layout {
         public static final int body_list=0x7f030000;
         public static final int body_view_back=0x7f030001;
         public static final int body_view_front=0x7f030002;
-        public static final int mode_selection=0x7f030003;
-        public static final int mts_list=0x7f030004;
-        public static final int salvage_list=0x7f030005;
-        public static final int salvage_main=0x7f030006;
-        public static final int salvage_map=0x7f030007;
-        public static final int salvage_single_view=0x7f030008;
-        public static final int scan_tag=0x7f030009;
-        public static final int test_layout=0x7f03000a;
-        public static final int therapy_area=0x7f03000b;
-        public static final int therapy_diagnosis=0x7f03000c;
-        public static final int therapy_immediate=0x7f03000d;
-        public static final int therapy_list=0x7f03000e;
-        public static final int therapy_list_add=0x7f03000f;
-        public static final int therapy_minor=0x7f030010;
-        public static final int therapy_personal_data=0x7f030011;
-        public static final int therapy_record_death=0x7f030012;
-        public static final int therapy_selection=0x7f030013;
-        public static final int therapy_vital_parameter=0x7f030014;
-        public static final int triage_main=0x7f030015;
-        public static final int triage_main_setcolor=0x7f030016;
-        public static final int triage_salvageinfo=0x7f030017;
-        public static final int triage_salvageinfo_add=0x7f030018;
-        public static final int triage_selection=0x7f030019;
+        public static final int change_url=0x7f030003;
+        public static final int mode_selection=0x7f030004;
+        public static final int mts_list=0x7f030005;
+        public static final int salvage_list=0x7f030006;
+        public static final int salvage_main=0x7f030007;
+        public static final int salvage_map=0x7f030008;
+        public static final int salvage_single_view=0x7f030009;
+        public static final int scan_tag=0x7f03000a;
+        public static final int test_layout=0x7f03000b;
+        public static final int therapy_area=0x7f03000c;
+        public static final int therapy_diagnosis=0x7f03000d;
+        public static final int therapy_immediate=0x7f03000e;
+        public static final int therapy_list=0x7f03000f;
+        public static final int therapy_list_add=0x7f030010;
+        public static final int therapy_minor=0x7f030011;
+        public static final int therapy_personal_data=0x7f030012;
+        public static final int therapy_record_death=0x7f030013;
+        public static final int therapy_selection=0x7f030014;
+        public static final int therapy_vital_parameter=0x7f030015;
+        public static final int triage_main=0x7f030016;
+        public static final int triage_main_setcolor=0x7f030017;
+        public static final int triage_salvageinfo=0x7f030018;
+        public static final int triage_salvageinfo_add=0x7f030019;
+        public static final int triage_selection=0x7f03001a;
     }
     public static final class string {
-        public static final int activate_gps=0x7f070047;
-        public static final int add=0x7f070029;
-        public static final int add_diagnosis=0x7f07005f;
-        public static final int adult=0x7f070055;
-        public static final int age=0x7f070051;
-        public static final int app_name=0x7f070015;
-        public static final int area=0x7f07003c;
-        public static final int area_1=0x7f07002d;
-        public static final int area_2=0x7f07002e;
-        public static final int area_3=0x7f07002f;
-        public static final int area_4=0x7f070030;
-        /**   Title for notification shown when GooglePlayServices is unavailable [CHAR LIMIT=70] 
-         */
-        public static final int auth_client_availability_notification_title=0x7f07000f;
-        /**   Title for notification shown when GooglePlayServices is unavailable [CHAR LIMIT=42] 
-         */
-        public static final int auth_client_play_services_err_notification_msg=0x7f070010;
-        /**   Requested by string saying which app requested the notification. [CHAR LIMIT=42] 
-         */
-        public static final int auth_client_requested_by_msg=0x7f070011;
-        public static final int back_body=0x7f070062;
-        public static final int birthdate=0x7f07005b;
-        public static final int bloodpressure=0x7f070044;
-        public static final int change=0x7f070023;
-        public static final int change_mode=0x7f07002c;
-        public static final int change_patient=0x7f070063;
-        public static final int child=0x7f070054;
-        public static final int city=0x7f07005a;
-        /**  Button in confirmation dialog to enable Google Play services.  Clicking it
-        will direct user to application settings of Google Play services where they
-        can enable it [CHAR LIMIT=40] 
-         */
-        public static final int common_google_play_services_enable_button=0x7f070006;
-        /**  Message in confirmation dialog informing user they need to enable
-        Google Play services in application settings [CHAR LIMIT=NONE] 
-         */
-        public static final int common_google_play_services_enable_text=0x7f070005;
-        /**  Title of confirmation dialog informing user they need to enable
-        Google Play services in application settings [CHAR LIMIT=40] 
-         */
-        public static final int common_google_play_services_enable_title=0x7f070004;
-        /**  Button in confirmation dialog for installing Google Play services [CHAR LIMIT=40] 
-         */
-        public static final int common_google_play_services_install_button=0x7f070003;
-        /**  (For phones) Message in confirmation dialog informing user that
-        they need to install Google Play services (from Play Store) [CHAR LIMIT=NONE] 
-         */
-        public static final int common_google_play_services_install_text_phone=0x7f070001;
-        /**  (For tablets) Message in confirmation dialog informing user that
-        they need to install Google Play services (from Play Store) [CHAR LIMIT=NONE] 
-         */
-        public static final int common_google_play_services_install_text_tablet=0x7f070002;
-        /**  Title of confirmation dialog informing user that they need to install
-        Google Play services (from Play Store) [CHAR LIMIT=40] 
-         */
-        public static final int common_google_play_services_install_title=0x7f070000;
-        /**  Message in confirmation dialog informing user there is an unknown issue in Google Play
-        services [CHAR LIMIT=NONE] 
-         */
-        public static final int common_google_play_services_unknown_issue=0x7f070009;
-        /**  Message in confirmation dialog informing user that Google Play services is not supported on their device [CHAR LIMIT=NONE] 
-         */
-        public static final int common_google_play_services_unsupported_text=0x7f07000b;
-        /**  Title of confirmation dialog informing user that Google Play services is not supported on their device [CHAR LIMIT=40] 
-         */
-        public static final int common_google_play_services_unsupported_title=0x7f07000a;
-        /**  Button in confirmation dialog for updating Google Play services [CHAR LIMIT=40] 
-         */
-        public static final int common_google_play_services_update_button=0x7f07000c;
-        /**  Message in confirmation dialog informing user that they need to update
-        Google Play services (from Play Store) [CHAR LIMIT=NONE] 
-         */
-        public static final int common_google_play_services_update_text=0x7f070008;
-        /**  Title of confirmation dialog informing user that they need to update
-        Google Play services (from Play Store) [CHAR LIMIT=40] 
-         */
-        public static final int common_google_play_services_update_title=0x7f070007;
-        /**  Sign-in button text [CHAR LIMIT=15] 
-         */
-        public static final int common_signin_button_text=0x7f07000d;
-        /**  Long form sign-in button text [CHAR LIMIT=30] 
-         */
-        public static final int common_signin_button_text_long=0x7f07000e;
-        public static final int cpr=0x7f07006d;
-        public static final int create_patient=0x7f070035;
-        public static final int critical=0x7f070020;
-        public static final int diagnosis=0x7f07004b;
-        public static final int diagnosis_added=0x7f070067;
-        public static final int distance=0x7f07006a;
-        public static final int edit_patient=0x7f070036;
-        public static final int error=0x7f070021;
-        public static final int error_category_missing=0x7f070024;
-        public static final int error_gps=0x7f070049;
-        public static final int error_load_data=0x7f070065;
-        public static final int error_no_reason=0x7f070060;
-        public static final int error_not_on_salvagelist=0x7f070066;
-        public static final int error_save_data=0x7f070064;
-        public static final int error_scan_tag=0x7f070069;
-        public static final int error_wrong_area=0x7f070056;
-        public static final int f=0x7f070052;
-        public static final int firstname=0x7f070057;
-        public static final int front_body=0x7f070061;
-        public static final int gender=0x7f070050;
-        public static final int go_for_doctor_tomorrow=0x7f070074;
-        public static final int i=0x7f070048;
-        public static final int info_saved=0x7f070038;
-        public static final int insert_info=0x7f070027;
-        public static final int insurance=0x7f07005e;
-        public static final int insurance_nr=0x7f07005d;
-        public static final int lastname=0x7f070058;
-        public static final int let_go=0x7f070075;
-        /**  Location client code resources (prefix with location_client) 
-
-        Begin strings for location.reporting
-    
-
-        Some InactiveReason names.  See more in OneUp/package/location/res/values/strings.xml
-    
-         */
-        public static final int location_client_ulr_inactive_age_under_13=0x7f070012;
-        public static final int location_client_ulr_inactive_age_unknown=0x7f070013;
-        public static final int location_client_ulr_inactive_unknown_restriction=0x7f070014;
-        public static final int login=0x7f070077;
-        public static final int logout=0x7f070078;
-        public static final int m=0x7f070053;
-        public static final int medication=0x7f07006b;
-        public static final int mental=0x7f07001c;
-        public static final int mental_criteria=0x7f070042;
-        public static final int mode=0x7f07003d;
-        public static final int no=0x7f07001e;
-        public static final int no_info=0x7f07002a;
-        public static final int no_support=0x7f07006e;
-        public static final int nothing=0x7f07003b;
-        public static final int ok=0x7f070028;
-        public static final int patient_already_registered=0x7f070071;
-        public static final int patient_put=0x7f070072;
-        public static final int perfusion=0x7f07001b;
-        public static final int perfusion_criteria=0x7f070041;
-        public static final int personal_data=0x7f07004c;
-        public static final int psychologist=0x7f070076;
-        public static final int pulse=0x7f070046;
-        public static final int question_gotoareaormode=0x7f070039;
-        public static final int question_gotomode=0x7f07003a;
-        public static final int question_restart=0x7f070026;
-        public static final int ready_transport=0x7f07006f;
-        public static final int reason_death=0x7f07004f;
-        public static final int record_death=0x7f07004e;
-        public static final int respiration=0x7f07001a;
-        public static final int respiration1_criteria=0x7f07003f;
-        public static final int respiration2_criteria=0x7f070040;
-        public static final int s_o2=0x7f070045;
-        public static final int salvage_mode=0x7f070017;
-        public static final int salvageinfo=0x7f070025;
-        public static final int salvagelist=0x7f070031;
-        public static final int salvagemap=0x7f070032;
-        public static final int save=0x7f070022;
-        public static final int scan_new_tag=0x7f07002b;
-        public static final int scan_qr=0x7f070068;
-        public static final int scan_tag=0x7f070033;
-        public static final int select_mode=0x7f070034;
-        public static final int send_to_hospital=0x7f070073;
-        public static final int skip=0x7f070037;
-        public static final int stable=0x7f07001f;
-        public static final int street=0x7f070059;
-        public static final int sure_ready_transport=0x7f070070;
-        public static final int therapy=0x7f07004d;
-        public static final int therapy_mode=0x7f070018;
-        public static final int triage_mode=0x7f070016;
-        public static final int urgency=0x7f070043;
-        public static final int vital_parameter=0x7f07004a;
-        public static final int walk=0x7f070019;
-        public static final int walk_criteria=0x7f07003e;
-        public static final int wound=0x7f07006c;
-        public static final int yes=0x7f07001d;
-        public static final int zip=0x7f07005c;
+        public static final int activate_gps=0x7f070032;
+        public static final int add=0x7f070014;
+        public static final int add_diagnosis=0x7f07004a;
+        public static final int adult=0x7f070040;
+        public static final int age=0x7f07003c;
+        public static final int app_name=0x7f070000;
+        public static final int area=0x7f070027;
+        public static final int area_1=0x7f070018;
+        public static final int area_2=0x7f070019;
+        public static final int area_3=0x7f07001a;
+        public static final int area_4=0x7f07001b;
+        public static final int back_body=0x7f07004d;
+        public static final int birthdate=0x7f070046;
+        public static final int bloodpressure=0x7f07002f;
+        public static final int change=0x7f07000e;
+        public static final int change_mode=0x7f070017;
+        public static final int change_patient=0x7f07004e;
+        public static final int child=0x7f07003f;
+        public static final int city=0x7f070045;
+        public static final int cpr=0x7f070058;
+        public static final int create_patient=0x7f070020;
+        public static final int critical=0x7f07000b;
+        public static final int diagnosis=0x7f070036;
+        public static final int diagnosis_added=0x7f070052;
+        public static final int distance=0x7f070055;
+        public static final int edit_patient=0x7f070021;
+        public static final int error=0x7f07000c;
+        public static final int error_category_missing=0x7f07000f;
+        public static final int error_gps=0x7f070034;
+        public static final int error_load_data=0x7f070050;
+        public static final int error_no_reason=0x7f07004b;
+        public static final int error_not_on_salvagelist=0x7f070051;
+        public static final int error_save_data=0x7f07004f;
+        public static final int error_scan_tag=0x7f070054;
+        public static final int error_wrong_area=0x7f070041;
+        public static final int f=0x7f07003d;
+        public static final int firstname=0x7f070042;
+        public static final int front_body=0x7f07004c;
+        public static final int gender=0x7f07003b;
+        public static final int go_for_doctor_tomorrow=0x7f07005f;
+        public static final int i=0x7f070033;
+        public static final int info_saved=0x7f070023;
+        public static final int insert_info=0x7f070012;
+        public static final int insurance=0x7f070049;
+        public static final int insurance_nr=0x7f070048;
+        public static final int lastname=0x7f070043;
+        public static final int let_go=0x7f070060;
+        public static final int login=0x7f070062;
+        public static final int logout=0x7f070063;
+        public static final int m=0x7f07003e;
+        public static final int medication=0x7f070056;
+        public static final int mental=0x7f070007;
+        public static final int mental_criteria=0x7f07002d;
+        public static final int mode=0x7f070028;
+        public static final int no=0x7f070009;
+        public static final int no_info=0x7f070015;
+        public static final int no_support=0x7f070059;
+        public static final int nothing=0x7f070026;
+        public static final int ok=0x7f070013;
+        public static final int patient_already_registered=0x7f07005c;
+        public static final int patient_put=0x7f07005d;
+        public static final int perfusion=0x7f070006;
+        public static final int perfusion_criteria=0x7f07002c;
+        public static final int personal_data=0x7f070037;
+        public static final int psychologist=0x7f070061;
+        public static final int pulse=0x7f070031;
+        public static final int question_gotoareaormode=0x7f070024;
+        public static final int question_gotomode=0x7f070025;
+        public static final int question_restart=0x7f070011;
+        public static final int ready_transport=0x7f07005a;
+        public static final int reason_death=0x7f07003a;
+        public static final int record_death=0x7f070039;
+        public static final int respiration=0x7f070005;
+        public static final int respiration1_criteria=0x7f07002a;
+        public static final int respiration2_criteria=0x7f07002b;
+        public static final int s_o2=0x7f070030;
+        public static final int salvage_mode=0x7f070002;
+        public static final int salvageinfo=0x7f070010;
+        public static final int salvagelist=0x7f07001c;
+        public static final int salvagemap=0x7f07001d;
+        public static final int save=0x7f07000d;
+        public static final int scan_new_tag=0x7f070016;
+        public static final int scan_qr=0x7f070053;
+        public static final int scan_tag=0x7f07001e;
+        public static final int scan_tag_error=0x7f070064;
+        public static final int select_mode=0x7f07001f;
+        public static final int send_to_hospital=0x7f07005e;
+        public static final int skip=0x7f070022;
+        public static final int stable=0x7f07000a;
+        public static final int street=0x7f070044;
+        public static final int sure_ready_transport=0x7f07005b;
+        public static final int therapy=0x7f070038;
+        public static final int therapy_mode=0x7f070003;
+        public static final int triage_mode=0x7f070001;
+        public static final int urgency=0x7f07002e;
+        public static final int vital_parameter=0x7f070035;
+        public static final int walk=0x7f070004;
+        public static final int walk_criteria=0x7f070029;
+        public static final int wound=0x7f070057;
+        public static final int yes=0x7f070008;
+        public static final int zip=0x7f070047;
     }
     public static final class style {
         /** 
@@ -570,14 +337,14 @@ containing a value of this type.
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f090000;
+        public static final int AppBaseTheme=0x7f080000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f090001;
-        public static final int ButtonBar=0x7f090003;
-        public static final int ButtonBarButton=0x7f090004;
-        public static final int FullscreenTheme=0x7f090002;
+        public static final int AppTheme=0x7f080001;
+        public static final int ButtonBar=0x7f080003;
+        public static final int ButtonBarButton=0x7f080004;
+        public static final int FullscreenTheme=0x7f080002;
     }
     public static final class xml {
         public static final int nfc_tech_filter=0x7f040000;
@@ -601,7 +368,7 @@ containing a value of this type.
            @see #ButtonBarContainerTheme_buttonBarStyle
          */
         public static final int[] ButtonBarContainerTheme = {
-            0x7f01000e, 0x7f01000f
+            0x7f010000, 0x7f010001
         };
         /**
           <p>This symbol is the offset where the {@link moco.android.mtsdevice.R.attr#buttonBarButtonStyle}
@@ -623,249 +390,5 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           @attr name android:buttonBarStyle
         */
         public static final int ButtonBarContainerTheme_buttonBarStyle = 0;
-        /** Attributes that can be used with a MapAttrs.
-           <p>Includes the following attributes:</p>
-           <table>
-           <colgroup align="left" />
-           <colgroup align="left" />
-           <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #MapAttrs_cameraBearing moco.android.mtsdevice:cameraBearing}</code></td><td></td></tr>
-           <tr><td><code>{@link #MapAttrs_cameraTargetLat moco.android.mtsdevice:cameraTargetLat}</code></td><td></td></tr>
-           <tr><td><code>{@link #MapAttrs_cameraTargetLng moco.android.mtsdevice:cameraTargetLng}</code></td><td></td></tr>
-           <tr><td><code>{@link #MapAttrs_cameraTilt moco.android.mtsdevice:cameraTilt}</code></td><td></td></tr>
-           <tr><td><code>{@link #MapAttrs_cameraZoom moco.android.mtsdevice:cameraZoom}</code></td><td></td></tr>
-           <tr><td><code>{@link #MapAttrs_mapType moco.android.mtsdevice:mapType}</code></td><td></td></tr>
-           <tr><td><code>{@link #MapAttrs_uiCompass moco.android.mtsdevice:uiCompass}</code></td><td></td></tr>
-           <tr><td><code>{@link #MapAttrs_uiRotateGestures moco.android.mtsdevice:uiRotateGestures}</code></td><td></td></tr>
-           <tr><td><code>{@link #MapAttrs_uiScrollGestures moco.android.mtsdevice:uiScrollGestures}</code></td><td></td></tr>
-           <tr><td><code>{@link #MapAttrs_uiTiltGestures moco.android.mtsdevice:uiTiltGestures}</code></td><td></td></tr>
-           <tr><td><code>{@link #MapAttrs_uiZoomControls moco.android.mtsdevice:uiZoomControls}</code></td><td></td></tr>
-           <tr><td><code>{@link #MapAttrs_uiZoomGestures moco.android.mtsdevice:uiZoomGestures}</code></td><td></td></tr>
-           <tr><td><code>{@link #MapAttrs_useViewLifecycle moco.android.mtsdevice:useViewLifecycle}</code></td><td></td></tr>
-           <tr><td><code>{@link #MapAttrs_zOrderOnTop moco.android.mtsdevice:zOrderOnTop}</code></td><td></td></tr>
-           </table>
-           @see #MapAttrs_cameraBearing
-           @see #MapAttrs_cameraTargetLat
-           @see #MapAttrs_cameraTargetLng
-           @see #MapAttrs_cameraTilt
-           @see #MapAttrs_cameraZoom
-           @see #MapAttrs_mapType
-           @see #MapAttrs_uiCompass
-           @see #MapAttrs_uiRotateGestures
-           @see #MapAttrs_uiScrollGestures
-           @see #MapAttrs_uiTiltGestures
-           @see #MapAttrs_uiZoomControls
-           @see #MapAttrs_uiZoomGestures
-           @see #MapAttrs_useViewLifecycle
-           @see #MapAttrs_zOrderOnTop
-         */
-        public static final int[] MapAttrs = {
-            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003,
-            0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007,
-            0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b,
-            0x7f01000c, 0x7f01000d
-        };
-        /**
-          <p>This symbol is the offset where the {@link moco.android.mtsdevice.R.attr#cameraBearing}
-          attribute's value can be found in the {@link #MapAttrs} array.
-
-
-          <p>Must be a floating point value, such as "<code>1.2</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name android:cameraBearing
-        */
-        public static final int MapAttrs_cameraBearing = 1;
-        /**
-          <p>This symbol is the offset where the {@link moco.android.mtsdevice.R.attr#cameraTargetLat}
-          attribute's value can be found in the {@link #MapAttrs} array.
-
-
-          <p>Must be a floating point value, such as "<code>1.2</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name android:cameraTargetLat
-        */
-        public static final int MapAttrs_cameraTargetLat = 2;
-        /**
-          <p>This symbol is the offset where the {@link moco.android.mtsdevice.R.attr#cameraTargetLng}
-          attribute's value can be found in the {@link #MapAttrs} array.
-
-
-          <p>Must be a floating point value, such as "<code>1.2</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name android:cameraTargetLng
-        */
-        public static final int MapAttrs_cameraTargetLng = 3;
-        /**
-          <p>This symbol is the offset where the {@link moco.android.mtsdevice.R.attr#cameraTilt}
-          attribute's value can be found in the {@link #MapAttrs} array.
-
-
-          <p>Must be a floating point value, such as "<code>1.2</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name android:cameraTilt
-        */
-        public static final int MapAttrs_cameraTilt = 4;
-        /**
-          <p>This symbol is the offset where the {@link moco.android.mtsdevice.R.attr#cameraZoom}
-          attribute's value can be found in the {@link #MapAttrs} array.
-
-
-          <p>Must be a floating point value, such as "<code>1.2</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name android:cameraZoom
-        */
-        public static final int MapAttrs_cameraZoom = 5;
-        /**
-          <p>This symbol is the offset where the {@link moco.android.mtsdevice.R.attr#mapType}
-          attribute's value can be found in the {@link #MapAttrs} array.
-
-
-          <p>Must be one of the following constant values.</p>
-<table>
-<colgroup align="left" />
-<colgroup align="left" />
-<colgroup align="left" />
-<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
-<tr><td><code>none</code></td><td>0</td><td></td></tr>
-<tr><td><code>normal</code></td><td>1</td><td></td></tr>
-<tr><td><code>satellite</code></td><td>2</td><td></td></tr>
-<tr><td><code>terrain</code></td><td>3</td><td></td></tr>
-<tr><td><code>hybrid</code></td><td>4</td><td></td></tr>
-</table>
-          @attr name android:mapType
-        */
-        public static final int MapAttrs_mapType = 0;
-        /**
-          <p>This symbol is the offset where the {@link moco.android.mtsdevice.R.attr#uiCompass}
-          attribute's value can be found in the {@link #MapAttrs} array.
-
-
-          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name android:uiCompass
-        */
-        public static final int MapAttrs_uiCompass = 6;
-        /**
-          <p>This symbol is the offset where the {@link moco.android.mtsdevice.R.attr#uiRotateGestures}
-          attribute's value can be found in the {@link #MapAttrs} array.
-
-
-          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name android:uiRotateGestures
-        */
-        public static final int MapAttrs_uiRotateGestures = 7;
-        /**
-          <p>This symbol is the offset where the {@link moco.android.mtsdevice.R.attr#uiScrollGestures}
-          attribute's value can be found in the {@link #MapAttrs} array.
-
-
-          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name android:uiScrollGestures
-        */
-        public static final int MapAttrs_uiScrollGestures = 8;
-        /**
-          <p>This symbol is the offset where the {@link moco.android.mtsdevice.R.attr#uiTiltGestures}
-          attribute's value can be found in the {@link #MapAttrs} array.
-
-
-          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name android:uiTiltGestures
-        */
-        public static final int MapAttrs_uiTiltGestures = 9;
-        /**
-          <p>This symbol is the offset where the {@link moco.android.mtsdevice.R.attr#uiZoomControls}
-          attribute's value can be found in the {@link #MapAttrs} array.
-
-
-          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name android:uiZoomControls
-        */
-        public static final int MapAttrs_uiZoomControls = 10;
-        /**
-          <p>This symbol is the offset where the {@link moco.android.mtsdevice.R.attr#uiZoomGestures}
-          attribute's value can be found in the {@link #MapAttrs} array.
-
-
-          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name android:uiZoomGestures
-        */
-        public static final int MapAttrs_uiZoomGestures = 11;
-        /**
-          <p>This symbol is the offset where the {@link moco.android.mtsdevice.R.attr#useViewLifecycle}
-          attribute's value can be found in the {@link #MapAttrs} array.
-
-
-          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name android:useViewLifecycle
-        */
-        public static final int MapAttrs_useViewLifecycle = 12;
-        /**
-          <p>This symbol is the offset where the {@link moco.android.mtsdevice.R.attr#zOrderOnTop}
-          attribute's value can be found in the {@link #MapAttrs} array.
-
-
-          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name android:zOrderOnTop
-        */
-        public static final int MapAttrs_zOrderOnTop = 13;
     };
 }

@@ -47,12 +47,12 @@ public class TriageActivity extends Activity {
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
-    	
-    	patient = new Patient();
-    	SelectedPatient.setPatient(patient);
-    	
+    	    	
         super.onCreate(savedInstanceState);
         setContentView(R.layout.triage_main);
+        
+    	patient = new Patient();
+    	SelectedPatient.setPatient(patient);
         
         initButtons();
 

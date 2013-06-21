@@ -63,6 +63,8 @@ public class ModeActivity extends Activity {
 			btnTherapy.setEnabled(false);
 		}
 		else {
+			btnLogin.setText(R.string.logout);
+			
 			if(Role.getActiveRole() == Role.MD || Role.getActiveRole() == Role.PARAMEDIC) {
 				
 				btnTriage.setEnabled(true);
@@ -101,8 +103,16 @@ public class ModeActivity extends Activity {
 			startActivity(intent);
 		}
 		else {
-			btnLogin.setText(R.string.logout);
+			Mode.setActiveMode(Mode.loggedout);
 		}
+		
+		this.recreate();
+	}
+	
+	public void changeUrl(View v) {
+		
+		Intent intent = new Intent(this, ChangeUrlActivity.class);
+		startActivity(intent);
 	}
 	
 	private void initComponent() {

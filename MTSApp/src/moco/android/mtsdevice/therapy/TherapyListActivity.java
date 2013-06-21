@@ -42,9 +42,12 @@ public class TherapyListActivity extends Activity {
 		
 		super.onResume();
 		
+		boolean error = false;
+		
 		try {
 			patientList = service.loadAllPatients();
 		} catch (ServiceException e) {
+			error = true;
 			new AlertDialog.Builder(this) 
 			    	.setMessage(R.string.error_load_data)
 			    	.setNeutralButton(R.string.ok, null)
@@ -53,9 +56,10 @@ public class TherapyListActivity extends Activity {
 		
 		//TODO falls geschwindigkeit es zulaesst: alle daten laden
 		
-		adapter = new MTSListTherapyAdapter<PatientListItem>(getApplicationContext(), R.layout.mts_list, patientList);
-
-		initContent();
+		if(!error) {
+			adapter = new MTSListTherapyAdapter<PatientListItem>(getApplicationContext(), R.layout.mts_list, patientList);
+			initContent();
+		}
 	}
 	
 	private void initContent() {
